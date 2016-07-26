@@ -1,0 +1,18 @@
+v1.0
+	-JogadorJogo renomeado para JogadorActor
+	-JogadorActor (antigo JogadorJogo) nao estende de Jogador mais
+		: Agora possui uma referencia de Jogador - um atributo.
+	-Actor se torna uma classe abstrata.
+	-JogadorActor e Bola estendem Actor
+		: Ambos compartilham muitos metodos de mesma implementação.
+		: JogadorJogo não compartilhava metodos com Jogador
+			: o estends servia apenas para referenciar o Jogador.
+	-O metodo act() de Actor agora é act(Action action,ArrayList<actor> collisions)
+			: sugerido pelo Julio
+	-GameScene não implementa Actor mais 
+			: Actor se quer é uma interface agora.
+			: só implementava por conta do metodo act()
+			: nunca necessitou do polimorfismo
+	-As implementações de JogadorJogo e Bola em comum foram para Actor.
+	-Ajeitado as assossiações que estavam invertidas.
+	-Adicionado o ImageManager
