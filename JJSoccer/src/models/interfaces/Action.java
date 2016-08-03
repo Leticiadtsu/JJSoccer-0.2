@@ -1,7 +1,7 @@
 
 package models.interfaces;
 
-import models.Dimencao;
+import models.Dimensao;
 
 /**
  *
@@ -9,5 +9,5 @@ import models.Dimencao;
  */
 public interface Action {
     
-    public Dimencao getLimite();
+    public Dimensao getLimite();
 }

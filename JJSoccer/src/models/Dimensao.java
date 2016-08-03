@@ -5,12 +5,12 @@ package models;
  *
  * @author 
  */
-public class Dimencao {
+public class Dimensao {
     
     private final int largura;
     private final int altura;
 
-    public Dimencao(int largura, int altura) {
+    public Dimensao(int largura, int altura) {
         this.largura = largura;
         this.altura = altura;
     }

@@ -8,7 +8,6 @@ import models.interfaces.Action;
 import models.interfaces.Renderable;
 import java.awt.Image;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -66,7 +65,7 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
      * @param collisions atores que colidem com esse ator na cena
      * @return se a posicao eh valida ou nao
      */
-    protected boolean canMove(int nextX, int nextY, Dimencao limite, List<Actor> collisions) {
+    protected boolean canMove(int nextX, int nextY, Dimensao limite, List<Actor> collisions) {
         //limites superiores do campo
         if (nextX < 0 || nextY < 0) {
             return false;
@@ -92,7 +91,7 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
      * @param collisions atores que colidem com esse ator na cena
      * @return se a posicao eh valida ou nao
      */
-    protected boolean isValidPosition(Dimencao limite, List<Actor> collisions) {
+    protected boolean isValidPosition(Dimensao limite, List<Actor> collisions) {
         return (canMove(x, y, limite, collisions));
     }
 
@@ -104,7 +103,7 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
      * @param limite
      * @param collisions
      */
-    protected void move(int horizontal, int vertical, Dimencao limite, List<Actor> collisions) {
+    protected void move(int horizontal, int vertical, Dimensao limite, List<Actor> collisions) {
         if (canMove(x + speedPixel * horizontal, y + speedPixel * vertical, limite, collisions)) {
             setX(x + speedPixel * horizontal);
             setY(y + speedPixel * vertical);

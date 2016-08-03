@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import models.Campo;
-import models.Dimencao;
+import models.Dimensao;
 
 /**
  *
@@ -42,7 +42,7 @@ public class MatchScene extends GameScene {
         //kjKJDWAKJDWALKDAW
         genericAction = new Action() {
             @Override
-            public Dimencao getLimite() {
+            public Dimensao getLimite() {
                 return campo.getDimencao();
             }
         };

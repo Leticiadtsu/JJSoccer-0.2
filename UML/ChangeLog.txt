@@ -16,3 +16,8 @@ v1.0
 	-As implementações de JogadorJogo e Bola em comum foram para Actor.
 	-Ajeitado as assossiações que estavam invertidas.
 	-Adicionado o ImageManager
+	-Adicionado a classe Dimensao
+	-MatchScene agora possui somente um array de actor
+	-Acicionado a classe habilidades
+	-Adicionado a classe collisionArea
+	-Adicionado campo 

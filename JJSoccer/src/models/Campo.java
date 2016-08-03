@@ -12,11 +12,11 @@ import models.interfaces.Renderable;
  */
 public class Campo implements Renderable{
 
-    private final Dimencao dimencao;
+    private final Dimensao dimencao;
     private final Image imagem;
 
     public Campo(int largura, int altura) {
-        dimencao = new Dimencao(largura, altura);
+        dimencao = new Dimensao(largura, altura);
         BufferedImage ground = new BufferedImage(dimencao.getLargura(),dimencao.getAltura(), BufferedImage.TYPE_INT_RGB);
         Graphics graphics =  ground.getGraphics();
         graphics.setColor(Color.green);
@@ -24,7 +24,7 @@ public class Campo implements Renderable{
         imagem = ground;
     }
 
-    public Dimencao getDimencao() {
+    public Dimensao getDimencao() {
         return dimencao;
     }
     

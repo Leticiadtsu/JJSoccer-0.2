@@ -11,7 +11,7 @@ import java.awt.Point;
  */
 public class CollisionArea {
 
-    Point area;
+    Dimensao area;
 
     /**
      * Instancia uma nova caixa de Colisao com a altura e largura definida
@@ -20,7 +20,7 @@ public class CollisionArea {
      * @param altura altura da caixa
      */
     public CollisionArea(int largura, int altura) {
-        area = new Point(largura, altura);
+        area = new Dimensao(largura, altura);
     }
 
     /**
@@ -88,7 +88,7 @@ public class CollisionArea {
      * @return a Altura da caixa de colisao
      */
     public int getAltura() {
-        return area.y;
+        return area.getAltura();
     }
 
     /**
@@ -96,7 +96,7 @@ public class CollisionArea {
      * @return a Largura da caixa de colisao
      */
     public int getLargura() {
-        return area.x;
+        return area.getLargura();
     }
 
 }

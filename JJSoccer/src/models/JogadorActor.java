@@ -50,7 +50,7 @@ public class JogadorActor extends Actor {
         return edit;
     }
 
-    protected void mover(Direcao direcao, Dimencao limite, List<Actor> collisions) {
+    protected void mover(Direcao direcao, Dimensao limite, List<Actor> collisions) {
         if (null != direcao) {
             switch (direcao) {
                 case CIMA:
