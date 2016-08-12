@@ -53,7 +53,7 @@ public class CollisionArea {
                 return false;
             }
             //se ele nao esta acima nem embaixo nem a esquerda nem a direita entao esta colidindo
-//            System.out.println("COLIDIU!!!! 1: " + actor1.toString() + " 2: " + actor2.toString());
+            System.out.println("COLIDIU!!!! 1: " + actor1.toString() + " 2: " + actor2.toString());
             return true;
         }
         return false;

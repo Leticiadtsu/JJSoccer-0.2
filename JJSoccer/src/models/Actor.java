@@ -7,6 +7,7 @@ package models;
 import models.interfaces.Action;
 import models.interfaces.Renderable;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
         x = 0;
         y = 0;
         direcao = Direcao.DIREITA;
-        collisionArea = new CollisionArea(50, 50);
+        collisionArea = new CollisionArea(40, 40);
         speedPixel = 3;
     }
 
@@ -74,6 +75,12 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
         if (nextX > limite.getLargura() || nextY > limite.getAltura()) {
             return false;
         }
+
+        for (Actor collision : collisions) {
+            if (collision instanceof JogadorActor) {
+                return false;
+            }
+        }
         // Caso não  há nenhum impedimento
         return true;
     }
@@ -99,20 +106,12 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
      */
     protected void move(int horizontal, int vertical, Dimensao limite, List<Actor> collisions) {
         //colisao com outros Jogadores
-        
+
         if (canMove(x + speedPixel * horizontal, y + speedPixel * vertical, limite, collisions)) {
             setX(x + speedPixel * horizontal);
             setY(y + speedPixel * vertical);
             setDirecao(horizontal, vertical);
         }
-        for (Actor collision : collisions) {
-            if (collision instanceof JogadorActor) {
-               // JOptionPane.showMessageDialog(null,"I'm back");
-                setX(x - ((speedPixel+3) * horizontal));
-                setY(y - ((speedPixel+3) * vertical));
-            }
-        }
-
     }
 
     private void setDirecao(int horizontal, int vertical) {
@@ -197,6 +196,7 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
 
     public Image getImage() {
         return getSprite().getImage();
+        //return new BufferedImage(getCollisionArea().getLargura(), getCollisionArea().getAltura(), BufferedImage.TYPE_INT_RGB);
     }
 
 }

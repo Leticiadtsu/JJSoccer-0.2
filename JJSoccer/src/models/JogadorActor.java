@@ -15,7 +15,7 @@ import models.basics.Jogador;
  */
 public class JogadorActor extends Actor {
 
-    //REmover
+    //Remover
     static int teste = 0;
 
     private Jogador jogador;
