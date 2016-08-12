@@ -5,10 +5,11 @@
 package controller.managers;
 
 import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author 
+ * @author
  */
 public class Game {
 
@@ -27,15 +28,21 @@ public class Game {
             update();//criar variavel dps
             render();
             InputManager.getInstance().update();
+            try {
+                Thread.sleep(10);
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "Erro no looping de jogo!!!\nFinalizando sitema ");
+                System.exit(0);
+            }
         }
         System.exit(0);
     }
 
     private void update() {
-        if (System.currentTimeMillis() - previousMillis >= DELAY) {
-            previousMillis = System.currentTimeMillis();
-            scene.update();
-        }
+        //if (System.currentTimeMillis() - previousMillis >= DELAY) {
+        previousMillis = System.currentTimeMillis();
+        scene.update();
+        //}
     }
 
     private void render() {

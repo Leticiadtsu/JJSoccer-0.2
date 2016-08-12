@@ -1,6 +1,5 @@
 package models;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -16,20 +15,25 @@ import models.basics.Jogador;
  */
 public class JogadorActor extends Actor {
 
+    //REmover
+    static int teste = 0;
+
     private Jogador jogador;
 
     public JogadorActor(int x, int y) {
         super(x, y);
-        jogador = new Jogador("Teste");
+        jogador = new Jogador("" + teste);
+        teste++;
         sprite = new Sprite("soccer.png");
         speedPixel = ((jogador.getHabilidade(Habilidades.habilidade.Velociadade) * 3) / 100) + 1;
     }
 
     public JogadorActor() {
         super();
-        jogador = new Jogador("Teste");
-        speedPixel = ((jogador.getHabilidade(Habilidades.habilidade.Velociadade) * 3) / 100) + 1;
+        jogador = new Jogador("" + teste);
+        teste++;
         sprite = new Sprite("soccer.png");
+        speedPixel = ((jogador.getHabilidade(Habilidades.habilidade.Velociadade) * 3) / 100) + 1;
 
     }
 
@@ -48,6 +52,7 @@ public class JogadorActor extends Actor {
         graphics.dispose();
 
         return edit;
+
     }
 
     protected void mover(Direcao direcao, Dimensao limite, List<Actor> collisions) {
@@ -69,5 +74,15 @@ public class JogadorActor extends Actor {
                     break;
             }
         }
+    }
+
+    /**
+     * remover depois
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "jogador" + this.jogador.getNome();
     }
 }

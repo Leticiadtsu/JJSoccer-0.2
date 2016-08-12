@@ -17,6 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import models.Campo;
 import models.Dimensao;
+import models.JogadorActor;
 
 /**
  *
@@ -36,9 +37,8 @@ public class MatchScene extends GameScene {
         campo = new Campo(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
         atores = new ArrayList<>();
         atores.add(new GamePlayer(30,Toolkit.getDefaultToolkit().getScreenSize().height/2));
-        atores.add(new GamePlayer(30,Toolkit.getDefaultToolkit().getScreenSize().height/3));
         atores.add(new Bola(Toolkit.getDefaultToolkit().getScreenSize().width/2,Toolkit.getDefaultToolkit().getScreenSize().height/2));
-        
+        atores.add(new JogadorActor(250, 250));
         //kjKJDWAKJDWALKDAW
         genericAction = new Action() {
             @Override

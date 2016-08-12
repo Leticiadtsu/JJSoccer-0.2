@@ -74,12 +74,6 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
         if (nextX > limite.getLargura() || nextY > limite.getAltura()) {
             return false;
         }
-        //colisao com outros Jogadores
-        for (Actor collision : collisions) {
-            if (collision instanceof JogadorActor) {
-                return false;
-            }
-        }
         // Caso não  há nenhum impedimento
         return true;
     }
@@ -104,11 +98,21 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
      * @param collisions
      */
     protected void move(int horizontal, int vertical, Dimensao limite, List<Actor> collisions) {
+        //colisao com outros Jogadores
+        
         if (canMove(x + speedPixel * horizontal, y + speedPixel * vertical, limite, collisions)) {
             setX(x + speedPixel * horizontal);
             setY(y + speedPixel * vertical);
             setDirecao(horizontal, vertical);
         }
+        for (Actor collision : collisions) {
+            if (collision instanceof JogadorActor) {
+               // JOptionPane.showMessageDialog(null,"I'm back");
+                setX(x - ((speedPixel+3) * horizontal));
+                setY(y - ((speedPixel+3) * vertical));
+            }
+        }
+
     }
 
     private void setDirecao(int horizontal, int vertical) {
