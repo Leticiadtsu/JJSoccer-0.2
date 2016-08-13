@@ -5,7 +5,9 @@ import models.interfaces.Renderable;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.util.List;
+import models.Bola;
 import models.Campo;
+import models.JogadorActor;
 import models.Placar;
 
 /**
@@ -34,10 +36,10 @@ public class Renderer {
         g.setColor(new Color(0, 200, 0, 255));
         g.fillRect(0, 100, Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height - 100);
         for (Renderable sprite : sprites) {
-            if (sprite instanceof Campo || sprite instanceof Placar) {
-                g.drawImage(sprite.getImage(), sprite.getX(), sprite.getY(), null);
-            } else {
+            if (sprite instanceof JogadorActor || sprite instanceof Bola) {
                 g.drawImage(sprite.getImage(), sprite.getX() - (sprite.getImage().getWidth(null) / 2), sprite.getY() - (sprite.getImage().getHeight(null) / 2), null);
+            } else {
+                g.drawImage(sprite.getImage(), sprite.getX(), sprite.getY(), null);
             }
 
         }
