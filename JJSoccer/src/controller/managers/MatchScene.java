@@ -57,8 +57,8 @@ public class MatchScene extends GameScene implements GolListener {
         atoresCasa = new ArrayList<>();
         bola = new Bola(posInicialBola.x, posInicialBola.x);
         todos.add(bola);
-        todos.add(new Gol(0, tela.getHeight() / 2 - 50, this, true));
-        todos.add(new Gol(tela.getWidth() - 80, tela.getHeight() / 2 - 50, this, false));
+        todos.add(new Gol(0, tela.getHeight() / 2 - 50, this, false));
+        todos.add(new Gol(tela.getWidth() - 80, tela.getHeight() / 2 - 50, this, true));
 
         player = new JogadorActor(Comportamentos.CONTROLADO, 100, 100);
         todos.add(0, player);
