@@ -63,6 +63,7 @@ public class MatchScene extends GameScene {
         for (Actor ator : todos) {
             ator.act(generateAction(ator),todos);
         }
+        
         if(InputManager.getInstance().isPressed(KeyEvent.VK_M)){
             System.err.println("Trocou");
             trocarPlayer();
