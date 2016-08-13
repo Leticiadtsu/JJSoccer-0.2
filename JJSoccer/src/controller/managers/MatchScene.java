@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Random;
 import models.Campo;
 import models.Dimensao;
+import models.Gol;
 import models.JogadorActor;
 import models.JogadorActor.Comportamentos;
 import models.Placar;
@@ -44,7 +45,6 @@ public class MatchScene extends GameScene {
 
     public MatchScene() {
         ultimaTroca = System.currentTimeMillis();
-
         tela = new Frame("Jogo");
         Dimensao tamanhoDoCampo = new Dimensao(tela.getWidth(), tela.getHeight() - 100);
         Dimensao tamanhoDoGol = new Dimensao(80, 200);
@@ -54,10 +54,12 @@ public class MatchScene extends GameScene {
         todos = new ArrayList<>();
         atoresCasa = new ArrayList<>();
         todos.add(new Bola(200, 200));
+        todos.add(new Gol(0, tela.getHeight()/2-50));
+        todos.add(new Gol(tela.getWidth()-80, tela.getHeight()/2-50));
+
         player = new JogadorActor(Comportamentos.CONTROLADO, 100, 100);
         todos.add(0, player);
         atoresCasa.add(0, player);
-
         adicionarJogadorCasa(new JogadorActor(Comportamentos.JOGADOR_IA, 150, 150));
         posJogadorControaldo = 0;
 

@@ -1,5 +1,6 @@
 package models;
 
+import java.awt.Point;
 import models.interfaces.Action;
 import java.util.List;
 
@@ -18,7 +19,6 @@ public class Bola extends Actor {
         speedX = 0;
         speedY = 0;
         sprite = new Sprite("soccerball.png");
-
     }
 
     public Bola(int x, int y) {
@@ -51,28 +51,32 @@ public class Bola extends Actor {
     }
 
     protected void setSpeedX(int speedX) {
-        if (speedX >= 0) {
+       // if (speedX >= 0) {
             this.speedX = speedX;
-        }
+        //}
     }
 
     protected void setSpeedY(int speedY) {
-        if (speedY >= 0) {
+        //if (speedY >= 0) {
             this.speedY = speedY;
-        }
+       // }
     }
 
     public void act(Action action, List<Actor> collisions) {
+        if(!action.getLimite().contains(new Point(getX(),getY()))){
+            speedX=-speedX;
+            speedY=-speedY;
+        }
         setX(getX() + speedX);
         setY(getY() + speedY);
         desacelerar();
+        
     }
 
     public void receberAcao(int speedX, int speedY) {
         //System.err.println("X: " + speedX + "Y " + speedY);
         setSpeedX(speedX);
         setSpeedY(speedY);
-       
     }
 
     /**
