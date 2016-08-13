@@ -10,8 +10,6 @@ import java.util.List;
  */
 public class Bola extends Actor {
 
-    private final int inicialX;
-    private final int inicialY;
     private int speedX;
     private int speedY;
 
@@ -20,8 +18,6 @@ public class Bola extends Actor {
     public Bola() {
         speedX = 0;
         speedY = 0;
-        inicialX = 0;
-        inicialY = 0;
         sprite = new Sprite("soccerball.png");
     }
 
@@ -29,8 +25,6 @@ public class Bola extends Actor {
         super(x, y);
         speedX = 0;
         speedY = 0;
-        inicialX = x;
-        inicialY = y;
         sprite = new Sprite("soccerball.png");
     }
 
@@ -95,10 +89,16 @@ public class Bola extends Actor {
         return "bola";
     }
 
-    public void retornarPosicaoInicial() {
+    @Override
+    public void reset() {
+        super.reset();
+        speedX = 0;
+        speedY = 0;
+    }
+    /* public void retornarPosicaoInicial() {
         setX(inicialX);
         setY(inicialY);
         speedX = 0;
         speedY = 0;
-    }
+    }*/
 }

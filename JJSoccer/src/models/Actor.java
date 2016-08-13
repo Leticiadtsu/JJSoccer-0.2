@@ -247,5 +247,9 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
         }
         return collisions;
     }
+    public void reset(){
+        setX(XInicial);
+        setY(YInicial);
+    }
 
 }

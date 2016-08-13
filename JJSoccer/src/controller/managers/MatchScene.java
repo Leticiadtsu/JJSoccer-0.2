@@ -152,7 +152,9 @@ public class MatchScene extends GameScene implements GolListener {
             placar.addGolTime2();
 
         }
-        bola.retornarPosicaoInicial();
+        for (Actor todo : todos) {
+            todo.reset();
+        }
     }
 
 }
