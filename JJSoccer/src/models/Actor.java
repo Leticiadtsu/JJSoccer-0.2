@@ -4,11 +4,13 @@
  */
 package models;
 
+import controller.managers.InputManager;
 import models.interfaces.Action;
 import models.interfaces.Renderable;
 import java.awt.Image;
 import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +95,7 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
         }
         Actor futuraPosicao = new ActorBasic(nextX, nextY);
         for (Actor atorAlvo : collisions) {
-            if (this != atorAlvo && !(atorAlvo instanceof  Bola)) {
+            if (this != atorAlvo && !(atorAlvo instanceof Bola)) {
                 if (collisionArea.isColliding(nextX, nextY, atorAlvo)) {
                     return false;
                 }
@@ -134,7 +136,7 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
     }
 
     private void setDirecao(int horizontal, int vertical) {
-        if (horizontal > 0 ) {
+        if (horizontal > 0) {
             direcao = Direcao.DIREITA;
         }
         if (horizontal < 0) {
@@ -222,8 +224,11 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
     }
 
     public Image getImage() {
+        if (InputManager.getInstance().isPressed(KeyEvent.VK_F5)) {
+            return new BufferedImage(getCollisionArea().getLargura(), getCollisionArea().getAltura(), BufferedImage.TYPE_INT_RGB);
+        }
         return getSprite().getImage();
-        //return new BufferedImage(getCollisionArea().getLargura(), getCollisionArea().getAltura(), BufferedImage.TYPE_INT_RGB);
+
     }
 
     private List<Actor> getCollisionsOn(Actor actor, List<Actor> areaRelevancia) {
