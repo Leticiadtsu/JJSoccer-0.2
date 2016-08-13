@@ -64,8 +64,7 @@ public class Bola extends Actor {
 
     public void act(Action action, List<Actor> collisions) {
         if (!action.getLimite().contains(new Point(getX(), getY()))) {
-            speedX = -speedX;
-            speedY = -speedY;
+            reset();
         }
         setX(getX() + speedX);
         setY(getY() + speedY);

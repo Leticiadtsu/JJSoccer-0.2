@@ -23,6 +23,7 @@ import models.Gol;
 import models.JogadorActor;
 import models.JogadorActor.Comportamentos;
 import models.Placar;
+import models.Sprite;
 import models.interfaces.GolListener;
 
 /**
@@ -52,19 +53,21 @@ public class MatchScene extends GameScene implements GolListener {
         Dimensao tamanhoDoGol = new Dimensao(80, 200);
         campo = new Campo(new Point(20, 100), tamanhoDoCampo, tamanhoDoGol);
         placar = new Placar(tela.getWidth() / 2, 10, "Time da Casa", "Time Visitante");
-        posInicialBola = new Point(tela.getWidth() / 2, tela.getHeight() / 2 + 100);
+        posInicialBola = new Point(tela.getWidth() / 2, tela.getHeight() / 2 + 50);
         todos = new ArrayList<>();
         atoresCasa = new ArrayList<>();
-        bola = new Bola(posInicialBola.x, posInicialBola.x);
+        bola = new Bola(posInicialBola.x, posInicialBola.y);
         todos.add(bola);
         todos.add(new Gol(0, tela.getHeight() / 2 - 50, this, false));
         todos.add(new Gol(tela.getWidth() - 80, tela.getHeight() / 2 - 50, this, true));
-
         player = new JogadorActor(Comportamentos.CONTROLADO, 100, 100);
         todos.add(0, player);
         atoresCasa.add(0, player);
         adicionarJogadorCasa(new JogadorActor(Comportamentos.JOGADOR_IA, 150, 150));
         posJogadorControaldo = 0;
+        adicionarJogadorInimigo(600, 200);
+        adicionarJogadorInimigo(800, 300);
+        adicionarJogadorInimigo(1000, 500);
 
         genericAction = new Action() {
             @Override
@@ -75,14 +78,24 @@ public class MatchScene extends GameScene implements GolListener {
 
     }
 
-    private void adicionarJogador(Actor a) {
+    private void adicionarJogadorInimigo(Actor a) {
         todos.add(a);
+    }
+
+    private void adicionarJogadorInimigo(int x, int y) {
+        JogadorActor jogador = new JogadorActor(Comportamentos.JOGADOR_IA, x, y);
+        jogador.setSpr(new Sprite("soccer-inimigo.png"));
+        adicionarJogadorInimigo(jogador);
     }
 
     private void adicionarJogadorCasa(Actor a) {
         todos.add(a);
         atoresCasa.add(a);
+    }
 
+    private void adicionarJogadorCasa(int x, int y) {
+        JogadorActor jogador = new JogadorActor(Comportamentos.JOGADOR_IA, x, y);
+        adicionarJogadorCasa(jogador);
     }
 
     @Override

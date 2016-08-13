@@ -212,7 +212,7 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
     /**
      * @param spr the sprite to set
      */
-    protected void setSpr(Sprite spr) {
+    public void setSpr(Sprite spr) {
         this.sprite = spr;
     }
 
