@@ -86,7 +86,7 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
         
         Actor futuraPosicao = new ActorBasic(nextX,nextY);
         for (Actor atorAlvo : collisions) {
-            if (this != atorAlvo) {
+            if (this != atorAlvo && !(atorAlvo instanceof  Bola)) {
                 if (collisionArea.isColliding(nextX, nextY, atorAlvo)) {
                     return false;
                 }
@@ -127,17 +127,17 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
     }
 
     private void setDirecao(int horizontal, int vertical) {
-        if (horizontal > 0) {
-            direcao = Direcao.BAIXO;
-        }
-        if (horizontal < 0) {
-            direcao = Direcao.CIMA;
-        }
-        if (vertical > 0) {
+        if (horizontal > 0 ) {
             direcao = Direcao.DIREITA;
         }
-        if (vertical < 0) {
+        if (horizontal < 0) {
             direcao = Direcao.ESQUERDA;
+        }
+        if (vertical > 0) {
+            direcao = Direcao.BAIXO;
+        }
+        if (vertical < 0) {
+            direcao = Direcao.CIMA;
         }
     }
 
@@ -216,8 +216,8 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
     }
 
     public Image getImage() {
-        //return getSprite().getImage();
-        return new BufferedImage(getCollisionArea().getLargura(), getCollisionArea().getAltura(), BufferedImage.TYPE_INT_RGB);
+        return getSprite().getImage();
+        //return new BufferedImage(getCollisionArea().getLargura(), getCollisionArea().getAltura(), BufferedImage.TYPE_INT_RGB);
     }
 
     private List<Actor> getCollisionsOn(Actor actor, List<Actor> areaRelevancia) {

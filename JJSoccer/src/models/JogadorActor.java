@@ -28,7 +28,7 @@ public class JogadorActor extends Actor {
 
     private Jogador jogador;
     private ComportamentoAtuar comportamento;
-    
+
     public JogadorActor(Comportamentos comportamento, int x, int y) {
         super(x, y);
         setComportamento(comportamento);
@@ -46,8 +46,9 @@ public class JogadorActor extends Actor {
         speedPixel = ((jogador.getHabilidade(Habilidades.habilidade.Velociadade) * 3) / 100) + 1;
         teste++;
     }
-    public void setComportamento(Comportamentos comportamento){
-        switch(comportamento){
+
+    public void setComportamento(Comportamentos comportamento) {
+        switch (comportamento) {
             case GOLEIRO_IA:
                 this.comportamento = new IAGoleiro();
                 break;
@@ -59,6 +60,7 @@ public class JogadorActor extends Actor {
                 break;
         }
     }
+
     @Override
     public void act(Action action, List<Actor> collisions) {
         comportamento.agir(this, action, collisions);
@@ -69,12 +71,11 @@ public class JogadorActor extends Actor {
         BufferedImage edit = new BufferedImage(super.getImage().getWidth(null), super.getImage().getHeight(null), BufferedImage.TYPE_INT_ARGB);
         Graphics graphics = edit.getGraphics();
         graphics.drawString("" + speedPixel, (super.getImage().getWidth(null) / 2) / 2, 10);
-        graphics.setColor(Color.red);
+
         graphics.drawImage(super.getImage(), 0, 10, null);
         graphics.dispose();
 
         return edit;
-
     }
 
     public void mover(Direcao direcao, Dimensao limite, List<Actor> collisions) {
@@ -96,15 +97,34 @@ public class JogadorActor extends Actor {
                     break;
             }
         }
+        empurrarBola(direcao, collisions);
     }
 
-    /**
-     * remover depois
-     *
-     * @return
-     */
+    public void empurrarBola(Direcao direcao, List<Actor> collisions) {
+        for (Actor actor : collisions) {
+            if (this.isColliding(actor) && actor instanceof Bola) {
+                switch (direcao) {
+                    case CIMA:
+                        ((Bola) actor).receberAcao(0 * speedPixel, -1 * speedPixel);
+                        break;
+                    case BAIXO:
+                        ((Bola) actor).receberAcao(0 * speedPixel, 1 * speedPixel);
+                        break;
+                    case ESQUERDA:
+                        ((Bola) actor).receberAcao(-1 * speedPixel, 0 * speedPixel);
+                        break;
+                    case DIREITA:
+                        ((Bola) actor).receberAcao(1 * speedPixel, 0 * speedPixel);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
     @Override
     public String toString() {
-        return "jogador" + this.jogador.getNome();
+        return "jogador " + this.jogador.getNome();
     }
 }

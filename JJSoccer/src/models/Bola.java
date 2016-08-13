@@ -38,8 +38,16 @@ public class Bola extends Actor {
     }
 
     protected void desacelerar() {
-        setSpeedX(speedX - 1);
-        setSpeedY(speedY - 1);
+        if (speedX > 0) {
+            setSpeedX(speedX - 1);
+        } else if (speedX < 0) {
+            setSpeedX(speedX + 1);
+        }
+        if (speedY > 0) {
+            setSpeedY(speedY - 1);
+        }else if (speedY < 0){
+            setSpeedY(speedY + 1);
+        }
     }
 
     protected void setSpeedX(int speedX) {
@@ -61,8 +69,10 @@ public class Bola extends Actor {
     }
 
     public void receberAcao(int speedX, int speedY) {
+        //System.err.println("X: " + speedX + "Y " + speedY);
         setSpeedX(speedX);
         setSpeedY(speedY);
+       
     }
 
     /**
