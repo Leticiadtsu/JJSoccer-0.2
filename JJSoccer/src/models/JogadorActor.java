@@ -1,9 +1,11 @@
 package models;
 
+import controller.managers.InputManager;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Polygon;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import models.interfaces.Action;
 import java.util.List;
@@ -69,13 +71,18 @@ public class JogadorActor extends Actor {
 
     @Override
     public Image getImage() {
-        BufferedImage edit = new BufferedImage(super.getImage().getWidth(null), super.getImage().getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        
+        BufferedImage edit = new BufferedImage(super.getImage().getWidth(null), super.getImage().getHeight(null) + 20, BufferedImage.TYPE_INT_ARGB);
         Graphics graphics = edit.getGraphics();
+        if (comportamento instanceof Controlado) {
+            graphics.setColor(Color.red);
+            graphics.fillOval(10,60,50,50);
+        }
+        graphics.setColor(Color.BLUE);
         graphics.drawString("" + speedPixel, (super.getImage().getWidth(null) / 2) / 2, 10);
 
         graphics.drawImage(super.getImage(), 0, 10, null);
         graphics.dispose();
-
         return edit;
     }
 
