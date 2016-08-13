@@ -41,7 +41,7 @@ public class CollisionArea {
             }
             //actor1 em cima actro2
             if (getBottonColisionLine(actor1) < getTopColisionLine(actor2)) {
-                System.err.println(" 1: " + actor1.toString() + " 2: " + actor2.toString());
+//                System.err.println(" 1: " + actor1.toString() + " 2: " + actor2.toString());
                 return false;
             }
             //actor1 a direita de actor2
@@ -51,11 +51,11 @@ public class CollisionArea {
             }
             //actor1 a esquerda de actor2
             if (getRightColisionLine(actor1) < getLeftColisionLine(actor2)) {
-                System.err.println(" 1: " + actor1.toString() + " 2: " + actor2.toString());
+//                System.err.println(" 1: " + actor1.toString() + " 2: " + actor2.toString());
                 return false;
             }
             //se ele nao esta acima nem embaixo nem a esquerda nem a direita entao esta colidindo
-            System.out.println("COLIDIU!!!! 1: " + actor1.toString() + " 2: " + actor2.toString());
+//            System.out.println("COLIDIU!!!! 1: " + actor1.toString() + " 2: " + actor2.toString());
             return true;
         }
         return false;

@@ -44,22 +44,21 @@ public class MatchScene extends GameScene {
 
     public MatchScene() {
         ultimaTroca = System.currentTimeMillis();
-        
+
         tela = new Frame("Jogo");
         Dimensao tamanhoDoCampo = new Dimensao(tela.getWidth(), tela.getHeight() - 100);
         Dimensao tamanhoDoGol = new Dimensao(80, 200);
         campo = new Campo(new Point(20, 100), tamanhoDoCampo, tamanhoDoGol);
         placar = new Placar(tela.getWidth() / 2, 10, "Time da Casa", "Time Visitante");
 
+        todos = new ArrayList<>();
         atoresCasa = new ArrayList<>();
-        atoresCasa.add(new JogadorActor(Comportamentos.JOGADOR_IA, 500, 500));
-        atoresCasa.add(new JogadorActor(Comportamentos.JOGADOR_IA, 200, 200));
-        atoresCasa.add(new JogadorActor(Comportamentos.JOGADOR_IA, 300, 300));
-        atoresCasa.add(0, new JogadorActor(Comportamentos.CONTROLADO, 100, 100));
-
-        todos = new ArrayList<>(atoresCasa);
         todos.add(new Bola(200, 200));
+        player = new JogadorActor(Comportamentos.CONTROLADO, 100, 100);
+        todos.add(0, player);
+        atoresCasa.add(0, player);
 
+        adicionarJogadorCasa(new JogadorActor(Comportamentos.JOGADOR_IA, 150, 150));
         posJogadorControaldo = 0;
 
         genericAction = new Action() {
@@ -71,6 +70,16 @@ public class MatchScene extends GameScene {
 
     }
 
+    private void adicionarJogador(Actor a) {
+        todos.add(a);
+    }
+
+    private void adicionarJogadorCasa(Actor a) {
+        todos.add(a);
+        atoresCasa.add(a);
+
+    }
+
     @Override
     public void update() {
 
@@ -78,7 +87,7 @@ public class MatchScene extends GameScene {
             ator.act(generateAction(ator), todos);
         }
 
-        if (InputManager.getInstance().isPressed(KeyEvent.VK_M)) {
+        if (InputManager.getInstance().isJustPressed(KeyEvent.VK_M)) {
             System.err.println("Trocou");
             trocarPlayer();
         }
@@ -104,19 +113,26 @@ public class MatchScene extends GameScene {
     }
 
     private void trocarPlayer() {
-        if (System.currentTimeMillis()-ultimaTroca  >= 30) {
-            System.err.println("Vou troacar");
-            player = (JogadorActor) atoresCasa.get(posJogadorControaldo);
-            player.setComportamento(Comportamentos.JOGADOR_IA);
-            Random rand = new Random();
-            posJogadorControaldo = rand.nextInt(atoresCasa.size());
-            player = (JogadorActor) atoresCasa.get(posJogadorControaldo);
-            player.setComportamento(Comportamentos.CONTROLADO);
-            ultimaTroca = System.currentTimeMillis();
-        }else
-        {
-            System.err.println("Nao vou tocar");
+
+//        if (System.currentTimeMillis() - ultimaTroca >= 30) {
+        System.err.println("Vou troacar");
+        player = (JogadorActor) atoresCasa.get(posJogadorControaldo);
+        player.setComportamento(Comportamentos.JOGADOR_IA);
+        Random rand = new Random();
+        int novaPosicao = rand.nextInt(atoresCasa.size());
+        if (novaPosicao == posJogadorControaldo) {
+            novaPosicao = (novaPosicao + 1) % atoresCasa.size();
         }
+
+        posJogadorControaldo = novaPosicao;
+        player = (JogadorActor) atoresCasa.get(posJogadorControaldo);
+
+        player.setComportamento(Comportamentos.CONTROLADO);
+        ultimaTroca = System.currentTimeMillis();
+//        } else {
+//            System.err.println("Nao vou tocar");
+//        }
+
     }
 
     private Action generateAction(Actor actor) {
