@@ -23,17 +23,19 @@ import models.Gol;
 import models.JogadorActor;
 import models.JogadorActor.Comportamentos;
 import models.Placar;
+import models.interfaces.GolListener;
 
 /**
  *
  * @author
  */
-public class MatchScene extends GameScene {
+public class MatchScene extends GameScene implements GolListener {
 
     private int posJogadorControaldo;
     private Frame tela;
     private Campo campo;
-    private Actor bola;
+    private Bola bola;
+    private final Point posInicialBola;
     private JogadorActor player;
     private Placar placar;
     private List<Actor> todos;
@@ -50,12 +52,13 @@ public class MatchScene extends GameScene {
         Dimensao tamanhoDoGol = new Dimensao(80, 200);
         campo = new Campo(new Point(20, 100), tamanhoDoCampo, tamanhoDoGol);
         placar = new Placar(tela.getWidth() / 2, 10, "Time da Casa", "Time Visitante");
-
+        posInicialBola = new Point(tela.getWidth() / 2, tela.getHeight() / 2 + 100);
         todos = new ArrayList<>();
         atoresCasa = new ArrayList<>();
-        todos.add(new Bola(200, 200));
-        todos.add(new Gol(0, tela.getHeight()/2-50));
-        todos.add(new Gol(tela.getWidth()-80, tela.getHeight()/2-50));
+        bola = new Bola(posInicialBola.x, posInicialBola.x);
+        todos.add(bola);
+        todos.add(new Gol(0, tela.getHeight() / 2 - 50, this, true));
+        todos.add(new Gol(tela.getWidth() - 80, tela.getHeight() / 2 - 50, this, false));
 
         player = new JogadorActor(Comportamentos.CONTROLADO, 100, 100);
         todos.add(0, player);
@@ -139,6 +142,17 @@ public class MatchScene extends GameScene {
 
     private Action generateAction(Actor actor) {
         return genericAction;
+    }
+
+    @Override
+    public void onGoal(Gol gol) {
+        if (gol.isTimeCasa()) {
+            placar.addGolTime1();
+        } else {
+            placar.addGolTime2();
+
+        }
+        bola.retornarPosicaoInicial();
     }
 
 }

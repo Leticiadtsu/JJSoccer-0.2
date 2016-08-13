@@ -35,7 +35,7 @@ public class Placar implements Renderable {
         this.nomeTime2 = nomeTime2;
         int fontSize = 32;
         font = new Font(Font.SANS_SERIF, Font.BOLD, fontSize);
-        ImageWidth = (fontSize/2) * (nomeTime1.length() + nomeTime2.length() + 10);
+        ImageWidth = (fontSize / 2) * (nomeTime1.length() + nomeTime2.length() + 10);
         image = new BufferedImage(ImageWidth, 80, BufferedImage.TYPE_INT_ARGB_PRE);
         updateImage();
         this.x = x - (ImageWidth / 2);
@@ -43,7 +43,7 @@ public class Placar implements Renderable {
 
     private void updateImage() {
         Graphics2D graphics = (Graphics2D) image.getGraphics();
-        graphics.setColor(new Color(0, true));
+        graphics.setColor(Color.LIGHT_GRAY);
         graphics.fillRect(0, 0, ImageWidth, 80);
         graphics.setColor(Color.DARK_GRAY);
         graphics.setFont(font);
@@ -51,6 +51,16 @@ public class Placar implements Renderable {
 
         graphics.dispose();
 
+    }
+
+    public void addGolTime1() {
+        golsTime1++;
+        updateImage();
+    }
+
+    public void addGolTime2() {
+        golsTime2++;
+        updateImage();
     }
 
     @Override

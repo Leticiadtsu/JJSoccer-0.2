@@ -19,6 +19,13 @@ import java.util.List;
  */
 public abstract class Actor implements Renderable, Comparable<Actor> {
 
+    /**
+     * @param collisionArea the collisionArea to set
+     */
+    protected void setCollisionArea(CollisionArea collisionArea) {
+        this.collisionArea = collisionArea;
+    }
+
     public enum Direcao {
         CIMA, BAIXO, DIREITA, ESQUERDA
     }
