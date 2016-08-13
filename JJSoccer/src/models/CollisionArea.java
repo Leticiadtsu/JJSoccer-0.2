@@ -98,7 +98,7 @@ public class CollisionArea {
        //actor1 embaixo actor2
         if (actor1 != actor2) {
             if ((getTopColisionLine(actor1) + taxaAproximacao.getAltura()/2) > getBottonColisionLine(actor2)) {
-//                System.err.println(" 1: " + actor1.toString() + " 2: " + actor2.toString());
+                System.err.println(" 1: " + actor1.toString() + " 2: " + actor2.toString());
                 return false;
             }
             //actor1 em cima actro2
@@ -108,7 +108,7 @@ public class CollisionArea {
             }
             //actor1 a direita de actor2
             if ((getLeftColisionLine(actor1) + taxaAproximacao.getLargura()/2)> getRightColisionLine(actor2)) {
-//                System.err.println(" 1: " + actor1.toString() + " 2: " + actor2.toString());
+                System.err.println(" 1: " + actor1.toString() + " 2: " + actor2.toString());
                 return false;
             }
             //actor1 a esquerda de actor2

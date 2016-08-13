@@ -141,6 +141,15 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
         }
     }
 
+    public int getXInicial() {
+        return XInicial;
+    }
+
+    public int getYInicial() {
+        return YInicial;
+    }
+
+    
     /**
      *
      * @return direcao que o ator esta 'olhando'

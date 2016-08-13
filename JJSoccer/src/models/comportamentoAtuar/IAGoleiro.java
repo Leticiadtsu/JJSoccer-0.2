@@ -4,6 +4,7 @@
  */
 package models.comportamentoAtuar;
 
+import java.awt.Toolkit;
 import java.util.List;
 import models.Actor;
 import models.Actor.Direcao;
@@ -15,28 +16,27 @@ import models.interfaces.Action;
  *
  * @author costa
  */
-public class IAGoleiro extends InteligenciaArtificial{
+public class IAGoleiro extends InteligenciaArtificial {
+
     private Direcao direcao;
 
     public IAGoleiro() {
         direcao = Direcao.BAIXO;
     }
-    
+
     @Override
     public void agir(JogadorActor chamador, Action action, List<Actor> collisions) {
         escolherDirecao(chamador);
-        chamador.mover(direcao, new Dimensao(15000,15000), collisions);
+        chamador.mover(direcao, new Dimensao(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height), collisions);
     }
-    
-    private void escolherDirecao(JogadorActor chamador){
-        if(chamador.getY()>700){
+
+    private void escolherDirecao(JogadorActor chamador) {
+        if (chamador.getY() > (Toolkit.getDefaultToolkit().getScreenSize().height / 2)+60) {
             this.direcao = Direcao.CIMA;
         }
-        if(chamador.getY()<10){
+        if (chamador.getY() < (Toolkit.getDefaultToolkit().getScreenSize().height / 2)-60) {
             this.direcao = Direcao.BAIXO;
         }
     }
 
-    
-    
 }

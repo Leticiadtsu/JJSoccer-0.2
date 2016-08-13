@@ -8,6 +8,7 @@ import controller.managers.InputManager;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import models.Actor;
+import models.Bola;
 import models.JogadorActor;
 import models.interfaces.Action;
 
@@ -19,8 +20,6 @@ public class Controlado implements ComportamentoAtuar{
 
     @Override
     public void agir(JogadorActor chamador,Action action, List<Actor> collisions) {
-        int oldX = chamador.getX();
-        int oldY = chamador.getY();
         if (InputManager.getInstance().isPressed(KeyEvent.VK_UP)) {
             chamador.mover(Actor.Direcao.CIMA, action.getLimite(),collisions);
         }
@@ -32,6 +31,13 @@ public class Controlado implements ComportamentoAtuar{
         }
         if (InputManager.getInstance().isPressed(KeyEvent.VK_LEFT)) {
              chamador.mover(Actor.Direcao.ESQUERDA, action.getLimite(),collisions);
+        }
+        if((InputManager.getInstance().isPressed(KeyEvent.VK_SPACE))){
+            for (Actor actor : collisions) {
+                if(actor instanceof Bola){
+                    System.err.print("Era uma bola");
+                }
+            }
         }
     }
 

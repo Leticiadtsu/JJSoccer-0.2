@@ -31,7 +31,7 @@ public class Game {
             try {
                 Thread.sleep(10);
                 //throw  new Exception();
-            }catch(Exception e){
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Erro no looping de jogo!!!\n\tFinalizando sitema ");
                 System.exit(0);
             }
@@ -40,10 +40,10 @@ public class Game {
     }
 
     private void update() {
-        //if (System.currentTimeMillis() - previousMillis >= DELAY) {
-        //previousMillis = System.currentTimeMillis();
-        scene.update();
-        //}
+        if (System.currentTimeMillis() - previousMillis >= DELAY) {
+            previousMillis = System.currentTimeMillis();
+            scene.update();
+        }
     }
 
     private void render() {

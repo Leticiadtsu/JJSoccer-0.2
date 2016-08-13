@@ -21,7 +21,7 @@ public class Bola extends Actor {
 
     }
 
-    private Bola(int x, int y) {
+    public Bola(int x, int y) {
         super(x, y);
         speedX = 0;
         speedY = 0;
