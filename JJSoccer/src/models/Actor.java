@@ -8,6 +8,7 @@ import models.interfaces.Action;
 import models.interfaces.Renderable;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,10 +27,15 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
     protected int speedPixel;
     private int x;
     private int y;
+    private int XInicial;
+    private int YInicial;
 
+    
     public Actor() {
         x = 0;
         y = 0;
+        XInicial = 0;
+        YInicial = 0;
         direcao = Direcao.DIREITA;
         collisionArea = new CollisionArea(40, 40);
         speedPixel = 3;
@@ -39,6 +45,8 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
         this();
         this.x = x;
         this.y = y;
+        XInicial = x;
+        YInicial = y;
 
     }
 
@@ -53,9 +61,9 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
      * define a acao do ator a cada gameLoop
      *
      * @param action dados necessarios para a acao
-     * @param collisions lista de atores que colidem com esse
+     * @param areaDeRelevancia lista de atores que colidem com esse
      */
-    public abstract void act(Action action, List<Actor> collisions);
+    public abstract void act(Action action, List<Actor> areaDeRelevancia);
 
     /**
      * Verifica se a posicao desejada eh valida ou nao
@@ -75,12 +83,16 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
         if (nextX > limite.getLargura() || nextY > limite.getAltura()) {
             return false;
         }
-
-        for (Actor collision : collisions) {
-            if (collision instanceof JogadorActor) {
-                return false;
+        
+        Actor futuraPosicao = new ActorBasic(nextX,nextY);
+        for (Actor atorAlvo : collisions) {
+            if (this != atorAlvo) {
+                if (collisionArea.isColliding(nextX, nextY, atorAlvo)) {
+                    return false;
+                }
             }
         }
+
         // Caso não  há nenhum impedimento
         return true;
     }
@@ -89,11 +101,11 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
      * Verifica se a posicao do ator eh valida
      *
      * @param limite quadro de limite do campo
-     * @param collisions atores que colidem com esse ator na cena
+     * @param areaRelevante atores que colidem com esse ator na cena
      * @return se a posicao eh valida ou nao
      */
-    protected boolean isValidPosition(Dimensao limite, List<Actor> collisions) {
-        return (canMove(x, y, limite, collisions));
+    protected boolean isValidPosition(Dimensao limite, List<Actor> areaRelevante) {
+        return (canMove(x, y, limite, areaRelevante));
     }
 
     /**
@@ -138,8 +150,8 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
     }
 
     @Override
-    public int compareTo(Actor o) {
-        return (this.getY() - o.getY());
+    public int compareTo(Actor actor) {
+        return (this.getY() - actor.getY());
     }
 
     /**
@@ -195,8 +207,18 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
     }
 
     public Image getImage() {
-        return getSprite().getImage();
-        //return new BufferedImage(getCollisionArea().getLargura(), getCollisionArea().getAltura(), BufferedImage.TYPE_INT_RGB);
+        //return getSprite().getImage();
+        return new BufferedImage(getCollisionArea().getLargura(), getCollisionArea().getAltura(), BufferedImage.TYPE_INT_RGB);
+    }
+
+    private List<Actor> getCollisionsOn(Actor actor, List<Actor> areaRelevancia) {
+        List collisions = new ArrayList<Actor>();
+        for (Actor atorVerificado : areaRelevancia) {
+            if (actor.isColliding(atorVerificado)) {
+                collisions.add(atorVerificado);
+            }
+        }
+        return collisions;
     }
 
 }

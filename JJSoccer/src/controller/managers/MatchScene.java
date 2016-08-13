@@ -6,7 +6,6 @@ package controller.managers;
 
 import models.Actor;
 import models.Bola;
-import models.GamePlayer;
 import models.interfaces.Action;
 import models.interfaces.Renderable;
 import view.Frame;
@@ -18,27 +17,28 @@ import java.util.List;
 import models.Campo;
 import models.Dimensao;
 import models.JogadorActor;
+import models.JogadorActor.Comportamentos;
 
 /**
  *
- * @author 
+ * @author
  */
 public class MatchScene extends GameScene {
 
     private Frame tela;
     private Campo campo;
-    private ArrayList<Actor> atores;    
+    private ArrayList<Actor> atores;
     private Action genericAction;//Mudar depois no projeto final
-    
-    
+
     public MatchScene() {
-        
+
         tela = new Frame("Jogo");
         campo = new Campo(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
         atores = new ArrayList<>();
-        atores.add(new GamePlayer(30,Toolkit.getDefaultToolkit().getScreenSize().height/2));
-        atores.add(Bola.getInstance(Toolkit.getDefaultToolkit().getScreenSize().width/2,Toolkit.getDefaultToolkit().getScreenSize().height/2));
-        atores.add(new JogadorActor(250, 250));
+        atores.add(new JogadorActor(Comportamentos.CONTROLADO, 30, Toolkit.getDefaultToolkit().getScreenSize().height / 2));
+        atores.add(Bola.getInstance(Toolkit.getDefaultToolkit().getScreenSize().width / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2));
+        atores.add(new JogadorActor(JogadorActor.Comportamentos.JOGADOR_IA, 250, 250));
+        atores.add(new JogadorActor(Comportamentos.GOLEIRO_IA, Toolkit.getDefaultToolkit().getScreenSize().height / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2));
         //kjKJDWAKJDWALKDAW
         genericAction = new Action() {
             @Override
@@ -46,13 +46,13 @@ public class MatchScene extends GameScene {
                 return campo.getDimencao();
             }
         };
-        
+
     }
 
     @Override
     public void update() {
         for (Actor ator : atores) {
-            ator.act(generateAction(ator), getCollisionsOn(ator));
+            ator.act(generateAction(ator),atores);
         }
         Collections.sort(atores);
     }
@@ -63,15 +63,15 @@ public class MatchScene extends GameScene {
         renderables.add(0, campo);
         tela.render(renderables);
     }
-
-    private List<Actor> getCollisionsOn(Actor actor) {
-        List collisions =  new ArrayList<Actor>();
+    
+    private List<Actor> getActorsNear(Actor actor) {
+        List actorsNear =  new ArrayList<Actor>();
         for (Actor atorVerificado : atores) {
             if(actor.isColliding(atorVerificado)){
-                collisions.add(atorVerificado);
+                actorsNear.add(atorVerificado);
             }
         }
-        return collisions;
+        return actorsNear;
     }
 
     private Action generateAction(Actor actor) {
