@@ -1,6 +1,8 @@
 
 package models.interfaces;
 
+import java.awt.Polygon;
+import java.awt.Rectangle;
 import models.Dimensao;
 
 /**
@@ -9,5 +11,5 @@ import models.Dimensao;
  */
 public interface Action {
     
-    public Dimensao getLimite();
+    public Polygon getLimite();
 }

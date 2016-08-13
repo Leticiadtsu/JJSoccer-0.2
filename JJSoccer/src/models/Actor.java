@@ -7,6 +7,8 @@ package models;
 import models.interfaces.Action;
 import models.interfaces.Renderable;
 import java.awt.Image;
+import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,6 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
     private int XInicial;
     private int YInicial;
 
-    
     public Actor() {
         x = 0;
         y = 0;
@@ -74,17 +75,23 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
      * @param collisions atores que colidem com esse ator na cena
      * @return se a posicao eh valida ou nao
      */
-    protected boolean canMove(int nextX, int nextY, Dimensao limite, List<Actor> collisions) {
+    protected boolean canMove(int nextX, int nextY, Polygon limite, List<Actor> collisions) {
         //limites superiores do campo
-        if (nextX < 0 || nextY < 0) {
+        /* if (nextX < 0 || nextY < 0) {
             return false;
         }
         //limites inferiores do campo
         if (nextX > limite.getLargura() || nextY > limite.getAltura()) {
             return false;
         }
-        
-        Actor futuraPosicao = new ActorBasic(nextX,nextY);
+       if(limite.c)*/
+
+        Rectangle r = new Rectangle(nextX, nextY, collisionArea.getLargura(), collisionArea.getAltura());
+        if ((!limite.contains(r) && (limite.intersects(r)))) {
+            return false;
+
+        }
+        Actor futuraPosicao = new ActorBasic(nextX, nextY);
         for (Actor atorAlvo : collisions) {
             if (this != atorAlvo) {
                 if (collisionArea.isColliding(nextX, nextY, atorAlvo)) {
@@ -104,7 +111,7 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
      * @param areaRelevante atores que colidem com esse ator na cena
      * @return se a posicao eh valida ou nao
      */
-    protected boolean isValidPosition(Dimensao limite, List<Actor> areaRelevante) {
+    protected boolean isValidPosition(Polygon limite, List<Actor> areaRelevante) {
         return (canMove(x, y, limite, areaRelevante));
     }
 
@@ -116,7 +123,7 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
      * @param limite
      * @param collisions
      */
-    protected void move(int horizontal, int vertical, Dimensao limite, List<Actor> collisions) {
+    protected void move(int horizontal, int vertical, Polygon limite, List<Actor> collisions) {
         //colisao com outros Jogadores
 
         if (canMove(x + speedPixel * horizontal, y + speedPixel * vertical, limite, collisions)) {
@@ -149,7 +156,6 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
         return YInicial;
     }
 
-    
     /**
      *
      * @return direcao que o ator esta 'olhando'
@@ -216,8 +222,8 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
     }
 
     public Image getImage() {
-        //return getSprite().getImage();
-        return new BufferedImage(getCollisionArea().getLargura(), getCollisionArea().getAltura(), BufferedImage.TYPE_INT_RGB);
+        return getSprite().getImage();
+        //return new BufferedImage(getCollisionArea().getLargura(), getCollisionArea().getAltura(), BufferedImage.TYPE_INT_RGB);
     }
 
     private List<Actor> getCollisionsOn(Actor actor, List<Actor> areaRelevancia) {

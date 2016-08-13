@@ -30,20 +30,20 @@ public class IAJogador extends InteligenciaArtificial {
     public void agir(JogadorActor chamador, Action action, List<Actor> collisions) {
         if (voltarPosicaoOriginal) {
             if (chamador.getX() > chamador.getXInicial()) {
-                chamador.mover(Direcao.ESQUERDA, new Dimensao(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height), collisions);
+                chamador.mover(Direcao.ESQUERDA,action.getLimite(), collisions);
             } else if (chamador.getX() < chamador.getXInicial()) {
-                chamador.mover(Direcao.DIREITA, new Dimensao(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height), collisions);
+                chamador.mover(Direcao.DIREITA,action.getLimite(), collisions);
             }
             if (chamador.getY() > chamador.getYInicial()) {
-                chamador.mover(Direcao.CIMA, new Dimensao(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height), collisions);
+                chamador.mover(Direcao.CIMA,action.getLimite(), collisions);
             } else if (chamador.getY() < chamador.getYInicial()) {
-                chamador.mover(Direcao.BAIXO, new Dimensao(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height), collisions);
+                chamador.mover(Direcao.BAIXO,action.getLimite(), collisions);
             }
             if (chamador.getX() > chamador.getXInicial() && chamador.getY() > chamador.getYInicial()) {
                 voltarPosicaoOriginal = false;
             } else {
                 escolherDirecao(chamador);
-                chamador.mover(direcao, new Dimensao(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height), collisions);
+                chamador.mover(direcao,action.getLimite(), collisions);
             }
         }
     }

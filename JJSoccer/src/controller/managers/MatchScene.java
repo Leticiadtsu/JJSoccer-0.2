@@ -4,6 +4,9 @@
  */
 package controller.managers;
 
+import java.awt.Point;
+import java.awt.Polygon;
+import java.awt.Rectangle;
 import models.Actor;
 import models.Bola;
 import models.interfaces.Action;
@@ -20,6 +23,7 @@ import models.Campo;
 import models.Dimensao;
 import models.JogadorActor;
 import models.JogadorActor.Comportamentos;
+import models.Placar;
 
 /**
  *
@@ -31,46 +35,46 @@ public class MatchScene extends GameScene {
     private Campo campo;
     private Actor bola;
     private JogadorActor player;
+    private Placar placar;
     private ArrayList<Actor> atoresCasa;
     private Action genericAction;//Mudar depois no projeto final
 
     public MatchScene() {
-
         tela = new Frame("Jogo");
-        campo = new Campo(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
-        bola = new Bola(500,500);
+        Dimensao tamanhoDoCampo = new Dimensao(tela.getWidth(), tela.getHeight() - 100);
+        Dimensao tamanhoDoGol = new Dimensao(80, 200);
+        campo = new Campo(new Point(20, 100), tamanhoDoCampo, tamanhoDoGol);
+        placar = new Placar(tela.getWidth() / 2, 10, "Time da Casa", "Time Visitante");
+        bola = new Bola(500, 500);
         atoresCasa = new ArrayList<>();
-        atoresCasa.add(new JogadorActor(Comportamentos.JOGADOR_IA,100,100));
-        atoresCasa.add(new JogadorActor(Comportamentos.JOGADOR_IA,200,200));
-        atoresCasa.add(new JogadorActor(Comportamentos.JOGADOR_IA,300,300));
-        player = new JogadorActor(Comportamentos.CONTROLADO,400,400); 
-        
-  
+        atoresCasa.add(new JogadorActor(Comportamentos.JOGADOR_IA, 100, 100));
+        atoresCasa.add(new JogadorActor(Comportamentos.JOGADOR_IA, 200, 200));
+        atoresCasa.add(new JogadorActor(Comportamentos.JOGADOR_IA, 300, 300));
+        player = new JogadorActor(Comportamentos.CONTROLADO, 400, 400);
+
         genericAction = new Action() {
             @Override
-            public Dimensao getLimite() {
-                return campo.getDimencao();
+            public Polygon getLimite() {
+                return campo.getLimite();
             }
         };
 
     }
-    
-    
 
     @Override
     public void update() {
-       
+
         for (Actor ator : atoresCasa) {
-            ator.act(generateAction(ator),atoresCasa);
+            ator.act(generateAction(ator), atoresCasa);
         }
-        if(InputManager.getInstance().isPressed(KeyEvent.VK_TAB)){
+        if (InputManager.getInstance().isPressed(KeyEvent.VK_TAB)) {
             System.err.println("Trocou");
             trocarPlayer();
         }
         player.act(genericAction, atoresCasa);
         bola.act(genericAction, atoresCasa);
         Collections.sort(atoresCasa);
-        
+
     }
 
     @Override
@@ -79,21 +83,23 @@ public class MatchScene extends GameScene {
         renderables.add(player);
         renderables.add(0, campo);
         renderables.add(bola);
+        renderables.add(placar);
+
         tela.render(renderables);
     }
-    
+
     private List<Actor> getActorsNear(Actor actor) {
-        List actorsNear =  new ArrayList<Actor>();
+        List actorsNear = new ArrayList<Actor>();
         for (Actor atorVerificado : atoresCasa) {
-            if(actor.isColliding(atorVerificado)){
+            if (actor.isColliding(atorVerificado)) {
                 actorsNear.add(atorVerificado);
             }
         }
         return actorsNear;
     }
 
-    private void trocarPlayer(){
-        
+    private void trocarPlayer() {
+
         JogadorActor aux = player;
         player.setComportamento(Comportamentos.JOGADOR_IA);
         Random rand = new Random();
@@ -102,7 +108,7 @@ public class MatchScene extends GameScene {
         player.setComportamento(Comportamentos.CONTROLADO);
         atoresCasa.add(aux);
     }
-    
+
     private Action generateAction(Actor actor) {
         return genericAction;
     }

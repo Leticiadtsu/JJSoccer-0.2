@@ -3,6 +3,7 @@ package models;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Polygon;
 import java.awt.image.BufferedImage;
 import models.interfaces.Action;
 import java.util.List;
@@ -77,7 +78,7 @@ public class JogadorActor extends Actor {
 
     }
 
-    public void mover(Direcao direcao, Dimensao limite, List<Actor> collisions) {
+    public void mover(Direcao direcao, Polygon limite, List<Actor> collisions) {
         if (null != direcao) {
             switch (direcao) {
                 case CIMA:

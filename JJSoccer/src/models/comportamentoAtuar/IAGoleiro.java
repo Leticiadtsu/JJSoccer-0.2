@@ -27,7 +27,7 @@ public class IAGoleiro extends InteligenciaArtificial {
     @Override
     public void agir(JogadorActor chamador, Action action, List<Actor> collisions) {
         escolherDirecao(chamador);
-        chamador.mover(direcao, new Dimensao(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height), collisions);
+        chamador.mover(direcao, action.getLimite(), collisions);
     }
 
     private void escolherDirecao(JogadorActor chamador) {
