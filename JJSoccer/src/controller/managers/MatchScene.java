@@ -79,7 +79,7 @@ public class MatchScene extends GameScene {
             System.err.println("Trocou");
             trocarPlayer();
         }
-        Collections.sort(atoresCasa);
+        Collections.sort(todos);
     }
 
     @Override
