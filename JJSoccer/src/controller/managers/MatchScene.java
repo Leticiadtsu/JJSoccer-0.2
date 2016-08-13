@@ -31,12 +31,15 @@ import models.Placar;
  */
 public class MatchScene extends GameScene {
 
+    private int posJogadorControaldo;
     private Frame tela;
     private Campo campo;
     private Actor bola;
     private JogadorActor player;
     private Placar placar;
+    private List<Actor> todos;
     private ArrayList<Actor> atoresCasa;
+    private ArrayList<Actor> atoresProximos;
     private Action genericAction;//Mudar depois no projeto final
 
     public MatchScene() {
@@ -45,13 +48,17 @@ public class MatchScene extends GameScene {
         Dimensao tamanhoDoGol = new Dimensao(80, 200);
         campo = new Campo(new Point(20, 100), tamanhoDoCampo, tamanhoDoGol);
         placar = new Placar(tela.getWidth() / 2, 10, "Time da Casa", "Time Visitante");
-        bola = new Bola(500, 500);
+       /* bola = new Bola(500, 500);
         atoresCasa = new ArrayList<>();
         atoresCasa.add(new JogadorActor(Comportamentos.JOGADOR_IA, 100, 100));
         atoresCasa.add(new JogadorActor(Comportamentos.JOGADOR_IA, 200, 200));
         atoresCasa.add(new JogadorActor(Comportamentos.JOGADOR_IA, 300, 300));
-        player = new JogadorActor(Comportamentos.CONTROLADO, 400, 400);
-
+        player = new JogadorActor(Comportamentos.CONTROLADO, 400, 400);*/
+        todos = new ArrayList<>();
+        todos.add(new Bola(200,200));
+        todos.add(0, new JogadorActor(Comportamentos.CONTROLADO,100,100));
+        posJogadorControaldo = 0;       
+        
         genericAction = new Action() {
             @Override
             public Polygon getLimite() {
@@ -64,34 +71,29 @@ public class MatchScene extends GameScene {
     @Override
     public void update() {
 
-        for (Actor ator : atoresCasa) {
-            ator.act(generateAction(ator), atoresCasa);
+        for (Actor ator : todos) {
+            ator.act(generateAction(ator),todos);
         }
-        if (InputManager.getInstance().isPressed(KeyEvent.VK_TAB)) {
+        
+        if(InputManager.getInstance().isPressed(KeyEvent.VK_M)){
             System.err.println("Trocou");
             trocarPlayer();
         }
-        player.act(genericAction, atoresCasa);
-        bola.act(genericAction, atoresCasa);
         Collections.sort(atoresCasa);
-
     }
 
     @Override
     public void render() {
-        List<Renderable> renderables = new LinkedList<>(atoresCasa);
-        renderables.add(player);
+        List<Renderable> renderables = new LinkedList<>(todos);
         renderables.add(0, campo);
-        renderables.add(bola);
         renderables.add(placar);
-
         tela.render(renderables);
     }
 
     private List<Actor> getActorsNear(Actor actor) {
-        List actorsNear = new ArrayList<Actor>();
-        for (Actor atorVerificado : atoresCasa) {
-            if (actor.isColliding(atorVerificado)) {
+        List actorsNear =  new ArrayList<Actor>();
+        for (Actor atorVerificado : todos) {
+            if(actor.isColliding(atorVerificado)){
                 actorsNear.add(atorVerificado);
             }
         }

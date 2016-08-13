@@ -41,10 +41,10 @@ public class IAJogador extends InteligenciaArtificial {
             }
             if (chamador.getX() > chamador.getXInicial() && chamador.getY() > chamador.getYInicial()) {
                 voltarPosicaoOriginal = false;
-            } else {
-                escolherDirecao(chamador);
-                chamador.mover(direcao,action.getLimite(), collisions);
             }
+        } else {
+            escolherDirecao(chamador);
+            chamador.mover(direcao, action.getLimite(), collisions);
         }
     }
 

@@ -16,31 +16,50 @@ import models.interfaces.Action;
  *
  * @author costa
  */
-public class Controlado implements ComportamentoAtuar{
+public class Controlado implements ComportamentoAtuar {
 
     @Override
-    public void agir(JogadorActor chamador,Action action, List<Actor> collisions) {
+    public void agir(JogadorActor chamador, Action action, List<Actor> collisions) {
         if (InputManager.getInstance().isPressed(KeyEvent.VK_UP)) {
-            chamador.mover(Actor.Direcao.CIMA, action.getLimite(),collisions);
+            chamador.mover(Actor.Direcao.CIMA, action.getLimite(), collisions);
         }
         if (InputManager.getInstance().isPressed(KeyEvent.VK_DOWN)) {
-            chamador.mover(Actor.Direcao.BAIXO, action.getLimite(),collisions);
+            chamador.mover(Actor.Direcao.BAIXO, action.getLimite(), collisions);
         }
         if (InputManager.getInstance().isPressed(KeyEvent.VK_RIGHT)) {
-             chamador.mover(Actor.Direcao.DIREITA, action.getLimite(),collisions);
+            chamador.mover(Actor.Direcao.DIREITA, action.getLimite(), collisions);
         }
         if (InputManager.getInstance().isPressed(KeyEvent.VK_LEFT)) {
-             chamador.mover(Actor.Direcao.ESQUERDA, action.getLimite(),collisions);
+            chamador.mover(Actor.Direcao.ESQUERDA, action.getLimite(), collisions);
         }
-        if((InputManager.getInstance().isPressed(KeyEvent.VK_SPACE))){
-            for (Actor actor : collisions) {
-                if(actor instanceof Bola){
-                    System.err.print("Era uma bola");
+        if ((InputManager.getInstance().isPressed(KeyEvent.VK_SPACE))) {
+            chutar(chamador, collisions);
+
+        }
+    }
+
+    public static void chutar(Actor chamador, List<Actor> collisions) {
+        for (Actor actor : collisions) {
+            if (actor instanceof Bola) {
+                if (chamador.isColliding(actor) && actor instanceof Bola) {
+                    switch (chamador.getDirecao()) {
+                        case CIMA:
+                            ((Bola) actor).receberAcao(0, -20);
+                            break;
+                        case BAIXO:
+                            ((Bola) actor).receberAcao(0, 20);
+                            break;
+                        case ESQUERDA:
+                            ((Bola) actor).receberAcao(-20, 0);
+                            break;
+                        case DIREITA:
+                            ((Bola) actor).receberAcao(20, 0);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
     }
-
-    
-    
 }
