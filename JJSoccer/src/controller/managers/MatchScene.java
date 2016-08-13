@@ -6,13 +6,11 @@ package controller.managers;
 
 import java.awt.Point;
 import java.awt.Polygon;
-import java.awt.Rectangle;
 import models.Actor;
 import models.Bola;
 import models.interfaces.Action;
 import models.interfaces.Renderable;
 import view.Frame;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,23 +40,28 @@ public class MatchScene extends GameScene {
     private ArrayList<Actor> atoresProximos;
     private Action genericAction;//Mudar depois no projeto final
 
+    private long ultimaTroca;
+
     public MatchScene() {
+        ultimaTroca = System.currentTimeMillis();
+        
         tela = new Frame("Jogo");
         Dimensao tamanhoDoCampo = new Dimensao(tela.getWidth(), tela.getHeight() - 100);
         Dimensao tamanhoDoGol = new Dimensao(80, 200);
         campo = new Campo(new Point(20, 100), tamanhoDoCampo, tamanhoDoGol);
         placar = new Placar(tela.getWidth() / 2, 10, "Time da Casa", "Time Visitante");
-       /* bola = new Bola(500, 500);
+
         atoresCasa = new ArrayList<>();
-        atoresCasa.add(new JogadorActor(Comportamentos.JOGADOR_IA, 100, 100));
+        atoresCasa.add(new JogadorActor(Comportamentos.JOGADOR_IA, 500, 500));
         atoresCasa.add(new JogadorActor(Comportamentos.JOGADOR_IA, 200, 200));
         atoresCasa.add(new JogadorActor(Comportamentos.JOGADOR_IA, 300, 300));
-        player = new JogadorActor(Comportamentos.CONTROLADO, 400, 400);*/
-        todos = new ArrayList<>();
-        todos.add(new Bola(200,200));
-        todos.add(0, new JogadorActor(Comportamentos.CONTROLADO,100,100));
-        posJogadorControaldo = 0;       
-        
+        atoresCasa.add(0, new JogadorActor(Comportamentos.CONTROLADO, 100, 100));
+
+        todos = new ArrayList<>(atoresCasa);
+        todos.add(new Bola(200, 200));
+
+        posJogadorControaldo = 0;
+
         genericAction = new Action() {
             @Override
             public Polygon getLimite() {
@@ -72,10 +75,10 @@ public class MatchScene extends GameScene {
     public void update() {
 
         for (Actor ator : todos) {
-            ator.act(generateAction(ator),todos);
+            ator.act(generateAction(ator), todos);
         }
-        
-        if(InputManager.getInstance().isPressed(KeyEvent.VK_M)){
+
+        if (InputManager.getInstance().isPressed(KeyEvent.VK_M)) {
             System.err.println("Trocou");
             trocarPlayer();
         }
@@ -91,9 +94,9 @@ public class MatchScene extends GameScene {
     }
 
     private List<Actor> getActorsNear(Actor actor) {
-        List actorsNear =  new ArrayList<Actor>();
+        List actorsNear = new ArrayList<Actor>();
         for (Actor atorVerificado : todos) {
-            if(actor.isColliding(atorVerificado)){
+            if (actor.isColliding(atorVerificado)) {
                 actorsNear.add(atorVerificado);
             }
         }
@@ -101,14 +104,19 @@ public class MatchScene extends GameScene {
     }
 
     private void trocarPlayer() {
-
-        JogadorActor aux = player;
-        player.setComportamento(Comportamentos.JOGADOR_IA);
-        Random rand = new Random();
-        int pos = rand.nextInt(atoresCasa.size());
-        player = (JogadorActor) atoresCasa.get(pos);
-        player.setComportamento(Comportamentos.CONTROLADO);
-        atoresCasa.add(aux);
+        if (System.currentTimeMillis()-ultimaTroca  >= 30) {
+            System.err.println("Vou troacar");
+            player = (JogadorActor) atoresCasa.get(posJogadorControaldo);
+            player.setComportamento(Comportamentos.JOGADOR_IA);
+            Random rand = new Random();
+            posJogadorControaldo = rand.nextInt(atoresCasa.size());
+            player = (JogadorActor) atoresCasa.get(posJogadorControaldo);
+            player.setComportamento(Comportamentos.CONTROLADO);
+            ultimaTroca = System.currentTimeMillis();
+        }else
+        {
+            System.err.println("Nao vou tocar");
+        }
     }
 
     private Action generateAction(Actor actor) {

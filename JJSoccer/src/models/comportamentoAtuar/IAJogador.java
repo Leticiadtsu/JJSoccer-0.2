@@ -28,20 +28,21 @@ public class IAJogador extends InteligenciaArtificial {
 
     @Override
     public void agir(JogadorActor chamador, Action action, List<Actor> collisions) {
+        if (chamador.getX() > chamador.getXInicial() && chamador.getY() > chamador.getYInicial()) {
+            voltarPosicaoOriginal = false;
+        }
         if (voltarPosicaoOriginal) {
             if (chamador.getX() > chamador.getXInicial()) {
-                chamador.mover(Direcao.ESQUERDA,action.getLimite(), collisions);
+                chamador.mover(Direcao.ESQUERDA, action.getLimite(), collisions);
             } else if (chamador.getX() < chamador.getXInicial()) {
-                chamador.mover(Direcao.DIREITA,action.getLimite(), collisions);
+                chamador.mover(Direcao.DIREITA, action.getLimite(), collisions);
             }
             if (chamador.getY() > chamador.getYInicial()) {
-                chamador.mover(Direcao.CIMA,action.getLimite(), collisions);
+                chamador.mover(Direcao.CIMA, action.getLimite(), collisions);
             } else if (chamador.getY() < chamador.getYInicial()) {
-                chamador.mover(Direcao.BAIXO,action.getLimite(), collisions);
+                chamador.mover(Direcao.BAIXO, action.getLimite(), collisions);
             }
-            if (chamador.getX() > chamador.getXInicial() && chamador.getY() > chamador.getYInicial()) {
-                voltarPosicaoOriginal = false;
-            }
+
         } else {
             escolherDirecao(chamador);
             chamador.mover(direcao, action.getLimite(), collisions);
