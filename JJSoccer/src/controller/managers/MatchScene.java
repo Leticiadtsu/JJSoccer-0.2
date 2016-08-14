@@ -48,8 +48,16 @@ public class MatchScene extends GameScene implements GolListener {
 
     private long ultimaTroca;
 
-    public MatchScene() {
+    public MatchScene(Frame tela) {
         inicioPartida = System.currentTimeMillis();
+        this.tela = tela;
+        ultimaTroca = System.currentTimeMillis();
+
+        Dimensao tamanhoDoCampo = new Dimensao(tela.getWidth(), tela.getHeight() - 100);
+        Dimensao tamanhoDoGol = new Dimensao(80, 200);
+        campo = new Campo(new Point(20, 100), tamanhoDoCampo, tamanhoDoGol);
+        placar = new Placar(tela.getWidth() / 2, 10, "Time da Casa", "Time Visitante");
+        posInicialBola = new Point(tela.getWidth() / 2, tela.getHeight() / 2 + 50);
         ultimaTroca = System.currentTimeMillis();
 
         todos = new ArrayList<>();
@@ -113,6 +121,7 @@ public class MatchScene extends GameScene implements GolListener {
         JogadorActor jogador = new JogadorActor(Comportamentos.JOGADOR_IA, x, y);
         adicionarJogadorCasa(jogador);
     }
+
 
     private void gerarTimeCasa() {
         Polygon limiteCampo = campo.getLimite();
