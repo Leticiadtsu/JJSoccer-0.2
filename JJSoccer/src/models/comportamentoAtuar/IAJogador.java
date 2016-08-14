@@ -19,6 +19,9 @@ public class IAJogador extends InteligenciaArtificial {
 
     
     private final int RANGE = 50;
+    private final int NUM_DIRECOES = 3;
+    
+    
     Random rand = new Random();
     private Direcao direcao;
     private boolean voltarPosicaoOriginal;
@@ -61,7 +64,7 @@ public class IAJogador extends InteligenciaArtificial {
     }
 
     private Direcao gerarDirecaoAleatria() {
-        int direcaoAleatoria = rand.nextInt(3);
+        int direcaoAleatoria = rand.nextInt(NUM_DIRECOES);
         switch (direcaoAleatoria) {
             case 0:
                 return Actor.Direcao.BAIXO;
