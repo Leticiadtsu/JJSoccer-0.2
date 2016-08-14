@@ -57,5 +57,6 @@ public class IAJogador extends InteligenciaArtificial {
         if (chamador.getY() < (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 60) {
             this.direcao = Direcao.BAIXO;
         }
+        
     }
 }

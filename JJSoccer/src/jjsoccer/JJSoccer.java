@@ -6,19 +6,25 @@
 package jjsoccer;
 
 import controller.managers.Game;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author 
+ * @author
  */
 public class JJSoccer {
 
     /**
      * @param args the command line arguments
      */
- 
     public static void main(String[] args) {
-        new Game().init();
+        try {
+            throw new RuntimeException("Deu merda");
+            //new Game().init();
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Infelizmente Ocorreu algum erro no sistema\n"+ e +"\nO sistema será finalizado");
+        }   System.exit(0);
     }
-    
+
 }
