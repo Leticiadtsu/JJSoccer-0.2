@@ -94,6 +94,7 @@ public class JogadorActor extends Actor {
             graphics.setColor(Color.blue);
             graphics.fillOval(10, 60, 50, 50);
         }
+            graphics.setColor(Color.DARK_GRAY);
 
         graphics.drawString("" + jogador.getNome(), 0, 10);
 
@@ -155,8 +156,7 @@ public class JogadorActor extends Actor {
     }
 
     private String nomeAleatorio() {
-        String nomes = "Madalena Arantes"
-                + "Dionísio\n"
+        String nomes = "Dionísio\n"
                 + "Malafaia\n"
                 + "Vanderlei\n"
                 + "Teixeira\n"
@@ -184,7 +184,8 @@ public class JogadorActor extends Actor {
                 + "Carvalhal\n"
                 + "Quitério\n"
                 + "Figueiroa\n"
-                + "Levi Brás\n"
+                + "Levi\n"
+                + "Brás\n"
                 + "Mauro\n"
                 + "Andrade\n"
                 + "Abraão\n"
@@ -193,7 +194,7 @@ public class JogadorActor extends Actor {
                 + "André\n"
                 + "Leticia\n"
                 + "Costa\n"
-                + "chateaubriand\n"
+                + "Chateaubriand\n"
                 + "Tsuchiya\n"
                 + "Matheus\n"
                 + "Osmar\n"
@@ -204,8 +205,10 @@ public class JogadorActor extends Actor {
                 + "Daniel\n"
                 + "Norival\n"
                 + "Antonio\n"
-                + "Highlander\n";
-
+                + "Highlander\n"
+                + "Julio\n"
+                + "Dilson\n";
+        
         String[] result = nomes.split("\\n");
         Random rand = new Random();
         return result[rand.nextInt(result.length)];
