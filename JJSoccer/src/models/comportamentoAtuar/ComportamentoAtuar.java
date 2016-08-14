@@ -19,5 +19,7 @@ public interface ComportamentoAtuar {
      *
      */
     void agir(JogadorActor chamador, Action action, List<Actor> collisions);
+
+    
     
 }

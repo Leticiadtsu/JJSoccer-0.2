@@ -4,12 +4,16 @@
  */
 package models.comportamentoAtuar;
 
+import controller.managers.GameScene;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import models.Actor;
 import models.Actor.Direcao;
+import models.Bola;
 import models.JogadorActor;
 import models.interfaces.Action;
+import models.interfaces.PlayerListener;
 
 /**
  *
@@ -17,41 +21,66 @@ import models.interfaces.Action;
  */
 public class IAJogador extends InteligenciaArtificial {
 
-    
     private final int RANGE = 50;
     private final int NUM_DIRECOES = 3;
-    
-    
+
     Random rand = new Random();
     private Direcao direcao;
     private boolean voltarPosicaoOriginal;
+    private List<PlayerListener> listeners;
+
+    public IAJogador(PlayerListener listener) {
+        listeners = new ArrayList<>();
+        listeners.add(listener);
+        voltarPosicaoOriginal = true;
+        direcao = gerarDirecaoAleatria();
+    }
 
     public IAJogador() {
-
+        listeners = new ArrayList<>();
         voltarPosicaoOriginal = true;
         direcao = gerarDirecaoAleatria();
     }
 
     @Override
-    public void agir(JogadorActor chamador, Action action, List<Actor> collisions) {
-        if (chamador.getX() == chamador.getXInicial() && chamador.getY() == chamador.getYInicial()) {
-            voltarPosicaoOriginal = false;
-        }
-        if (voltarPosicaoOriginal) {
-            if (chamador.getX() > chamador.getXInicial()) {
-                chamador.mover(Direcao.ESQUERDA, action.getLimite(), collisions);
-            } else if (chamador.getX() < chamador.getXInicial()) {
-                chamador.mover(Direcao.DIREITA, action.getLimite(), collisions);
-            }
-            if (chamador.getY() > chamador.getYInicial()) {
-                chamador.mover(Direcao.CIMA, action.getLimite(), collisions);
-            } else if (chamador.getY() < chamador.getYInicial()) {
-                chamador.mover(Direcao.BAIXO, action.getLimite(), collisions);
+    public void agir(JogadorActor chamador, Action action, List<Actor> actorsNear) {
+        Actor bola = proximoBola(actorsNear);
+        if (bola != null) {
+            seguirBola(chamador, bola, action, actorsNear);
+        } else {
+            if (chamador.getX() == chamador.getXInicial() && chamador.getY() == chamador.getYInicial()) {
+                voltarPosicaoOriginal = false;
             }
 
-        } else {
-            escolherDirecao(chamador);
-            chamador.mover(direcao, action.getLimite(), collisions);
+            if (voltarPosicaoOriginal) {
+                voltarPosicaoOriginal(chamador, action, actorsNear);
+
+            } else {
+                escolherDirecao(chamador);
+                chamador.mover(direcao, action.getLimite(), actorsNear);
+            }
+        }
+    }
+
+    private Actor proximoBola(List<Actor> actorsNear) {
+        for (Actor actor : actorsNear) {
+            if (actor instanceof Bola) {
+                return actor;
+            }
+        }
+        return null;
+    }
+
+    private void seguirBola(JogadorActor chamador, Actor bola, Action action, List<Actor> actorsNear) {
+        if (chamador.getX() > bola.getX()) {
+            chamador.mover(Direcao.ESQUERDA, action.getLimite(), actorsNear);
+        } else if (chamador.getX() < bola.getX()) {
+            chamador.mover(Direcao.DIREITA, action.getLimite(), actorsNear);
+        }
+        if (chamador.getY() > bola.getY()) {
+            chamador.mover(Direcao.CIMA, action.getLimite(), actorsNear);
+        } else if (chamador.getY() < bola.getY()) {
+            chamador.mover(Direcao.BAIXO, action.getLimite(), actorsNear);
         }
     }
 
@@ -60,6 +89,19 @@ public class IAJogador extends InteligenciaArtificial {
         if (chamador.getY() > chamador.getYInicial() + RANGE || chamador.getY() < chamador.getYInicial() - RANGE || chamador.getX() > chamador.getXInicial() + RANGE || chamador.getX() < chamador.getXInicial() - RANGE) {
             direcao = gerarDirecaoAleatria();
             voltarPosicaoOriginal = true;
+        }
+    }
+
+    private void voltarPosicaoOriginal(JogadorActor chamador, Action action, List<Actor> actorsNear) {
+        if (chamador.getX() > chamador.getXInicial()) {
+            chamador.mover(Direcao.ESQUERDA, action.getLimite(), actorsNear);
+        } else if (chamador.getX() < chamador.getXInicial()) {
+            chamador.mover(Direcao.DIREITA, action.getLimite(), actorsNear);
+        }
+        if (chamador.getY() > chamador.getYInicial()) {
+            chamador.mover(Direcao.CIMA, action.getLimite(), actorsNear);
+        } else if (chamador.getY() < chamador.getYInicial()) {
+            chamador.mover(Direcao.BAIXO, action.getLimite(), actorsNear);
         }
     }
 
@@ -78,5 +120,11 @@ public class IAJogador extends InteligenciaArtificial {
 
         }
         return Actor.Direcao.DIREITA;
+    }
+
+    private void estaComAbola(JogadorActor chamador) {
+        for (PlayerListener listener : listeners) {
+            listener.onBall(chamador);
+        }
     }
 }
