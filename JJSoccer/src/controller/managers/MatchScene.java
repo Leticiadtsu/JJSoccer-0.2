@@ -104,7 +104,7 @@ public class MatchScene extends GameScene implements GolListener {
 
     @Override
     public void update() {
-        if (System.currentTimeMillis() - inicioPartida <= 10000/*Um minito*/) {
+        if (System.currentTimeMillis() - inicioPartida <= 60000*10/*Dex minitos*/) {
 
             for (Actor ator : todos) {
                 ator.act(generateAction(ator), todos);
@@ -122,6 +122,7 @@ public class MatchScene extends GameScene implements GolListener {
             for (Actor actor : todos) {
                 actor.reset();
             }
+            
         }
     }
 

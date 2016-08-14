@@ -2,8 +2,6 @@
 package models.interfaces;
 
 import java.awt.Polygon;
-import java.awt.Rectangle;
-import models.Dimensao;
 
 /**
  *
