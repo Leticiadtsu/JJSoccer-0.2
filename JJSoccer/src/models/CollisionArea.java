@@ -1,11 +1,9 @@
 package models;
 
 /**
- * Essa classe tem a finalidade de definir uma caixa de colisao A altura e
- * largura sao definidas, e no momento de calcular a colisao a localizacao da
- * caixa eh considerada com seu meia igual ao meio do ator que possui a caixa
- *
- * @author
+ * Essa classe tem a finalidade de definir uma caixa de colisão. A altura e
+ * largura são definidas, e no momento de calcular a colisão a localização da
+ * caixa é considerada com seu meio igual ao meio do ator que possui a caixa.
  */
 public class CollisionArea {
 
@@ -15,10 +13,10 @@ public class CollisionArea {
     private final Dimensao taxaAproximacao;
 
     /**
-     * Instancia uma nova caixa de Colisao com a altura e largura definida
+     * Instancia uma nova caixa de Colisao com a altura e largura definida.
      *
-     * @param largura largura da caixa
-     * @param altura altura da caixa
+     * @param largura largura da caixa.
+     * @param altura altura da caixa.
      */
     public CollisionArea(int largura, int altura) {
         areaColisao = new Dimensao(largura, altura);
@@ -26,11 +24,11 @@ public class CollisionArea {
     }
 
     /**
-     * Verifica de o ator A colide com o ator B
+     * Verifica de o ator A colide com o ator B.
      *
-     * @param actor1 ator referencia
-     * @param actor2 ator alvo
-     * @return true se o ator A colide com B
+     * @param actor1 ator referencia.
+     * @param actor2 ator alvo.
+     * @return true se o ator A colide com B.
      */
     public boolean isColliding(Actor actor1, Actor actor2) {
         //actor1 embaixo actor2
@@ -63,12 +61,12 @@ public class CollisionArea {
     }
 
     /**
-     * Metodo que verifica se há uma colisao a partir de um ponto
+     * Método que verifica se há uma colisão a partir de um ponto.
      *
-     * @param posX posicao em X
-     * @param posY posicao em Y
-     * @param actorAlvo actor que pode haver colisao
-     * @return true se o ponto colide com actorAlvo
+     * @param posX posicao em X.
+     * @param posY posicao em Y.
+     * @param actorAlvo actor que pode haver colisao.
+     * @return true se o ponto colide com actorAlvo.
      */
     public boolean isColliding(int posX, int posY, Actor actorAlvo) {
         //esta embaixo actor
@@ -95,6 +93,13 @@ public class CollisionArea {
         return true;
     }
 
+    /**
+     * Método que verifica se um ator está próximo de outro.
+     *
+     * @param actor1 ator referência.
+     * @param actor2 ator alvo.
+     * @return verdadeiro, para caso esteja prócimo, ou falso caso contrário.
+     */
     public boolean isNear(Actor actor1, Actor actor2) {
         //actor1 embaixo actor2
         if (getTopColisionLine(actor1) - actor1.getCollisionArea().getAltura() * 2 > getBottonColisionLine(actor2)) {
@@ -122,48 +127,58 @@ public class CollisionArea {
     }
 
     /**
-     * @param actor refered actor
-     * @return returns the actor's Upper Collision Line
+     * Retorna a linha de colisão de cima (topo) de um ator.
+     *
+     * @param actor ator referência.
+     * @return retorna a linha de colisão de cima do ator.
      */
     public int getTopColisionLine(Actor actor) {
         return actor.getY();
     }
 
     /**
-     * @param actor refered actor
-     * @return returns the actor's Lower Collision Line
+     * Retorna a linha de colisão de baixo (botton) de um ator.
+     *
+     * @param actor ator referência.
+     * @return retorna a linha de colisão de baixo do ator.
      */
     public int getBottonColisionLine(Actor actor) {
         return actor.getY() + actor.getCollisionArea().getAltura();
     }
 
     /**
-     * @param actor refered actor
-     * @return returns the actor's Eastern Collision Line
+     * Retorna a linha de colisão à esquerda de um ator.
+     *
+     * @param actor ator referência.
+     * @return retorna a linha de colisão a esquerda do ator.
      */
     public int getLeftColisionLine(Actor actor) {
         return actor.getX();
     }
 
     /**
-     * @param actor refered actor
-     * @return returns the actor's Western Collision Line
+     * Retorna a linha de colisão à direita de um ator.
+     *
+     * @param actor ator referência.
+     * @return retorna a linha de colisão à direita do ator.
      */
     public int getRightColisionLine(Actor actor) {
         return actor.getX() + actor.getCollisionArea().getLargura();
     }
 
     /**
+     * Retorna a altura da colisão.
      *
-     * @return a Altura da caixa de colisao
+     * @return a altura da caixa de colisão.
      */
     public int getAltura() {
         return areaColisao.getAltura();
     }
 
     /**
+     * Retorna a largura da colisão
      *
-     * @return a Largura da caixa de colisao
+     * @return a largura da caixa de colisão.
      */
     public int getLargura() {
         return areaColisao.getLargura();

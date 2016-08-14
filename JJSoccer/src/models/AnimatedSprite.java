@@ -1,17 +1,19 @@
-/*
- * Here comes the text of your license
- * Each line should be prefixed with  * 
- */
 package models;
 
 /**
- *
- * @author 
+ * É a definição das imagens do Actor que será impressa na tela. Caso especial
+ * de Sprite, por isso o estende.
  */
-public class AnimatedSprite extends Sprite{
-    
+public class AnimatedSprite extends Sprite {
+
+    /**
+     * O construtor recebe como parâmetro o nome da imagem e chama o construtor
+     * da sua superclasse.
+     *
+     * @param nomeImagem nome da imagem.
+     */
     public AnimatedSprite(String nomeImagem) {
         super(nomeImagem);
     }
-    
+
 }

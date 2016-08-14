@@ -1,7 +1,3 @@
-/*
- * Here comes the text of your license
- * Each line should be prefixed with  * 
- */
 package models;
 
 import controller.managers.InputManager;
@@ -17,18 +13,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author
+ * Classe abstrata que representa todos os objetos que realizam uma ação no jogo
+ * e portanto toda a lógica do jogo. Actor vem do sentido de atuar. Resonsável
+ * por alguns aspectos importantes do jogo, tais como, as posições dos objetos
+ * na tela, colisão e movimentação.
  */
 public abstract class Actor implements Renderable, Comparable<Actor> {
 
     /**
-     * @param collisionArea the collisionArea to set
+     * Alteta a área de colisão do ator.
+     *
+     * @param collisionArea nova área de colisão.
      */
     protected void setCollisionArea(CollisionArea collisionArea) {
         this.collisionArea = collisionArea;
     }
 
+    /**
+     * Definição das direções para qual um objeto, jogador ou bola, pode seguir.
+     */
     public enum Direcao {
         CIMA, BAIXO, DIREITA, ESQUERDA
     }
@@ -42,6 +45,12 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
     private int XInicial;
     private int YInicial;
 
+    /**
+     * Construtor de Actor que não recebe nenhum parâmetro, as posições x e y
+     * são inicializadas em zero, a sua velocidade em pixel é definida em 3, a
+     * direção inicializada para a direita e é definido a sua área de colisão
+     * com altura e largura em 40.
+     */
     public Actor() {
         x = 0;
         y = 0;
@@ -52,40 +61,49 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
         speedPixel = 3;
     }
 
+    /**
+     * Construtor que recebe como parâmetro as posições x e y, todos os outros
+     * atributos são definidos como oconstrutor que não possui parâmetros.
+     *
+     * @param x posição x do objeto.
+     * @param y posição y do objeto.
+     */
     public Actor(int x, int y) {
         this();
         this.x = x;
         this.y = y;
         XInicial = x;
         YInicial = y;
-
     }
 
     /**
-     * @return the collision
+     * Retorna a área de colisão do objeto.
+     *
+     * @return a área de colisão.
      */
     protected CollisionArea getCollisionArea() {
         return collisionArea;
     }
 
     /**
-     * define a acao do ator a cada gameLoop
+     * Define a ação do ator a cada gameLoop. Deve ser implementada pelas
+     * classes que implementam Actor.
      *
-     * @param action dados necessarios para a acao
-     * @param areaDeRelevancia lista de atores que colidem com esse
+     * @param action dados necessários para a ação.
+     * @param areaDeRelevancia lista de atores que colidem com esse.
      */
     public abstract void act(Action action, List<Actor> areaDeRelevancia);
 
     /**
-     * Verifica se a posicao desejada eh valida ou nao
+     * Verifica se a posição desejada é válida ou não.
      *
-     * @param nextX o valor X da posicao desejada
-     * @param nextY o valor Y da posicao desejada
-     * @param limite quadro de limite do campo
-     * @param actorNears atores que colidem com esse ator na cena
-     * @return se a posicao eh valida ou nao
+     * @param nextX o valor X da posição desejada.
+     * @param nextY o valor Y da posição desejada.
+     * @param limite quadro de limite do campo.
+     * @param collisions atores que colidem com esse ator na cena.
+     * @return se a posicao é válida ou não.
      */
-    public boolean canMove(int nextX, int nextY, Polygon limite, List<Actor> actorNears) {
+    protected boolean canMove(int nextX, int nextY, Polygon limite, List<Actor> actorNears) {
         Rectangle r = new Rectangle(nextX, nextY, collisionArea.getLargura(), collisionArea.getAltura());
         if ((!limite.contains(r) && (limite.intersects(r)))) {
             return false;
@@ -105,23 +123,23 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
     }
 
     /**
-     * Verifica se a posicao do ator eh valida
+     * Verifica se a posição do ator é válida.
      *
-     * @param limite quadro de limite do campo
-     * @param areaRelevante atores que colidem com esse ator na cena
-     * @return se a posicao eh valida ou nao
+     * @param limite quadro de limite do campo.
+     * @param areaRelevante atores que colidem com esse ator na cena.
+     * @return se a posição é válida ou não.
      */
     protected boolean isValidPosition(Polygon limite, List<Actor> areaRelevante) {
         return (canMove(x, y, limite, areaRelevante));
     }
 
     /**
-     * Move o actor em direcao as coordenadas passadas por parametro
+     * Move o actor em direção as coordenadas passadas por parâmetro.
      *
-     * @param horizontal coordenada Y
-     * @param vertical coordenada X
-     * @param limite
-     * @param collisions
+     * @param horizontal coordenada Y.
+     * @param vertical coordenada X.
+     * @param limite quadro de limite do campo.
+     * @param collisions atores que colidem com esse ator na cena.
      */
     protected boolean move(int horizontal, int vertical, Polygon limite, List<Actor> collisions) {
         //colisao com outros Jogadores
@@ -135,6 +153,12 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
         return false;
     }
 
+    /**
+     * Altera a direção de acordo com o valor passado por parâmetro.
+     *
+     * @param horizontal eixo x.
+     * @param vertical eixo y.
+     */
     private void setDirecao(int horizontal, int vertical) {
         if (horizontal > 0) {
             direcao = Direcao.DIREITA;
@@ -150,17 +174,28 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
         }
     }
 
+    /**
+     * Retorna a posição x inicial do ator.
+     *
+     * @return posição x inicial.
+     */
     public int getXInicial() {
         return XInicial;
     }
 
+    /**
+     * Retorna a posição y inicial do ator.
+     *
+     * @return posição y inicial.
+     */
     public int getYInicial() {
         return YInicial;
     }
 
     /**
+     * Retorna a direção para qual o ator está "olhando".
      *
-     * @return direcao que o ator esta 'olhando'
+     * @return direção que o ator está 'olhando'
      */
     public Direcao getDirecao() {
         return direcao;
@@ -181,52 +216,76 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
         return (collisionArea.isColliding(this, actor));
     }
 
+    /**
+     * Verificar se o ator passado como parâmetro está próximo.
+     *
+     * @param actor ator em questão.
+     * @return verdadeiro se está próximo, falso caso contrário.
+     */
     public boolean isNear(Actor actor) {
         return (collisionArea.isNear(this, actor));
     }
 
     /**
-     * @return the x
+     * Retorna a posição x.
+     *
+     * @return posição x.
      */
     public int getX() {
         return x;
     }
 
     /**
-     * @return the y
+     * Retorna a posição y.
+     *
+     * @return posição y.
      */
     public int getY() {
         return y;
     }
 
     /**
-     * @return the sprite
+     * Retorna o sprite.
+     *
+     * @return sprite.
      */
     protected Sprite getSprite() {
         return sprite;
     }
 
     /**
-     * @param spr the sprite to set
+     * Altera o sprite, recebendo como parâmetro um novo sprite.
+     *
+     * @param spr sprite.
      */
     public void setSpr(Sprite spr) {
         this.sprite = spr;
     }
 
     /**
-     * @param x the x to set
+     * Altera a posição x.
+     *
+     * @param x
      */
     protected void setX(int x) {
         this.x = x;
     }
 
     /**
-     * @param y the y to set
+     * Altera a posição y
+     *
+     * @param y
      */
     protected void setY(int y) {
         this.y = y;
     }
 
+    /**
+     * Retorna a imagem do ator, com a criação de um BufferedImage, a qual
+     * recebe largura, altura e o tipo da imagem.
+     *
+     * @return image.
+     */
     public Image getImage() {
         if (InputManager.getInstance().isPressed(KeyEvent.VK_F5)) {
             BufferedImage edit = new BufferedImage(getCollisionArea().getLargura(), getCollisionArea().getAltura(), BufferedImage.TYPE_INT_ARGB);
@@ -238,6 +297,13 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
 
     }
 
+    /**
+     * Retorna uma lista de atores que estão colidindo com o ator em questão.
+     *
+     * @param actor ator em questão.
+     * @param areaRelevancia possíveis atores que podem estar colidindo.
+     * @return lista de atores que estao colidindo.
+     */
     private List<Actor> getCollisionsOn(Actor actor, List<Actor> areaRelevancia) {
         List collisions = new ArrayList<Actor>();
         for (Actor atorVerificado : areaRelevancia) {
@@ -248,6 +314,11 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
         return collisions;
     }
 
+    /**
+     * Método responsável por resetar o ator para sua posição inicial, alterando
+     * sua posição x e y, passando como parâmetro os valores da sua posição
+     * inicial.
+     */
     public void reset() {
         setX(XInicial);
         setY(YInicial);
