@@ -1,3 +1,7 @@
+/*
+ * Here comes the text of your license
+ * Each line should be prefixed with  * 
+ */
 package models.comportamentoAtuar;
 
 import java.util.List;
@@ -11,8 +15,7 @@ import models.interfaces.Action;
  */
 public interface ComportamentoAtuar {
 
-    /**
-     * 
+ /**
      * Método responsável por fazer com que o objeto aja. Recebbe como parâmetro
      * uma ação e uma lista de atores que a colidem. Deve ser implementado pelas
      * classes que implementam a interface.
@@ -23,4 +26,6 @@ public interface ComportamentoAtuar {
      */
     void agir(JogadorActor chamador, Action action, List<Actor> collisions);
 
+    
+    
 }

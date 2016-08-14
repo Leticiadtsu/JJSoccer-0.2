@@ -1,3 +1,8 @@
+
+/*
+ * Here comes the text of your license
+ * Each line should be prefixed with  * 
+ */
 package models.comportamentoAtuar;
 
 import controller.managers.InputManager;
@@ -47,11 +52,7 @@ public class Player1 implements ComportamentoAtuar {
      * Verifica a ação de chutar a bola, qual o sentido que a bola deve seguir
      * ao ser chutada
      *
-<<<<<<< HEAD
      * @param chamador JogadorActor que chamou a aÃ§Ã£o.
-=======
-     * @param chamador JogadorActor que chamou a ação.
->>>>>>> 7b43b1ca94aae14ed8cd8577777e1e2b67427adb
      * @param collisions lista de atores que colidem.
      */
     public static void chutar(Actor chamador, List<Actor> collisions) {

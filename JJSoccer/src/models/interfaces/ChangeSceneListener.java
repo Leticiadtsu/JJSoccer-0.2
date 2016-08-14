@@ -5,6 +5,7 @@
 package models.interfaces;
 
 import controller.managers.GameScene;
+import controller.managers.MenuScene;
 
 /**
  * Interface que representa aqueles que ouvem quando há um requerimento de

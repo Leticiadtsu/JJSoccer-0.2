@@ -1,10 +1,13 @@
 package models;
 
+import controller.managers.InputManager;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Polygon;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import models.interfaces.Action;
 import java.util.List;
 import java.util.Random;
@@ -22,8 +25,7 @@ import models.interfaces.PlayerListener;
  * para os jogadores. Possui um atributo da classe Jogador, apenas para
  * referenciá-lo. Métodos como a sua movimentação, verificação de colisão,
  * controle da direção são idênticos à qualquer ator, por este motivo herda de
- * actor, o comportamento específico de um JogadorActor e um atributo portante
- * este pode ser moficado em tempo de execução.
+ * actor.
  */
 public class JogadorActor extends Actor {
 
@@ -35,6 +37,9 @@ public class JogadorActor extends Actor {
     public enum Comportamentos {
         GOLEIRO_IA, JOGADOR_IA, PLAYER_1, PLAYER_2;
     }
+
+    //Remover
+    private static int teste = 0;
 
     private Jogador jogador;
     private ComportamentoAtuar comportamento;
@@ -57,6 +62,7 @@ public class JogadorActor extends Actor {
         jogador = new Jogador(nomeAleatorio());
         sprite = new Sprite("soccer.png");
         speedPixel = ((jogador.getHabilidade(Habilidades.habilidade.Velociadade) * 3) / 100) + 1;
+        teste++;
     }
 
     /**
@@ -72,9 +78,11 @@ public class JogadorActor extends Actor {
     public JogadorActor(Comportamentos comportamento) {
         super();
         setComportamento(comportamento);
-        jogador = new Jogador(nomeAleatorio());
+        jogador = new Jogador("" + teste);
         sprite = new Sprite("soccer.png");
         speedPixel = ((jogador.getHabilidade(Habilidades.habilidade.Velociadade) * 3) / 100) + 1;
+        teste++;
+
     }
 
     /**
@@ -112,8 +120,7 @@ public class JogadorActor extends Actor {
     }
 
     /**
-     * Método responsável pela ação do jogador, a cada gameloop.
-     *
+     *Método responsável pela ação do jogador, a cada gameloop. 
      * @param action dados necessários para a ação.
      * @param collisions lista de atores que colidem com esse.
      */
@@ -123,9 +130,8 @@ public class JogadorActor extends Actor {
     }
 
     /**
-     * Método responsável pelo retorno da imagem do jogador, é criado um
-     * BufferedImage e desenhado a imagem com o auxílio da classe Graphics.
-     *
+     * Método responsável pelo retorno da imagem do jogador, é criado um BufferedImage e desenhado a imagem
+     * com o auxílio da classe Graphics.
      * @return image.
      */
     @Override
@@ -140,7 +146,6 @@ public class JogadorActor extends Actor {
             graphics.setColor(Color.blue);
             graphics.fillOval(10, 60, 50, 50);
         }
-        graphics.setColor(Color.DARK_GRAY);
 
         graphics.drawString("" + jogador.getNome(), 0, 10);
 
@@ -150,11 +155,10 @@ public class JogadorActor extends Actor {
     }
 
     /**
-     * Método responsável pela movimentação do jogador. Retorna se foi possível
-     * mover ou não. Recebe como parâmetros a direção que deve ser seguida, um
-     * polígono represetando o limite e uma lista de atores que colidem.
-     *
-     * @param direcao direção.
+     * Método responsável pela movimentação do jogador. Retorna se foi possível mover ou não. Recebe
+     * como parâmetros a direção que deve ser seguida, um polígono represetando o limite e uma lista
+     * de atores que colidem.
+     * @param direcao direção. 
      * @param limite limite.
      * @param collisions lista de atores que colidem.
      * @return verdadeiro se moveu, falso caso contrário.
@@ -184,11 +188,9 @@ public class JogadorActor extends Actor {
     }
 
     /**
-     * Método que realiza a ação de um jogador empurrar a bola, é recebido a
-     * direção e uma lista de atores que colidem, caso o ator que esteja
-     * colidindo com o jogador, seja a bola, esta então recebe a ação de ser
-     * empurrada, de acordo com o a velocidade definida pelo jogador.
-     *
+     * Método que realiza a ação de um jogador empurrar a bola, é recebido a direção e uma lista de atores
+     * que colidem, caso o ator que esteja colidindo com o jogador, seja a bola, esta então
+     * recebe a ação de ser empurrada, de acordo com o a velocidade definida pelo jogador.
      * @param direcao direção.
      * @param collisions lista de atores que colidem.
      */
@@ -221,7 +223,8 @@ public class JogadorActor extends Actor {
     }
 
     private String nomeAleatorio() {
-        String nomes = "Dionísio\n"
+        String nomes = "Madalena Arantes"
+                + "Dionísio\n"
                 + "Malafaia\n"
                 + "Vanderlei\n"
                 + "Teixeira\n"
@@ -249,8 +252,7 @@ public class JogadorActor extends Actor {
                 + "Carvalhal\n"
                 + "Quitério\n"
                 + "Figueiroa\n"
-                + "Levi\n"
-                + "Brás\n"
+                + "Levi Brás\n"
                 + "Mauro\n"
                 + "Andrade\n"
                 + "Abraão\n"
@@ -270,9 +272,7 @@ public class JogadorActor extends Actor {
                 + "Daniel\n"
                 + "Norival\n"
                 + "Antonio\n"
-                + "Highlander\n"
-                + "Julio\n"
-                + "Dilson\n";
+                + "Highlander\n";
 
         String[] result = nomes.split("\\n");
         Random rand = new Random();
