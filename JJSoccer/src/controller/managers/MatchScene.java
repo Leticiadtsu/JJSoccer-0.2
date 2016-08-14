@@ -56,7 +56,7 @@ public class MatchScene extends GameScene implements GolListener {
     private long ultimaTrocPlayer1;
 
     public MatchScene(Frame tela, ChangeSceneListener lisntener) {
-        tempoDeJogo =  10;
+        tempoDeJogo = 10;
         this.tela = tela;
         sceneListeners = new ArrayList<>();
         sceneListeners.add(lisntener);
@@ -183,7 +183,7 @@ public class MatchScene extends GameScene implements GolListener {
         adicionarJogadorVisitante(new JogadorActor(Comportamentos.JOGADOR_IA, gridX * 14, gridY * 14));
 
         adicionarJogadorVisitante(new JogadorActor(Comportamentos.JOGADOR_IA, gridX * 16, gridY * 10));
-        adicionarJogadorVisitante(new JogadorActor(Comportamentos.GOLEIRO_IA, (gridX/2) * 35  , gridY * 10));
+        adicionarJogadorVisitante(new JogadorActor(Comportamentos.GOLEIRO_IA, (gridX / 2) * 35, gridY * 10));
 
     }
 

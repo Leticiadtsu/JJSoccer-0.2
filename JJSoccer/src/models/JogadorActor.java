@@ -208,7 +208,6 @@ public class JogadorActor extends Actor {
 
         String[] result = nomes.split("\\n");
         Random rand = new Random();
-        System.err.print(result.length + "\n");
         return result[rand.nextInt(result.length)];
     }
 }
