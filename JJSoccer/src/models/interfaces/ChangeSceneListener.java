@@ -8,10 +8,16 @@ import controller.managers.GameScene;
 import controller.managers.MenuScene;
 
 /**
- *
- * @author Andre Chateaubriand
+ * Interface que representa aqueles que ouvem quando há um requerimento de
+ * mudança de scene. Utilizado no contexto do Game e suas GameScenes.
  */
 public interface ChangeSceneListener {
-        public void changeScene( GameScene scene);
+
+    /**
+     * Requerimento de mudança de cena
+     *
+     * @param scene cena requeria para que seja atribuida.
+     */
+    public void changeScene(GameScene scene);
 
 }

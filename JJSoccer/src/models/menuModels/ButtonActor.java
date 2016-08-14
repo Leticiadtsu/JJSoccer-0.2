@@ -12,18 +12,15 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import models.Actor;
 import models.Sprite;
 import models.interfaces.Action;
 
 /**
+ * Classe que representa uma opcao do MenuScene
  *
- * @author Andre Chateaubriand
  */
 public class ButtonActor extends Actor {
 
@@ -38,6 +35,14 @@ public class ButtonActor extends Actor {
     private final int DELAY = 250;
     private long previuousMillis;
 
+    /**
+     * Inicia o botao na posicao Y, e inicia sua animacao ateh a posicao X
+     *
+     * @param x Posicao X final do botao
+     * @param y Posicao Y final do botao
+     * @param speed Velocidade da animacao ate o botao alcancar o X final
+     * @param text Texto exibido no botao
+     */
     public ButtonActor(int x, int y, int speed, String text) {
         super(-300, y);
         setSpr(new Sprite("soccerball.png"));
@@ -53,6 +58,14 @@ public class ButtonActor extends Actor {
         previuousMillis = System.currentTimeMillis();
     }
 
+    /**
+     * Acao do botao. Responsavel por sua animacao. Faz o botao percorrer o
+     * caminho até alcancar a posicao X desejada, e alterna o desenho da bola
+     * caso o botao seja o botao em foco.
+     *
+     * @param action Nao utilizado no botao
+     * @param areaDeRelevancia Nao utilizado no botao
+     */
     @Override
     public void act(Action action, List<Actor> areaDeRelevancia) {
         if (!isOnPosition()) {
@@ -63,37 +76,46 @@ public class ButtonActor extends Actor {
         }
         if (System.currentTimeMillis() - previuousMillis >= DELAY) {
             updateImage();
-            previuousMillis=System.currentTimeMillis();
+            previuousMillis = System.currentTimeMillis();
         }
     }
 
     /**
-     * @return the onPosition
+     * @return verifica se o botao ja alcançou a posicao X desejada
      */
     public boolean isOnPosition() {
         return onPosition;
     }
 
     /**
-     * @return the focused
+     * @return se o botao esta com o foco
      */
     public boolean isFocused() {
         return focused;
     }
 
     /**
-     * @param focused the focused to set
+     * @param focused o foco a ser setado
      */
     public void setFocused(boolean focused) {
         this.focused = focused;
-        image=new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
+        image = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
         updateImage();
     }
 
+    /**
+     * Adiona um listener que deseja saber quando o botao foi ativado
+     *
+     * @param listener listener
+     */
     public void add(ActionListener listener) {
         listeners.add(listener);
     }
 
+    /**
+     * Percorre todos os listeners avisando que o botao foi apertado para que
+     * façam sua ação de acordo com esse botao.
+     */
     public void ActionPerformed() {
         ActionEvent e = new ActionEvent(this, 0, text);
         for (ActionListener listener : listeners) {
@@ -101,11 +123,19 @@ public class ButtonActor extends Actor {
         }
     }
 
+    /**
+     *
+     * @return a imagem do botao a ser desenhada
+     */
     @Override
     public Image getImage() {
         return image;
     }
 
+    /**
+     * Atualiza a imagem do botao, para sua animacao e aparencia da alteracao do
+     * foco.
+     */
     private void updateImage() {
         Graphics2D graphics = (Graphics2D) image.getGraphics();
         graphics.setColor(new Color(10, 10, 10));
@@ -123,7 +153,6 @@ public class ButtonActor extends Actor {
                 graphics.drawImage(ImageManager.getInstance().loadImage("selectionball2.png"), 0, 15, null);
             }
         }
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

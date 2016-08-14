@@ -10,7 +10,8 @@ import models.interfaces.Renderable;
 
 /**
  * Classe que representa o placar no jogo. Por ser um objeto que será impresso na tela, herda de Renderable.
- * Possui sua posição x e y que não serão alteradas durante a execução, 
+ * Possui sua posição x e y que não serão alteradas durante a execução, os valores correspondentes aos gols 
+ * dos dois times da partida, o nome desses times, a imagem e uma fonte para o texto.
  */
 public class Placar implements Renderable {
 
@@ -24,6 +25,15 @@ public class Placar implements Renderable {
     private BufferedImage image;
     private Font font;
 
+    /**
+     * Construtor que recebe como parâmetro o as posições x e y do placar e os nomesdos times.
+     * Os gols são inicializados em 0 , a fonte utilizada é definida em Sans Serif com tamanho 32, em negrito.
+     * E é feito as definições da image.
+     * @param x posição x.
+     * @param y posição y.
+     * @param nomeTime1 nome do time 1.
+     * @param nomeTime2 nome do time 2.
+     */
     public Placar(int x, int y, String nomeTime1, String nomeTime2) {
         this.y = y;
         golsTime1 = 0;
@@ -38,6 +48,9 @@ public class Placar implements Renderable {
         this.x = ((Toolkit.getDefaultToolkit().getScreenSize().width - ImageWidth) / 2) - 10;
     }
 
+    /**
+     * Atualização da imagem utilizando as classes BufferedImage e Graphics, definições de como será desenhado o placar.
+     */
     private void updateImage() {
         image = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
         Graphics2D graphics = (Graphics2D) image.getGraphics();
@@ -50,33 +63,61 @@ public class Placar implements Renderable {
 
     }
 
+    /**
+     * Adiciona gol para o time 1 e atualiza o placar.
+     */
     public void addGolTime1() {
         golsTime1++;
         updateImage();
     }
 
+    
+    /**
+     * Adiciona gol para o time 2 e atualiza o placar.
+     */
     public void addGolTime2() {
         golsTime2++;
         updateImage();
     }
 
+    /**
+     * Retorna a quantidade de gols do time 1.
+     * @return quantidade de gols do time 1.
+     */
     public int getGolTime1() {
         return this.golsTime1;
     }
+    
+    /**
+     * Retorna a quantidade de gols do time 2.
+     * @return quantidade de gols do time 2.
+     */
     public int getGolTime2() {
         return this.golsTime2;
     }
 
+    /**
+     * Retorna a imagem do placar.
+     * @return imagem do placar.
+     */
     @Override
     public Image getImage() {
         return image;
     }
 
+    /**
+     * Retorna a posição x do placar.
+     * @return posição x do placar.
+     */
     @Override
     public int getX() {
         return x;
     }
 
+    /**
+     * Retorna a posição y do placar.
+     * @return posição y do placar.
+     */
     @Override
     public int getY() {
         return y;

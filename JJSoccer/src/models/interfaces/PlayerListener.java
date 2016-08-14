@@ -7,10 +7,10 @@ package models.interfaces;
 import models.JogadorActor;
 
 /**
- *
- * @author costa
+ * Interface nao utilizada na versao final do jogo
  */
+@Deprecated
 public interface PlayerListener {
-    
+
     public void onBall(JogadorActor actor);
 }

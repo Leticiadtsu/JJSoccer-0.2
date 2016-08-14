@@ -11,8 +11,9 @@ import models.JogadorActor;
 import models.Placar;
 
 /**
- *
- * @author
+ * Classe Singleton responsavel pela impressão de imagens numa tela(graphics)
+ * Possui apenas o metodo Render, que pinta uma lista de Renderable em um
+ * Graphics
  */
 public class Renderer {
 
@@ -24,6 +25,8 @@ public class Renderer {
     }
 
     /**
+     * Limpa o conteudo do Graphics recebido, e desenha nesse a lista de sprites
+     * recebidas por parametro
      *
      * @param sprites lista de renderables a ser desenhado
      * @param g Graphics 2D para desenho na tela
