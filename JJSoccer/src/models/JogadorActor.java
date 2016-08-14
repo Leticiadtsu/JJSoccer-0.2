@@ -48,6 +48,7 @@ public class JogadorActor extends Actor {
         sprite = new Sprite("soccer.png");
         speedPixel = ((jogador.getHabilidade(Habilidades.habilidade.Velociadade) * 3) / 100) + 1;
         teste++;
+
     }
 
     public void setComportamento(Comportamentos comportamento) {
@@ -71,12 +72,12 @@ public class JogadorActor extends Actor {
 
     @Override
     public Image getImage() {
-        
+
         BufferedImage edit = new BufferedImage(super.getImage().getWidth(null), super.getImage().getHeight(null) + 20, BufferedImage.TYPE_INT_ARGB);
         Graphics graphics = edit.getGraphics();
         if (comportamento instanceof Controlado) {
             graphics.setColor(Color.red);
-            graphics.fillOval(10,60,50,50);
+            graphics.fillOval(10, 60, 50, 50);
         }
         graphics.setColor(Color.BLUE);
         graphics.drawString("" + speedPixel, (super.getImage().getWidth(null) / 2) / 2, 10);

@@ -102,7 +102,7 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
         }
         Actor futuraPosicao = new ActorBasic(nextX, nextY);
         for (Actor atorAlvo : collisions) {
-            if (this != atorAlvo && !(atorAlvo instanceof Bola)) {
+            if (this != atorAlvo && !(atorAlvo instanceof Bola) && !(atorAlvo instanceof Gol)) {
                 if (collisionArea.isColliding(nextX, nextY, atorAlvo)) {
                     return false;
                 }
