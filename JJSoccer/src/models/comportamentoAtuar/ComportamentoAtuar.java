@@ -11,11 +11,8 @@ import models.interfaces.Action;
  */
 public interface ComportamentoAtuar {
 
-<<<<<<< HEAD
- /**
-=======
     /**
->>>>>>> 7b43b1ca94aae14ed8cd8577777e1e2b67427adb
+     * 
      * Método responsável por fazer com que o objeto aja. Recebbe como parâmetro
      * uma ação e uma lista de atores que a colidem. Deve ser implementado pelas
      * classes que implementam a interface.
