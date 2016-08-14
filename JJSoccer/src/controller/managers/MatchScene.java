@@ -4,6 +4,7 @@
  */
 package controller.managers;
 
+import java.applet.AudioClip;
 import java.awt.Point;
 import java.awt.Polygon;
 import models.Actor;
@@ -12,12 +13,14 @@ import models.interfaces.Action;
 import models.interfaces.Renderable;
 import view.Frame;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import javax.swing.JOptionPane;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.Campo;
 import models.Dimensao;
 import models.Gol;
@@ -25,6 +28,7 @@ import models.JogadorActor;
 import models.JogadorActor.Comportamentos;
 import models.Placar;
 import models.Sprite;
+import models.interfaces.ChangeSceneListener;
 import models.interfaces.GolListener;
 
 /**
@@ -33,35 +37,40 @@ import models.interfaces.GolListener;
  */
 public class MatchScene extends GameScene implements GolListener {
 
-    private int posJogadorControaldo;
+    private int posPlayer1;
+    private int posPlayer2;
+    private AudioClip audioGol;
     private Frame tela;
     private Campo campo;
     private Bola bola;
     private Point posInicialBola;
-    private JogadorActor player;
+    private JogadorActor player1;
+    private JogadorActor player2;
     private Placar placar;
     private List<Actor> todos;
-    private ArrayList<Actor> atoresCasa;
-    private ArrayList<Actor> atoresProximos;
+    private List<Actor> atoresCasa;
+    private List<Actor> atoresVisitantes;
+    private List<Actor> atoresProximos;
+    private List<ChangeSceneListener> sceneListeners;
     private Action genericAction;//Mudar depois no projeto final
     private long inicioPartida;
 
-    private long ultimaTroca;
+    private long ultimaTrocPlayer1;
 
-    public MatchScene(Frame tela) {
+    public MatchScene(Frame tela, ChangeSceneListener lisntener) {
+
+
+        this.tela = tela;
+        sceneListeners = new ArrayList<>();
+        sceneListeners.add(lisntener);
+
+        posPlayer1 = 0;
+        posPlayer1 = 0;
         inicioPartida = System.currentTimeMillis();
         this.tela = tela;
-        ultimaTroca = System.currentTimeMillis();
-
-        Dimensao tamanhoDoCampo = new Dimensao(tela.getWidth(), tela.getHeight() - 100);
-        Dimensao tamanhoDoGol = new Dimensao(80, 200);
-        campo = new Campo(new Point(20, 100), tamanhoDoCampo, tamanhoDoGol);
-        placar = new Placar(tela.getWidth() / 2, 10, "Time da Casa", "Time Visitante");
-        posInicialBola = new Point(tela.getWidth() / 2, tela.getHeight() / 2 + 50);
-        ultimaTroca = System.currentTimeMillis();
-
         todos = new ArrayList<>();
         atoresCasa = new ArrayList<>();
+        atoresVisitantes = new ArrayList<>();
 
         genericAction = new Action() {
             @Override
@@ -81,13 +90,11 @@ public class MatchScene extends GameScene implements GolListener {
 
     private void criarCenario() {
 
-        tela = new Frame("Jogo");
         criarCampo(tela);
 
         gerarTimeCasa();
         gerarTimeVisitante();
-        player = (JogadorActor) atoresCasa.get(posJogadorControaldo);
-        player.setComportamento(Comportamentos.CONTROLADO);
+        initPlayers();
 
         posInicialBola = new Point(tela.getWidth() / 2, tela.getHeight() / 2 + 50);
         bola = new Bola(posInicialBola.x, posInicialBola.y);
@@ -95,14 +102,23 @@ public class MatchScene extends GameScene implements GolListener {
         placar = new Placar(tela.getWidth() / 2, 10, "Time da Casa", "Time Visitante");
 
         todos.add(bola);
-        todos.add(new Gol(0, tela.getHeight() / 2 - 50, this, false));
-        todos.add(new Gol(tela.getWidth() - 80, tela.getHeight() / 2 - 50, this, true));
+        todos.add(new Gol(0, (tela.getHeight() / 2) - 50, this, false));
+        todos.add(new Gol(tela.getWidth() - 80, tela.getHeight() / 2 - 80, this, true));
 
+    }
+
+    private void initPlayers() {
+
+        player1 = (JogadorActor) atoresCasa.get(posPlayer1);
+        player1.setComportamento(Comportamentos.PLAYER_1);
+        player2 = (JogadorActor) atoresVisitantes.get(posPlayer1);
+        player2.setComportamento(Comportamentos.PLAYER_2);
     }
 
     private void adicionarJogadorVisitante(Actor a) {
         a.setSpr(new Sprite("soccer-inimigo.png"));
         todos.add(a);
+        atoresVisitantes.add(a);
     }
 
     @Deprecated
@@ -122,7 +138,6 @@ public class MatchScene extends GameScene implements GolListener {
         JogadorActor jogador = new JogadorActor(Comportamentos.JOGADOR_IA, x, y);
         adicionarJogadorCasa(jogador);
     }
-
 
     private void gerarTimeCasa() {
         Polygon limiteCampo = campo.getLimite();
@@ -162,14 +177,8 @@ public class MatchScene extends GameScene implements GolListener {
     @Override
     public void update() {
         if (System.currentTimeMillis() - inicioPartida <= 60000 * 10/*Dex minitos*/) {
-            realizarPartida();
+            partida();
         } else {
-            JOptionPane.showMessageDialog(null, "Acabou");
-            inicioPartida = System.currentTimeMillis();
-            InputManager.getInstance().reset();
-            for (Actor actor : todos) {
-                actor.reset();
-            }
 
         }
 
@@ -193,21 +202,28 @@ public class MatchScene extends GameScene implements GolListener {
         return actorsNear;
     }
 
-    private void trocarPlayer() {
-        System.err.println("Vou troacar");
-        player = (JogadorActor) atoresCasa.get(posJogadorControaldo);
-        player.setComportamento(Comportamentos.JOGADOR_IA);
-        Random rand = new Random();
-        int novaPosicao = rand.nextInt(atoresCasa.size());
-        if (novaPosicao == posJogadorControaldo) {
-            novaPosicao = (novaPosicao + 1) % atoresCasa.size();
-        }
+    private void trocarPlayer1() {
 
-        posJogadorControaldo = novaPosicao;
-        player = (JogadorActor) atoresCasa.get(posJogadorControaldo);
+        player1 = (JogadorActor) atoresCasa.get(posPlayer1);
+        player1.setComportamento(Comportamentos.JOGADOR_IA);
 
-        player.setComportamento(Comportamentos.CONTROLADO);
-        ultimaTroca = System.currentTimeMillis();
+        posPlayer1 = (posPlayer1 + 1) % (atoresCasa.size() - 1);
+
+        player1 = (JogadorActor) atoresCasa.get(posPlayer1);
+
+        player1.setComportamento(Comportamentos.PLAYER_1);
+
+    }
+
+    private void trocarPlayer2() {
+        player2 = (JogadorActor) atoresVisitantes.get(posPlayer2);
+        player2.setComportamento(Comportamentos.JOGADOR_IA);
+
+        posPlayer2 = (posPlayer2 + 1) % (atoresVisitantes.size() - 1);
+
+        player2 = (JogadorActor) atoresVisitantes.get(posPlayer2);
+
+        player2.setComportamento(Comportamentos.PLAYER_2);
 
     }
 
@@ -221,24 +237,42 @@ public class MatchScene extends GameScene implements GolListener {
             placar.addGolTime1();
         } else {
             placar.addGolTime2();
-
+        }
+        try {
+            audioGol = AudioManager.getInstance().loadAudio("gol.wav");
+            audioGol.play();
+        } catch (IOException ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (Actor todo : todos) {
             todo.reset();
         }
-        
+
     }
 
-    private void realizarPartida() {
+    private void partida() {
 
         for (Actor ator : todos) {
-            ator.act(generateAction(ator), todos);
+            ator.act(generateAction(ator), getActorsNear(ator));
         }
 
-        if (InputManager.getInstance().isJustPressed(KeyEvent.VK_M)) {
-            System.err.println("Trocou");
-            trocarPlayer();
+        if (InputManager.getInstance().isJustPressed(KeyEvent.VK_ALT)) {
+            trocarPlayer1();
         }
+        if (InputManager.getInstance().isJustPressed(KeyEvent.VK_CONTROL)) {
+            trocarPlayer2();
+        }
+        if(InputManager.getInstance().isJustPressed(KeyEvent.VK_ESCAPE)){
+            voltarMenu();
+        }
+
         Collections.sort(todos);
+    }
+
+    public void voltarMenu() {
+        
+        for (ChangeSceneListener sceneListener : sceneListeners) {
+            sceneListener.changeScene(new MenuScene(tela,sceneListener));
+        }
     }
 }

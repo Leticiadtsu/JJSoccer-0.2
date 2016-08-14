@@ -12,9 +12,10 @@ import java.util.List;
 import models.basics.Habilidades;
 import models.basics.Jogador;
 import models.comportamentoAtuar.ComportamentoAtuar;
-import models.comportamentoAtuar.Controlado;
+import models.comportamentoAtuar.Player1;
 import models.comportamentoAtuar.IAGoleiro;
 import models.comportamentoAtuar.IAJogador;
+import models.comportamentoAtuar.Player2;
 
 /**
  *
@@ -23,7 +24,7 @@ import models.comportamentoAtuar.IAJogador;
 public class JogadorActor extends Actor {
 
     public enum Comportamentos {
-        GOLEIRO_IA, JOGADOR_IA, CONTROLADO;
+        GOLEIRO_IA, JOGADOR_IA, PLAYER_1, PLAYER_2;
     }
 
     //Remover
@@ -59,9 +60,11 @@ public class JogadorActor extends Actor {
             case JOGADOR_IA:
                 this.comportamento = new IAJogador();
                 break;
-            case CONTROLADO:
-                this.comportamento = new Controlado();
+            case PLAYER_1:
+                this.comportamento = new Player1();
                 break;
+            case PLAYER_2:
+                this.comportamento = new Player2();
         }
     }
 
@@ -75,14 +78,17 @@ public class JogadorActor extends Actor {
 
         BufferedImage edit = new BufferedImage(super.getImage().getWidth(null), super.getImage().getHeight(null) + 20, BufferedImage.TYPE_INT_ARGB);
         Graphics graphics = edit.getGraphics();
-        if (comportamento instanceof Controlado) {
+        if (comportamento instanceof Player1) {
             graphics.setColor(Color.red);
             graphics.fillOval(10, 60, 50, 50);
+        }else if (comportamento instanceof Player2) {
+            graphics.setColor(Color.blue);
+            graphics.fillOval(10, 60, 50, 50);
         }
-        graphics.setColor(Color.BLUE);
+        
         graphics.drawString("" + speedPixel, (super.getImage().getWidth(null) / 2) / 2, 10);
 
-        graphics.drawImage(super.getImage(), 0, 10, null);
+        graphics.drawImage(super.getImage(), 0, 0, null);
         graphics.dispose();
         return edit;
     }

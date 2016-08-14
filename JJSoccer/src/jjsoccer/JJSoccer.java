@@ -20,8 +20,6 @@ public class JJSoccer {
      */
     public static void main(String[] args) {
         try {
-//            throw new RuntimeException("Deu merda");
-//            throw new ConcurrentModificationException();
             new Game().init();
 
         } catch (ConcurrentModificationException e) {

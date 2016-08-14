@@ -4,20 +4,16 @@
  */
 package controller.managers;
 
-import java.applet.AudioClip;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import models.interfaces.changeSceneListener;
 import view.Frame;
+import models.interfaces.ChangeSceneListener;
 
 /**
  *
  * @author
  */
-public class Game implements changeSceneListener {
+public class Game implements ChangeSceneListener {
 
     private final int DELAY = 10;
     private GameScene scene;
@@ -26,14 +22,14 @@ public class Game implements changeSceneListener {
 
     public void init() {
         previousMillis = System.currentTimeMillis();
-        
+
         tela = new Frame("Jogo");
         scene = new MenuScene(tela, this);
         gameloop();
     }
 
     private void gameloop() {
-        while (!InputManager.getInstance().isPressed(KeyEvent.VK_ESCAPE)) {
+        while (true) {
 
             update();//criar variavel dps
             render();
@@ -47,7 +43,7 @@ public class Game implements changeSceneListener {
             }
 
         }
-        System.exit(0);
+        
     }
 
     private void update() {
@@ -64,6 +60,7 @@ public class Game implements changeSceneListener {
     @Override
     public void changeScene(GameScene scene) {
         this.scene = scene;
+
     }
 
 }

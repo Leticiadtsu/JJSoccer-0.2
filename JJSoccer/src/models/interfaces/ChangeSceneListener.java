@@ -5,12 +5,13 @@
 package models.interfaces;
 
 import controller.managers.GameScene;
+import controller.managers.MenuScene;
 
 /**
  *
  * @author Andre Chateaubriand
  */
-public interface changeSceneListener {
-        public void changeScene(GameScene scene);
+public interface ChangeSceneListener {
+        public void changeScene( GameScene scene);
 
 }

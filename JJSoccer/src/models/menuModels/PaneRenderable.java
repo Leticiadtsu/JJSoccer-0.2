@@ -21,7 +21,7 @@ public class PaneRenderable implements Renderable {
     public PaneRenderable(int width, int height) {
         imagem = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = (Graphics2D) imagem.getGraphics();
-        graphics.setColor(new Color(0, 128, 0));
+        graphics.setColor(new Color(10, 200, 0));
         graphics.fillRect(0, 0, width, height);
     }
 

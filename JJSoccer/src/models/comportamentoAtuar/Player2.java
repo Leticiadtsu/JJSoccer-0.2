@@ -16,7 +16,7 @@ import models.interfaces.Action;
  *
  * @author costa
  */
-public class Controlado implements ComportamentoAtuar {
+public class Player2 implements ComportamentoAtuar {
 
     @Override
     public void agir(JogadorActor chamador, Action action, List<Actor> collisions) {
@@ -32,7 +32,7 @@ public class Controlado implements ComportamentoAtuar {
         if (InputManager.getInstance().isPressed(KeyEvent.VK_LEFT)) {
             chamador.mover(Actor.Direcao.ESQUERDA, action.getLimite(), collisions);
         }
-        if ((InputManager.getInstance().isPressed(KeyEvent.VK_SPACE))) {
+        if ((InputManager.getInstance().isPressed(KeyEvent.VK_SHIFT))) {
             chutar(chamador, collisions);
 
         }

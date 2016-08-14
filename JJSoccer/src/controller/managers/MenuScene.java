@@ -8,21 +8,18 @@ import com.sun.glass.events.KeyEvent;
 import java.applet.AudioClip;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.Actor;
-import models.Sprite;
-import models.interfaces.Action;
 import models.interfaces.Renderable;
-import models.interfaces.changeSceneListener;
 import models.menuModels.ButtonActor;
 import models.menuModels.LogoActor;
 import models.menuModels.PaneRenderable;
 import view.Frame;
+import models.interfaces.ChangeSceneListener;
 
 /**
  *
@@ -30,16 +27,22 @@ import view.Frame;
  */
 public class MenuScene extends GameScene {
 
-    private final changeSceneListener parent;
+    private List<ChangeSceneListener> sceneListeners;
     private AudioClip BGM;
     private LogoActor logo;
     private PaneRenderable pane;
     private final Frame tela;
     private List<ButtonActor> buttons;
 
-    public MenuScene(Frame tela, changeSceneListener parent) {
+    public enum Opcoes {
+        JOGAR, SAIR;
+    }
+
+    public MenuScene(Frame tela, ChangeSceneListener parent) {
         this.tela = tela;
-        this.parent = parent;
+        tela.setVisible(true);
+        this.sceneListeners = new ArrayList<>();
+        this.sceneListeners.add(parent);
         logo = new LogoActor(100, 50, 4);
         pane = new PaneRenderable(tela.getWidth(), tela.getHeight());
 
@@ -50,6 +53,7 @@ public class MenuScene extends GameScene {
             int delay = 1000;
             while (System.currentTimeMillis() - previousMillis < delay) {
             }
+
             BGM.play();
         } catch (IOException ex) {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
@@ -90,6 +94,8 @@ public class MenuScene extends GameScene {
             upButton();
         } else if (InputManager.getInstance().isJustPressed(KeyEvent.VK_ENTER)) {
             enterButton();
+        }if(InputManager.getInstance().isJustPressed(KeyEvent.VK_ESCAPE)){
+            System.exit(0);
         }
     }
 
@@ -136,7 +142,11 @@ public class MenuScene extends GameScene {
 
     public void jogar() {
         //BGM.stop();
-        parent.changeScene(new MatchScene(tela));
+        
+        for (ChangeSceneListener sceneListener : sceneListeners) {
+            sceneListener.changeScene(new MatchScene(tela, sceneListener));
+        }
+
     }
 
     public void sair() {
