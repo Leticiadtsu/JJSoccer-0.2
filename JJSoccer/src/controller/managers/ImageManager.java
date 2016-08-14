@@ -6,13 +6,14 @@ package controller.managers;
 
 /**
  *
- * @author 
+ * @author
  */
-
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 public class ImageManager {
@@ -31,20 +32,25 @@ public class ImageManager {
         return instance;
     }
 
-    public BufferedImage loadImage(String fileName) throws IOException {
-        URL url = getClass().getResource("/resources/" + fileName);
-        if (url == null) {
-            throw new RuntimeException("A imagem /resource/" + fileName
-                    + " não foi encontrada.");
-        } else {
+    public BufferedImage loadImage(String fileName) {
+        try {
+            URL url = getClass().getResource("/resources/" + fileName);
+            if (url == null) {
+                url = getClass().getResource("/resources/x.png");
+            }
+
             String path = url.getPath();
             if (images.containsKey(path)) {
                 return images.get(path);
             } else {
+
                 BufferedImage img = ImageIO.read(url);
                 images.put(path, img);
                 return img;
+
             }
+        } catch (IOException ex) {
+            return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB_PRE);
         }
     }
 

@@ -4,6 +4,8 @@
  */
 package controller.managers;
 
+import view.Frame;
+
 /**
  *
  * @author 

@@ -15,11 +15,8 @@ public class Sprite {
     Image imagem;
 
     public Sprite(String nomeImagem) {
-        try {
             imagem = ImageManager.getInstance().loadImage(nomeImagem);
-        } catch (IOException ex) {
-            Logger.getLogger(Sprite.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
     }
 
     public Image getImage() {

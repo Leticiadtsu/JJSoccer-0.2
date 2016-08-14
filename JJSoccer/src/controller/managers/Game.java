@@ -4,23 +4,31 @@
  */
 package controller.managers;
 
+import java.applet.AudioClip;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import models.interfaces.changeSceneListener;
+import view.Frame;
 
 /**
  *
  * @author
  */
-public class Game {
+public class Game implements changeSceneListener {
 
     private final int DELAY = 10;
     private GameScene scene;
+    private Frame tela;
     private long previousMillis;
-    
 
     public void init() {
         previousMillis = System.currentTimeMillis();
-        scene = new MatchScene();
+        
+        tela = new Frame("Jogo");
+        scene = new MenuScene(tela, this);
         gameloop();
     }
 
@@ -51,6 +59,11 @@ public class Game {
 
     private void render() {
         scene.render();
+    }
+
+    @Override
+    public void changeScene(GameScene scene) {
+        this.scene = scene;
     }
 
 }
