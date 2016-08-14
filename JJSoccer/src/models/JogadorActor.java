@@ -7,8 +7,10 @@ import java.awt.Image;
 import java.awt.Polygon;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import models.interfaces.Action;
 import java.util.List;
+import java.util.Random;
 import models.basics.Habilidades;
 import models.basics.Jogador;
 import models.comportamentoAtuar.ComportamentoAtuar;
@@ -37,7 +39,7 @@ public class JogadorActor extends Actor {
     public JogadorActor(Comportamentos comportamento, int x, int y) {
         super(x, y);
         setComportamento(comportamento);
-        jogador = new Jogador("" + teste);
+        jogador = new Jogador(nomeAleatorio());
         sprite = new Sprite("soccer.png");
         speedPixel = ((jogador.getHabilidade(Habilidades.habilidade.Velociadade) * 3) / 100) + 1;
         teste++;
@@ -53,11 +55,12 @@ public class JogadorActor extends Actor {
 
     }
 
-    public void setComportamento(Comportamentos comportamento, PlayerListener listener){
-        if(comportamento ==Comportamentos.JOGADOR_IA){
+    public void setComportamento(Comportamentos comportamento, PlayerListener listener) {
+        if (comportamento == Comportamentos.JOGADOR_IA) {
             this.comportamento = new IAJogador(listener);
         }
     }
+
     public void setComportamento(Comportamentos comportamento) {
         switch (comportamento) {
             case GOLEIRO_IA:
@@ -92,9 +95,9 @@ public class JogadorActor extends Actor {
             graphics.fillOval(10, 60, 50, 50);
         }
 
-        graphics.drawString("" + speedPixel, (super.getImage().getWidth(null) / 2) / 2, 10);
+        graphics.drawString("" + jogador.getNome(), 0, 10);
 
-        graphics.drawImage(super.getImage(), 0, 0, null);
+        graphics.drawImage(super.getImage(), 0, 10, null);
         graphics.dispose();
         return edit;
     }
@@ -149,5 +152,62 @@ public class JogadorActor extends Actor {
     @Override
     public String toString() {
         return "jogador " + this.jogador.getNome();
+    }
+
+    private String nomeAleatorio() {
+        String nomes = "Madalena Arantes"
+                + "Dionísio\n"
+                + "Malafaia\n"
+                + "Vanderlei\n"
+                + "Teixeira\n"
+                + "Matias\n"
+                + "Arouca\n"
+                + "Gláucio\n"
+                + "Abranches\n"
+                + "Saraiva\n"
+                + "Eloi\n"
+                + "Poças\n"
+                + "Xavier\n"
+                + "Barata\n"
+                + "Ulrico\n"
+                + "Guerra\n"
+                + "Dinarte\n"
+                + "Benedito\n"
+                + "Roriz\n"
+                + "Cristóvão\n"
+                + "Rebotim\n"
+                + "Bernardino\n"
+                + "Candeias\n"
+                + "Jaime\n"
+                + "Onofre\n"
+                + "Gil\n"
+                + "Carvalhal\n"
+                + "Quitério\n"
+                + "Figueiroa\n"
+                + "Levi Brás\n"
+                + "Mauro\n"
+                + "Andrade\n"
+                + "Abraão\n"
+                + "Castanheira\n"
+                + "Marco\n"
+                + "André\n"
+                + "Leticia\n"
+                + "Costa\n"
+                + "chateaubriand\n"
+                + "Tsuchiya\n"
+                + "Matheus\n"
+                + "Osmar\n"
+                + "Maycon\n"
+                + "Diego\n"
+                + "Caio\n"
+                + "Felipe\n"
+                + "Daniel\n"
+                + "Norival\n"
+                + "Antonio\n"
+                + "Highlander\n";
+
+        String[] result = nomes.split("\\n");
+        Random rand = new Random();
+        return result[rand.nextInt(result.length)];
     }
 }

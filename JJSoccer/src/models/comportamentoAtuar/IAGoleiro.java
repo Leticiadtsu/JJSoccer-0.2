@@ -31,10 +31,10 @@ public class IAGoleiro extends InteligenciaArtificial {
     }
 
     private void escolherDirecao(JogadorActor chamador) {
-        if (chamador.getY() > (Toolkit.getDefaultToolkit().getScreenSize().height / 2)+60) {
+        if (chamador.getY() > (Toolkit.getDefaultToolkit().getScreenSize().height / 2)+90) {
             this.direcao = Direcao.CIMA;
         }
-        if (chamador.getY() < (Toolkit.getDefaultToolkit().getScreenSize().height / 2)-60) {
+        if (chamador.getY() < (Toolkit.getDefaultToolkit().getScreenSize().height / 2)-35) {
             this.direcao = Direcao.BAIXO;
         }
     }

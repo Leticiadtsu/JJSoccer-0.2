@@ -51,11 +51,12 @@ public class MatchScene extends GameScene implements GolListener {
     private List<ChangeSceneListener> sceneListeners;
     private Action genericAction;//Mudar depois no projeto final
     private long inicioPartida;
+    private int tempoDeJogo;
 
     private long ultimaTrocPlayer1;
 
     public MatchScene(Frame tela, ChangeSceneListener lisntener) {
-
+        tempoDeJogo = 10;
         this.tela = tela;
         sceneListeners = new ArrayList<>();
         sceneListeners.add(lisntener);
@@ -182,13 +183,13 @@ public class MatchScene extends GameScene implements GolListener {
         adicionarJogadorVisitante(new JogadorActor(Comportamentos.JOGADOR_IA, gridX * 14, gridY * 14));
 
         adicionarJogadorVisitante(new JogadorActor(Comportamentos.JOGADOR_IA, gridX * 16, gridY * 10));
-        adicionarJogadorVisitante(new JogadorActor(Comportamentos.GOLEIRO_IA, gridX * 18 - 65, gridY * 10));
+        adicionarJogadorVisitante(new JogadorActor(Comportamentos.GOLEIRO_IA, (gridX / 2) * 35, gridY * 10));
 
     }
 
     @Override
     public void update() {
-        if (System.currentTimeMillis() - inicioPartida <= 60000 * 5/*Cinco minitos*/) {
+        if (System.currentTimeMillis() - inicioPartida <= 60000 * tempoDeJogo) {
             partida();
         } else {
             JOptionPane.showMessageDialog(tela, "\tFim da partida\nCasa " + placar.getGolTime1() + " X " + placar.getGolTime2() + " Visitante");
