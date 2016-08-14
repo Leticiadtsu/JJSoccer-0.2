@@ -22,13 +22,14 @@ public class IAJogador extends InteligenciaArtificial {
     private boolean voltarPosicaoOriginal;
 
     public IAJogador() {
-        direcao = Actor.Direcao.BAIXO;
+
         voltarPosicaoOriginal = true;
+        direcao = Actor.Direcao.BAIXO;
     }
 
     @Override
     public void agir(JogadorActor chamador, Action action, List<Actor> collisions) {
-        if (chamador.getX() > chamador.getXInicial() && chamador.getY() > chamador.getYInicial()) {
+        if (chamador.getX() == chamador.getXInicial() && chamador.getY() == chamador.getYInicial()) {
             voltarPosicaoOriginal = false;
         }
         if (voltarPosicaoOriginal) {
