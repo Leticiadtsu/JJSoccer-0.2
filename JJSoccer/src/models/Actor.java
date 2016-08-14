@@ -100,7 +100,7 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
      * @param nextX o valor X da posição desejada.
      * @param nextY o valor Y da posição desejada.
      * @param limite quadro de limite do campo.
-     * @param collisions atores que colidem com esse ator na cena.
+     * @param actorNears atores proximos esse ator na cena.
      * @return se a posicao é válida ou não.
      */
     protected boolean canMove(int nextX, int nextY, Polygon limite, List<Actor> actorNears) {
