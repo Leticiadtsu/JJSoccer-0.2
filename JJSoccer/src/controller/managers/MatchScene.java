@@ -119,7 +119,7 @@ public class MatchScene extends GameScene implements GolListener {
 
         todos.add(bola);
         todos.add(new Gol(0, (tela.getHeight() / 2) - 50, this, false));
-        todos.add(new Gol(tela.getWidth() - 80, tela.getHeight() / 2 - 80, this, true));
+        todos.add(new Gol(tela.getWidth() - 80, tela.getHeight() / 2 - 50, this, true));
 
     }
 
@@ -272,7 +272,7 @@ public class MatchScene extends GameScene implements GolListener {
             ator.act(generateAction(ator), getActorsNear(ator));
         }
 
-        if (InputManager.getInstance().isJustPressed(KeyEvent.VK_ALT)) {
+        if (InputManager.getInstance().isJustPressed(KeyEvent.VK_Q)) {
             trocarPlayer1();
         }
         if (InputManager.getInstance().isJustPressed(KeyEvent.VK_CONTROL)) {
