@@ -287,6 +287,7 @@ public class MatchScene extends GameScene implements GolListener {
                 tocandoTheme = false;
             }else{
                 BGM.loop();
+                tocandoTheme = true;
             }
         }
 
