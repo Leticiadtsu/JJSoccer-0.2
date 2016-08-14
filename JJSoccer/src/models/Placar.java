@@ -1,7 +1,3 @@
-/*
- * Here comes the text of your license
- * Each line should be prefixed with  * 
- */
 package models;
 
 import java.awt.Color;
@@ -13,8 +9,8 @@ import java.awt.image.BufferedImage;
 import models.interfaces.Renderable;
 
 /**
- *
- * @author Andre Chateaubriand
+ * Classe que representa o placar no jogo. Por ser um objeto que será impresso na tela, herda de Renderable.
+ * Possui sua posição x e y que não serão alteradas durante a execução, 
  */
 public class Placar implements Renderable {
 

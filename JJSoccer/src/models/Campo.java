@@ -12,8 +12,9 @@ import java.awt.image.BufferedImage;
 import models.interfaces.Renderable;
 
 /**
- *
- * @author
+ * Classe responsável pela definição do campo utilizado no jogo. É uma classe
+ * que será renderizada, portanto implementa a interface Renderable. Possui uma
+ * imagem que a define, suas dimensões, um polígono que a determina e sua posição.
  */
 public class Campo implements Renderable {
 
@@ -22,6 +23,14 @@ public class Campo implements Renderable {
     private final Polygon poligono;
     private final Point posicao;
 
+    /**
+     * Construtor do campo que recebe como parâmetro a sua posição, dimensão (altura e largura),
+     * e a dimensão do gol. É determinado todas as informações do campo, como o seu tamanho e o
+     * tamanho do gol. 
+     * @param posicao posição do campo.
+     * @param dimencao dimensão do campo.
+     * @param tamanhoDoGol dimensão do gol.
+     */
     public Campo(Point posicao, Dimensao dimencao, Dimensao tamanhoDoGol) {
         this.dimencao = dimencao;
         Dimensao gol = tamanhoDoGol;
@@ -80,29 +89,56 @@ public class Campo implements Renderable {
 
     }
 
+    /**
+     * Verifica se o retângula passado como parâmetro, estácontido no polígono.
+     * @param rect
+     * @return Verdadeiro ou falso.
+     */
     public boolean isInside(Rectangle rect) {
         return !poligono.contains(rect);
     }
 
+    /**
+     * Retorna o polígono correspondente ao limite do campo.
+     * @return polígono correspondente ao limite do campo.
+     */
     public Polygon getLimite() {
         return poligono;
     }
 
+    /**
+     * Retorna a dimensão do campo.
+     *
+     * @return dimensão do campo.
+     */
     @Deprecated
     public Dimensao getDimencao() {
         return dimencao;
     }
 
+    /**
+     * Retorna a imagem do campo.
+     *
+     * @return imagem do campo.
+     */
     @Override
     public Image getImage() {
         return imagem;
     }
 
+    /**
+     * Retorna um valor correspondente a posição X do campo, que sempre será -20.
+     * @return -20.
+     */
     @Override
     public int getX() {
         return -20;
     }
 
+    /**
+     * Retorna um valor correspondente a posição Y do campo, que sempre será 0.
+     * @return 0.
+     */
     @Override
     public int getY() {
         return 0;
