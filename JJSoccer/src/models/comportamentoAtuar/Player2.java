@@ -13,11 +13,20 @@ import models.JogadorActor;
 import models.interfaces.Action;
 
 /**
- *
- * @author costa
+ * Classe responsável por receber os pressionamentos do teclado para movimentar
+ * o jogador.
  */
 public class Player2 implements ComportamentoAtuar {
 
+    /**
+     * Método responsável por fazer com que o jogador aja. Recebbe como
+     * parâmetro uma ação e uma lista de atores que a colidem. Indica as
+     * direções que o jogador deve seguir.
+     *
+     * @param chamador JogadorActor que chamou a ação.
+     * @param action dados necessários para a ação.
+     * @param collisions lista de atores que colidem.
+     */
     @Override
     public void agir(JogadorActor chamador, Action action, List<Actor> collisions) {
         if (InputManager.getInstance().isPressed(KeyEvent.VK_UP)) {
@@ -38,6 +47,13 @@ public class Player2 implements ComportamentoAtuar {
         }
     }
 
+    /**
+     * Verifica a ação de chutar a bola, qual o sentido que a bola deve seguir
+     * ao ser chutada
+     *
+     * @param chamador JogadorActor que chamou a ação.
+     * @param collisions lista de atores que colidem.
+     */
     public static void chutar(Actor chamador, List<Actor> collisions) {
         for (Actor actor : collisions) {
             if (actor instanceof Bola) {

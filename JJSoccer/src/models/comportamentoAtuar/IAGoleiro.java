@@ -13,17 +13,29 @@ import models.JogadorActor;
 import models.interfaces.Action;
 
 /**
- *
- * @author costa
+ * Classe que define a ação do goleiro, simplesmente tem uma direção como
+ * atributo.
  */
 public class IAGoleiro extends InteligenciaArtificial {
 
     private Direcao direcao;
 
+    /**
+     * Inicialmente a direção que o goleiro está "olhando" é para baixo.
+     */
     public IAGoleiro() {
         direcao = Direcao.BAIXO;
     }
 
+    /**
+     * Método responsável por fazer com que o goleiro aja. Recebe como
+     * parâmetro uma ação e uma lista de atores que a colidem. A sua
+     * movimentação é definida apenas alterando de direção.
+     *
+     * @param chamador JogadorActor que chamou a açãoo.
+     * @param action dados necessários para a ação.
+     * @param collisions lista de atores que colidem.
+     */
     @Override
     public void agir(JogadorActor chamador, Action action, List<Actor> collisions) {
         escolherDirecao(chamador);
@@ -31,10 +43,10 @@ public class IAGoleiro extends InteligenciaArtificial {
     }
 
     private void escolherDirecao(JogadorActor chamador) {
-        if (chamador.getY() > (Toolkit.getDefaultToolkit().getScreenSize().height / 2)+90) {
+        if (chamador.getY() > (Toolkit.getDefaultToolkit().getScreenSize().height / 2) + 90) {
             this.direcao = Direcao.CIMA;
         }
-        if (chamador.getY() < (Toolkit.getDefaultToolkit().getScreenSize().height / 2)-35) {
+        if (chamador.getY() < (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 35) {
             this.direcao = Direcao.BAIXO;
         }
     }

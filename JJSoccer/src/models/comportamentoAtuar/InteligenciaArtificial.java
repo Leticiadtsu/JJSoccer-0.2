@@ -5,8 +5,9 @@
 package models.comportamentoAtuar;
 
 /**
- *
- * @author costa
+ * Todos os jogadores que não estã sendo controlados por um player possui uma
+ * inteligência artificial de como agir durante a execução do jogo. Ã‰ a
+ * definição dos comportamentos dos jogadores.
  */
 public abstract class InteligenciaArtificial implements ComportamentoAtuar {
     

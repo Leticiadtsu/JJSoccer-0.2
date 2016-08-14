@@ -4,10 +4,7 @@
  */
 package controller.managers;
 
-/**
- *
- * @author Andre Chateaubriand
- */
+@Deprecated
 public class Mp3 {
     
 }
