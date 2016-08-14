@@ -1,7 +1,3 @@
-/*
- * Here comes the text of your license
- * Each line should be prefixed with  * 
- */
 package models.comportamentoAtuar;
 
 import java.awt.Toolkit;
@@ -13,17 +9,27 @@ import models.JogadorActor;
 import models.interfaces.Action;
 
 /**
- *
- * @author costa
+ * Classe que define a ação do goleiro, simplesmente tem uma direção como atributo.
  */
 public class IAGoleiro extends InteligenciaArtificial {
 
     private Direcao direcao;
 
+    /**
+     * Inicialmente a direção que o goleiro está "olhando" é para baixo. 
+     */
     public IAGoleiro() {
         direcao = Direcao.BAIXO;
     }
 
+    /**
+     * Método responsável por fazer com que o goleiro aja. Recebbe como parâmetro
+     * uma ação e uma lista de atores que a colidem. A sua movimentação é definida apenas alterando de direção.
+     *
+     * @param chamador JogadorActor que chamou a ação.
+     * @param action dados necessários para a ação.
+     * @param collisions lista de atores que colidem.
+     */
     @Override
     public void agir(JogadorActor chamador, Action action, List<Actor> collisions) {
         escolherDirecao(chamador);

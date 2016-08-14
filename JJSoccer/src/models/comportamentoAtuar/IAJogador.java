@@ -1,7 +1,3 @@
-/*
- * Here comes the text of your license
- * Each line should be prefixed with  * 
- */
 package models.comportamentoAtuar;
 
 import controller.managers.GameScene;
@@ -16,8 +12,8 @@ import models.interfaces.Action;
 import models.interfaces.PlayerListener;
 
 /**
- *
- * @author costa
+ * Interface que define a Inteligência Artificial dos jogadores que estarão em campo.
+ * Onde a lógica de toda a movimentação dos jogadores é definifda.
  */
 public class IAJogador extends InteligenciaArtificial {
 
@@ -29,25 +25,42 @@ public class IAJogador extends InteligenciaArtificial {
     private boolean voltarPosicaoOriginal;
     private List<PlayerListener> listeners;
 
+    /**
+     * Construtor que recebe como parâmetro um ouvinte, esse ouvinte é então adicionado
+     * à uma lista de ouvintes, o atributo voltar para a posição original é inicializado com verdadeiro
+     * e a direção é definida de forma aleatória.
+     * @param listener ouvinte.
+     */
     public IAJogador(PlayerListener listener) {
         listeners = new ArrayList<>();
         listeners.add(listener);
         voltarPosicaoOriginal = true;
-        direcao = gerarDirecaoAleatria();
+        direcao = gerarDirecaoAleatoria();
     }
 
+    /**
+     * Construtor que não receber nenhum parâmetro, cria uma lista de ouvintes,
+     * o atributo voltar para a posição original é inicializado com verdadeiro
+     * e a direção é definida de forma aleatória.
+     */
     public IAJogador() {
         listeners = new ArrayList<>();
         voltarPosicaoOriginal = true;
-        direcao = gerarDirecaoAleatria();
+        direcao = gerarDirecaoAleatoria();
     }
 
+    /**
+     * Definição da ação agir dos jogadores, para a lógica é feita umas verificações tais como, se o jogador está com a bola,
+     * se está próximo da bola, escolher direção, seguir a bola e voltar para a posição original.
+     * @param chamador JogadorActor que chamou a ação.
+     * @param action dados necessários para a ação.
+     * @param actorsNear lista de atores que estão próximos
+     */
     @Override
     public void agir(JogadorActor chamador, Action action, List<Actor> actorsNear) {
         for (Actor actor : actorsNear) {
             if(chamador.isColliding(actor) && actor instanceof Bola){
                 estaComAbola(chamador);
-                
             }
         }
         Actor bola = proximoBola(actorsNear);
@@ -95,7 +108,7 @@ public class IAJogador extends InteligenciaArtificial {
     private void escolherDirecao(JogadorActor chamador) {
 
         if (chamador.getY() > chamador.getYInicial() + RANGE || chamador.getY() < chamador.getYInicial() - RANGE || chamador.getX() > chamador.getXInicial() + RANGE || chamador.getX() < chamador.getXInicial() - RANGE) {
-            direcao = gerarDirecaoAleatria();
+            direcao = gerarDirecaoAleatoria();
             voltarPosicaoOriginal = true;
         }
     }
@@ -113,7 +126,7 @@ public class IAJogador extends InteligenciaArtificial {
         }
     }
 
-    private Direcao gerarDirecaoAleatria() {
+    private Direcao gerarDirecaoAleatoria() {
         int direcaoAleatoria = rand.nextInt(NUM_DIRECOES);
         switch (direcaoAleatoria) {
             case 0:
