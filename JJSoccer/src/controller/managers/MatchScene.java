@@ -40,6 +40,7 @@ public class MatchScene extends GameScene implements GolListener {
     private int posPlayer1;
     private int posPlayer2;
     private AudioClip audioGol;
+    private AudioClip BGM;
     private Frame tela;
     private Campo campo;
     private Bola bola;
@@ -79,6 +80,7 @@ public class MatchScene extends GameScene implements GolListener {
             }
         };
         criarCenario();
+        initAudio();
 
     }
 
@@ -88,6 +90,20 @@ public class MatchScene extends GameScene implements GolListener {
         campo = new Campo(new Point(20, 100), tamanhoDoCampo, tamanhoDoGol);
     }
 
+    private void initAudio(){
+        long previousMillis = System.currentTimeMillis();
+        try {
+            BGM = AudioManager.getInstance().loadAudio("Theme2.wav");
+
+            int delay = 1000;
+            while (System.currentTimeMillis() - previousMillis < delay) {
+            }
+
+            BGM.loop();
+        } catch (IOException ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void criarCenario() {
 
         criarCampo(tela);
@@ -179,7 +195,7 @@ public class MatchScene extends GameScene implements GolListener {
         if (System.currentTimeMillis() - inicioPartida <= 60000 * 10/*Dex minitos*/) {
             partida();
         } else {
-
+            voltarMenu();
         }
 
     }
@@ -265,12 +281,15 @@ public class MatchScene extends GameScene implements GolListener {
         if(InputManager.getInstance().isJustPressed(KeyEvent.VK_ESCAPE)){
             voltarMenu();
         }
+        if(InputManager.getInstance().isJustPressed(KeyEvent.VK_F3)){
+            BGM.loop();
+        }
 
         Collections.sort(todos);
     }
 
     public void voltarMenu() {
-        
+        BGM.stop();
         for (ChangeSceneListener sceneListener : sceneListeners) {
             sceneListener.changeScene(new MenuScene(tela,sceneListener));
         }
