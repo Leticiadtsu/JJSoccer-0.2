@@ -16,6 +16,7 @@ import models.comportamentoAtuar.Player1;
 import models.comportamentoAtuar.IAGoleiro;
 import models.comportamentoAtuar.IAJogador;
 import models.comportamentoAtuar.Player2;
+import models.interfaces.PlayerListener;
 
 /**
  *
@@ -81,11 +82,11 @@ public class JogadorActor extends Actor {
         if (comportamento instanceof Player1) {
             graphics.setColor(Color.red);
             graphics.fillOval(10, 60, 50, 50);
-        }else if (comportamento instanceof Player2) {
+        } else if (comportamento instanceof Player2) {
             graphics.setColor(Color.blue);
             graphics.fillOval(10, 60, 50, 50);
         }
-        
+
         graphics.drawString("" + speedPixel, (super.getImage().getWidth(null) / 2) / 2, 10);
 
         graphics.drawImage(super.getImage(), 0, 0, null);
@@ -93,26 +94,28 @@ public class JogadorActor extends Actor {
         return edit;
     }
 
-    public void mover(Direcao direcao, Polygon limite, List<Actor> collisions) {
+    public boolean mover(Direcao direcao, Polygon limite, List<Actor> collisions) {
+        boolean moveu = false;
         if (null != direcao) {
             switch (direcao) {
                 case CIMA:
-                    move(0, -1, limite, collisions);
+                    moveu = move(0, -1, limite, collisions);
                     break;
                 case BAIXO:
-                    move(0, 1, limite, collisions);
+                    moveu = move(0, 1, limite, collisions);
                     break;
                 case ESQUERDA:
-                    move(-1, 0, limite, collisions);
+                    moveu = move(-1, 0, limite, collisions);
                     break;
                 case DIREITA:
-                    move(1, 0, limite, collisions);
+                    moveu = move(1, 0, limite, collisions);
                     break;
                 default:
                     break;
             }
         }
         empurrarBola(direcao, collisions);
+        return moveu;
     }
 
     public void empurrarBola(Direcao direcao, List<Actor> collisions) {

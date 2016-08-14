@@ -85,7 +85,7 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
      * @param actorNears atores que colidem com esse ator na cena
      * @return se a posicao eh valida ou nao
      */
-    protected boolean canMove(int nextX, int nextY, Polygon limite, List<Actor> actorNears) {
+    public boolean canMove(int nextX, int nextY, Polygon limite, List<Actor> actorNears) {
         Rectangle r = new Rectangle(nextX, nextY, collisionArea.getLargura(), collisionArea.getAltura());
         if ((!limite.contains(r) && (limite.intersects(r)))) {
             return false;
@@ -123,14 +123,16 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
      * @param limite
      * @param collisions
      */
-    protected void move(int horizontal, int vertical, Polygon limite, List<Actor> collisions) {
+    protected boolean move(int horizontal, int vertical, Polygon limite, List<Actor> collisions) {
         //colisao com outros Jogadores
 
         if (canMove(x + speedPixel * horizontal, y + speedPixel * vertical, limite, collisions)) {
             setX(x + speedPixel * horizontal);
             setY(y + speedPixel * vertical);
             setDirecao(horizontal, vertical);
+            return true;
         }
+        return false;
     }
 
     private void setDirecao(int horizontal, int vertical) {
@@ -177,6 +179,10 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
      */
     public boolean isColliding(Actor actor) {
         return (collisionArea.isColliding(this, actor));
+    }
+
+    public boolean isNear(Actor actor) {
+        return (collisionArea.isNear(this, actor));
     }
 
     /**

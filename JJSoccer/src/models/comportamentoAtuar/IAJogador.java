@@ -57,7 +57,9 @@ public class IAJogador extends InteligenciaArtificial {
 
             } else {
                 escolherDirecao(chamador);
-                chamador.mover(direcao, action.getLimite(), actorsNear);
+                if(!chamador.mover(direcao, action.getLimite(), actorsNear)){
+                    voltarPosicaoOriginal = true;
+                }
             }
         }
     }

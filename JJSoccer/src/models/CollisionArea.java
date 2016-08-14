@@ -12,7 +12,7 @@ public class CollisionArea {
     //Constante de ajuste distancia da colisao
 //    public final int  AJUSTE = 2;
     private final Dimensao areaColisao;
-    private final Dimensao taxaAproximacao; 
+    private final Dimensao taxaAproximacao;
 
     /**
      * Instancia uma nova caixa de Colisao com a altura e largura definida
@@ -22,7 +22,7 @@ public class CollisionArea {
      */
     public CollisionArea(int largura, int altura) {
         areaColisao = new Dimensao(largura, altura);
-        taxaAproximacao = new Dimensao(largura*2, altura*2);
+        taxaAproximacao = new Dimensao(largura * 2, altura * 2);
     }
 
     /**
@@ -64,6 +64,7 @@ public class CollisionArea {
 
     /**
      * Metodo que verifica se há uma colisao a partir de um ponto
+     *
      * @param posX posicao em X
      * @param posY posicao em Y
      * @param actorAlvo actor que pode haver colisao
@@ -93,34 +94,31 @@ public class CollisionArea {
         //se ele nao ficara acima nem embaixo nem a esquerda nem a direita entao esta colidindo
         return true;
     }
-    
-    public boolean isNear(Actor actor1, Actor actor2){
-       //actor1 embaixo actor2
-        if (actor1 != actor2) {
-            if ((getTopColisionLine(actor1) + taxaAproximacao.getAltura()) > getBottonColisionLine(actor2)) {
-                System.err.println(" 1: " + actor1.toString() + " 2: " + actor2.toString());
-                return false;
-            }
-            //actor1 em cima actro2
-            if ((getBottonColisionLine(actor1) + taxaAproximacao.getAltura()) < getTopColisionLine(actor2)) {
-                System.err.println(" 1: " + actor1.toString() + " 2: " + actor2.toString());
-                return false;
-            }
-            //actor1 a direita de actor2
-            if ((getLeftColisionLine(actor1) + taxaAproximacao.getLargura())> getRightColisionLine(actor2)) {
-                System.err.println(" 1: " + actor1.toString() + " 2: " + actor2.toString());
-                return false;
-            }
-            //actor1 a esquerda de actor2
-            if ((getRightColisionLine(actor1) + taxaAproximacao.getLargura()) < getLeftColisionLine(actor2)) {
-                System.err.println(" 1: " + actor1.toString() + " 2: " + actor2.toString());
-                return false;
-            }
-            //se ele nao esta acima nem embaixo nem a esquerda nem a direita entao esta colidindo
-            System.out.println("COLIDIU!!!! 1: " + actor1.toString() + " 2: " + actor2.toString());
-            return true;
+
+    public boolean isNear(Actor actor1, Actor actor2) {
+        //actor1 embaixo actor2
+        if (getTopColisionLine(actor1) - actor1.getCollisionArea().getAltura() * 2 > getBottonColisionLine(actor2)) {
+//                System.err.println(" 1: " + actor1.toString() + " 2: " + actor2.toString());
+            return false;
         }
-        return false;
+        //actor1 em cima actro2
+        if (getBottonColisionLine(actor1) + actor1.getCollisionArea().getAltura() * 2 < getTopColisionLine(actor2)) {
+//                System.err.println(" 1: " + actor1.toString() + " 2: " + actor2.toString());
+            return false;
+        }
+        //actor1 a direita de actor2
+        if (getLeftColisionLine(actor1) - actor1.getCollisionArea().getLargura() * 2 > getRightColisionLine(actor2)) {
+//                System.err.println(" 1: " + actor1.toString() + " 2: " + actor2.toString());
+            return false;
+        }
+        //actor1 a esquerda de actor2
+        if (getRightColisionLine(actor1) + actor1.getCollisionArea().getLargura() * 2 < getLeftColisionLine(actor2)) {
+//                System.err.println(" 1: " + actor1.toString() + " 2: " + actor2.toString());
+            return false;
+        }
+        //se ele nao esta acima nem embaixo nem a esquerda nem a direita entao esta colidindo
+//            System.out.println("COLIDIU!!!! 1: " + actor1.toString() + " 2: " + actor2.toString());
+        return true;
     }
 
     /**

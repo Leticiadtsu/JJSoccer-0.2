@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Campo;
@@ -58,7 +57,7 @@ public class MatchScene extends GameScene implements GolListener {
 
     private long ultimaTrocPlayer1;
 
-    public MatchScene(Frame tela, ChangeSceneListener lisntener) {
+    public MatchScene(Frame tela, ChangeSceneListener lisntener)  {
 
 
         this.tela = tela;
@@ -211,7 +210,7 @@ public class MatchScene extends GameScene implements GolListener {
     private List<Actor> getActorsNear(Actor actor) {
         List actorsNear = new ArrayList<Actor>();
         for (Actor atorVerificado : todos) {
-            if (actor.isColliding(atorVerificado)) {
+            if (actor.isNear(atorVerificado)) {
                 actorsNear.add(atorVerificado);
             }
         }
