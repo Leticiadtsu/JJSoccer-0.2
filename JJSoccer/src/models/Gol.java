@@ -1,7 +1,3 @@
-/*
- * Here comes the text of your license
- * Each line should be prefixed with  * 
- */
 package models;
 
 import java.util.ArrayList;
@@ -10,14 +6,23 @@ import models.interfaces.Action;
 import models.interfaces.GolListener;
 
 /**
- *
- * @author Andre Chateaubriand
+ * Classe que representa o gol do jogo. Possui uma lista de ouvintes e o um
+ * atributo booleano que representa se o gol é do time casa ou não. Commo herda
+ * de Actor, é uma classe renderizável.
  */
 public class Gol extends Actor {
 
     private List<GolListener> listeners;
     private boolean timeCasa;
 
+    /**
+     * Construtor que recebe como parâmetro um ouvinte e a informação se o gol é
+     * do time casa.
+     *
+     * @param listener ouvinte.
+     * @param timeCasa verdadeiro se o gol é do time casa, ou falso caso
+     * contrário.
+     */
     public Gol(GolListener listener, boolean timeCasa) {
         sprite = new Sprite("gol.png");
         setCollisionArea(new CollisionArea(80, 200));
@@ -26,6 +31,16 @@ public class Gol extends Actor {
         this.timeCasa = timeCasa;
     }
 
+    /**
+     * Construtor que recebe como parâmetro um ouvinte, a informação se o gol é
+     * do time casa e a as posições x e y.
+     *
+     * @param x
+     * @param y
+     * @param listener ouvinte.
+     * @param timeCasa verdadeiro se o gol é do time casa, ou falso caso
+     * contrário.
+     */
     public Gol(int x, int y, GolListener listener, boolean timeCasa) {
         super(x, y);
         sprite = new Sprite("gol.png");
@@ -35,6 +50,13 @@ public class Gol extends Actor {
         this.timeCasa = timeCasa;
     }
 
+    /**
+     * Sobreescrita do método act de Actor, o qual indica se houve ou não um
+     * gol.
+     *
+     * @param action dados necessários para a ação.
+     * @param areaDeRelevancia lista de atores que colidem com ele.
+     */
     @Override
     public void act(Action action, List<Actor> areaDeRelevancia) {
         for (Actor actor : areaDeRelevancia) {
@@ -48,13 +70,20 @@ public class Gol extends Actor {
             }
         }
     }
-    
-    public void addListener(GolListener listener){
+
+    /**
+     * Adiciona um ouvinte na lista de ouvintes do gol.
+     *
+     * @param listener ouvinte.
+     */
+    public void addListener(GolListener listener) {
         this.listeners.add(listener);
     }
 
     /**
-     * @return the timeCasa
+     * Retorna se o o gol é do time casa, ou não.
+     *
+     * @return verdadeiro, se o o gol é do time casa, ou falso caso contrário.
      */
     public boolean isTimeCasa() {
         return timeCasa;
