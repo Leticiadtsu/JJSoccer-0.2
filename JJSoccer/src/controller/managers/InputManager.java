@@ -1,16 +1,25 @@
 package controller.managers;
 
+<<<<<<< HEAD
 /**
  * Classe unica, que realiza o tratamento de entrada de teclas, ela armazena
  * todas entradas do toclado durante o jogo, e disponibilizando informações
  * sobre estas apartir dos seus metodos. Como o contole do jogo deve ser
  * executado por um unico objeto esta classe utiliza o padrão Singleton
  */
+=======
+>>>>>>> 7b43b1ca94aae14ed8cd8577777e1e2b67427adb
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Classe unica, que realiza o tratamento de entrada de teclas, ela armazena
+ * todas entradas do toclado durante o jogo, e disponibilizando informações
+ * sobre estas apartir dos seus metodos. Como o contole do jogo deve ser
+ * executado por um unico objeto esta classe utiliza o padrão Singleton
+ */
 public class InputManager implements KeyListener {
 
     static protected int KEY_RELEASED = 0;
@@ -105,8 +114,12 @@ public class InputManager implements KeyListener {
      *
      * @param e
      */
+<<<<<<< HEAD
+=======
+    @Override
+>>>>>>> 7b43b1ca94aae14ed8cd8577777e1e2b67427adb
     public void keyTyped(KeyEvent e) {
-        // Rotina não utilizada. Evento de tecla teclada.
+
     }
 
     /**

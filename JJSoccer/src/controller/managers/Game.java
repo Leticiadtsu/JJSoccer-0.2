@@ -1,10 +1,5 @@
-/*
- * Here comes the text of your license
- * Each line should be prefixed with  * 
- */
 package controller.managers;
 
-import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import view.Frame;
 import models.interfaces.ChangeSceneListener;
@@ -29,7 +24,7 @@ public class Game implements ChangeSceneListener {
     public void init() {
         previousMillis = System.currentTimeMillis();
 
-        tela = new Frame("Jogo");
+        tela = new Frame("JJsoccer");
         scene = new MenuScene(tela, this);
         gameloop();
     }
@@ -41,12 +36,10 @@ public class Game implements ChangeSceneListener {
      */
     private void gameloop() {
         while (true) {
-
-            update();//criar variavel dps
-            render();
-            InputManager.getInstance().update();
             try {
-                Thread.sleep(10);
+                update();//criar variavel dps
+                render();
+                InputManager.getInstance().update();
                 //throw  new Exception();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Erro no looping de jogo!!!\n\tFinalizando sitema ");
