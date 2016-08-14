@@ -5,6 +5,7 @@
 package models;
 
 import controller.managers.InputManager;
+import java.awt.Graphics;
 import models.interfaces.Action;
 import models.interfaces.Renderable;
 import java.awt.Image;
@@ -81,27 +82,17 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
      * @param nextX o valor X da posicao desejada
      * @param nextY o valor Y da posicao desejada
      * @param limite quadro de limite do campo
-     * @param collisions atores que colidem com esse ator na cena
+     * @param actorNears atores que colidem com esse ator na cena
      * @return se a posicao eh valida ou nao
      */
-    protected boolean canMove(int nextX, int nextY, Polygon limite, List<Actor> collisions) {
-        //limites superiores do campo
-        /* if (nextX < 0 || nextY < 0) {
-            return false;
-        }
-        //limites inferiores do campo
-        if (nextX > limite.getLargura() || nextY > limite.getAltura()) {
-            return false;
-        }
-       if(limite.c)*/
-
+    protected boolean canMove(int nextX, int nextY, Polygon limite, List<Actor> actorNears) {
         Rectangle r = new Rectangle(nextX, nextY, collisionArea.getLargura(), collisionArea.getAltura());
         if ((!limite.contains(r) && (limite.intersects(r)))) {
             return false;
 
         }
         Actor futuraPosicao = new ActorBasic(nextX, nextY);
-        for (Actor atorAlvo : collisions) {
+        for (Actor atorAlvo : actorNears) {
             if (this != atorAlvo && !(atorAlvo instanceof Bola) && !(atorAlvo instanceof Gol)) {
                 if (collisionArea.isColliding(futuraPosicao, atorAlvo)) {
                     return false;
@@ -232,7 +223,10 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
 
     public Image getImage() {
         if (InputManager.getInstance().isPressed(KeyEvent.VK_F5)) {
-            return new BufferedImage(getCollisionArea().getLargura(), getCollisionArea().getAltura(), BufferedImage.TYPE_INT_RGB);
+            BufferedImage edit = new BufferedImage(getCollisionArea().getLargura(), getCollisionArea().getAltura(), BufferedImage.TYPE_INT_ARGB);
+            Graphics graphics = edit.getGraphics();
+            graphics.fillRect(0, 0, getCollisionArea().getLargura(), getCollisionArea().getLargura());
+            return edit;
         }
         return getSprite().getImage();
 
@@ -247,7 +241,8 @@ public abstract class Actor implements Renderable, Comparable<Actor> {
         }
         return collisions;
     }
-    public void reset(){
+
+    public void reset() {
         setX(XInicial);
         setY(YInicial);
     }

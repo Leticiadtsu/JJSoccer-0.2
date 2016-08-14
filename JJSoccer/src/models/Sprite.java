@@ -2,9 +2,6 @@ package models;
 
 import controller.managers.ImageManager;
 import java.awt.Image;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
