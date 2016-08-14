@@ -22,7 +22,8 @@ import models.interfaces.PlayerListener;
  * para os jogadores. Possui um atributo da classe Jogador, apenas para
  * referenciá-lo. Métodos como a sua movimentação, verificação de colisão,
  * controle da direção são idênticos à qualquer ator, por este motivo herda de
- * actor.
+ * actor, o comportamento específico de um JogadorActor e um atributo portante
+ * este pode ser moficado em tempo de execução.
  */
 public class JogadorActor extends Actor {
 
@@ -111,7 +112,8 @@ public class JogadorActor extends Actor {
     }
 
     /**
-     *Método responsável pela ação do jogador, a cada gameloop. 
+     * Método responsável pela ação do jogador, a cada gameloop.
+     *
      * @param action dados necessários para a ação.
      * @param collisions lista de atores que colidem com esse.
      */
@@ -121,8 +123,9 @@ public class JogadorActor extends Actor {
     }
 
     /**
-     * Método responsável pelo retorno da imagem do jogador, é criado um BufferedImage e desenhado a imagem
-     * com o auxílio da classe Graphics.
+     * Método responsável pelo retorno da imagem do jogador, é criado um
+     * BufferedImage e desenhado a imagem com o auxílio da classe Graphics.
+     *
      * @return image.
      */
     @Override
@@ -137,7 +140,7 @@ public class JogadorActor extends Actor {
             graphics.setColor(Color.blue);
             graphics.fillOval(10, 60, 50, 50);
         }
-            graphics.setColor(Color.DARK_GRAY);
+        graphics.setColor(Color.DARK_GRAY);
 
         graphics.drawString("" + jogador.getNome(), 0, 10);
 
@@ -147,10 +150,11 @@ public class JogadorActor extends Actor {
     }
 
     /**
-     * Método responsável pela movimentação do jogador. Retorna se foi possível mover ou não. Recebe
-     * como parâmetros a direção que deve ser seguida, um polígono represetando o limite e uma lista
-     * de atores que colidem.
-     * @param direcao direção. 
+     * Método responsável pela movimentação do jogador. Retorna se foi possível
+     * mover ou não. Recebe como parâmetros a direção que deve ser seguida, um
+     * polígono represetando o limite e uma lista de atores que colidem.
+     *
+     * @param direcao direção.
      * @param limite limite.
      * @param collisions lista de atores que colidem.
      * @return verdadeiro se moveu, falso caso contrário.
@@ -180,9 +184,11 @@ public class JogadorActor extends Actor {
     }
 
     /**
-     * Método que realiza a ação de um jogador empurrar a bola, é recebido a direção e uma lista de atores
-     * que colidem, caso o ator que esteja colidindo com o jogador, seja a bola, esta então
-     * recebe a ação de ser empurrada, de acordo com o a velocidade definida pelo jogador.
+     * Método que realiza a ação de um jogador empurrar a bola, é recebido a
+     * direção e uma lista de atores que colidem, caso o ator que esteja
+     * colidindo com o jogador, seja a bola, esta então recebe a ação de ser
+     * empurrada, de acordo com o a velocidade definida pelo jogador.
+     *
      * @param direcao direção.
      * @param collisions lista de atores que colidem.
      */
@@ -267,7 +273,7 @@ public class JogadorActor extends Actor {
                 + "Highlander\n"
                 + "Julio\n"
                 + "Dilson\n";
-        
+
         String[] result = nomes.split("\\n");
         Random rand = new Random();
         return result[rand.nextInt(result.length)];
