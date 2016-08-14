@@ -281,7 +281,7 @@ public class MatchScene extends GameScene implements GolListener {
         if (InputManager.getInstance().isJustPressed(KeyEvent.VK_ESCAPE)) {
             voltarMenu();
         }
-        if (InputManager.getInstance().isJustPressed(KeyEvent.VK_F3)) {
+        if (InputManager.getInstance().isJustPressed(KeyEvent.VK_M)) {
             if(tocandoTheme){
                 BGM.stop();
                 tocandoTheme = false;
