@@ -52,10 +52,12 @@ public class MatchScene extends GameScene implements GolListener {
     private Action genericAction;//Mudar depois no projeto final
     private long inicioPartida;
     private int tempoDeJogo;
+    private boolean tocandoTheme;
 
     private long ultimaTrocPlayer1;
 
     public MatchScene(Frame tela, ChangeSceneListener lisntener) {
+        tocandoTheme = true;
         tempoDeJogo = 10;
         this.tela = tela;
         sceneListeners = new ArrayList<>();
@@ -94,8 +96,8 @@ public class MatchScene extends GameScene implements GolListener {
             int delay = 1000;
             while (System.currentTimeMillis() - previousMillis < delay) {
             }
-
             BGM.loop();
+            
         } catch (IOException ex) {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -280,7 +282,12 @@ public class MatchScene extends GameScene implements GolListener {
             voltarMenu();
         }
         if (InputManager.getInstance().isJustPressed(KeyEvent.VK_F3)) {
-            BGM.loop();
+            if(tocandoTheme){
+                BGM.stop();
+                tocandoTheme = false;
+            }else{
+                BGM.loop();
+            }
         }
 
         Collections.sort(todos);
