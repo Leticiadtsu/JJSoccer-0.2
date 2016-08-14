@@ -64,6 +64,13 @@ public class Placar implements Renderable {
         updateImage();
     }
 
+    public int getGolTime1() {
+        return this.golsTime1;
+    }
+    public int getGolTime2() {
+        return this.golsTime2;
+    }
+
     @Override
     public Image getImage() {
         return image;

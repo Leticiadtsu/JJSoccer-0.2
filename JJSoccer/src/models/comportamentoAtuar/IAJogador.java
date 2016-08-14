@@ -44,6 +44,12 @@ public class IAJogador extends InteligenciaArtificial {
 
     @Override
     public void agir(JogadorActor chamador, Action action, List<Actor> actorsNear) {
+        for (Actor actor : actorsNear) {
+            if(chamador.isColliding(actor) && actor instanceof Bola){
+                estaComAbola(chamador);
+                
+            }
+        }
         Actor bola = proximoBola(actorsNear);
         if (bola != null) {
             seguirBola(chamador, bola, action, actorsNear);

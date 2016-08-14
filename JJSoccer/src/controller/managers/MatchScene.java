@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import models.Campo;
 import models.Dimensao;
 import models.Gol;
@@ -30,10 +31,6 @@ import models.Sprite;
 import models.interfaces.ChangeSceneListener;
 import models.interfaces.GolListener;
 
-/**
- *
- * @author
- */
 public class MatchScene extends GameScene implements GolListener {
 
     private int posPlayer1;
@@ -57,8 +54,7 @@ public class MatchScene extends GameScene implements GolListener {
 
     private long ultimaTrocPlayer1;
 
-    public MatchScene(Frame tela, ChangeSceneListener lisntener)  {
-
+    public MatchScene(Frame tela, ChangeSceneListener lisntener) {
 
         this.tela = tela;
         sceneListeners = new ArrayList<>();
@@ -89,7 +85,7 @@ public class MatchScene extends GameScene implements GolListener {
         campo = new Campo(new Point(20, 100), tamanhoDoCampo, tamanhoDoGol);
     }
 
-    private void initAudio(){
+    private void initAudio() {
         long previousMillis = System.currentTimeMillis();
         try {
             BGM = AudioManager.getInstance().loadAudio("Theme2.wav");
@@ -103,6 +99,7 @@ public class MatchScene extends GameScene implements GolListener {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     private void criarCenario() {
 
         criarCampo(tela);
@@ -191,9 +188,10 @@ public class MatchScene extends GameScene implements GolListener {
 
     @Override
     public void update() {
-        if (System.currentTimeMillis() - inicioPartida <= 60000 * 10/*Dex minitos*/) {
+        if (System.currentTimeMillis() - inicioPartida <= 60000 * 5/*Cinco minitos*/) {
             partida();
         } else {
+            JOptionPane.showMessageDialog(tela, "\tFim da partida\nCasa " + placar.getGolTime1() + " X " + placar.getGolTime2() + " Visitante");
             voltarMenu();
         }
 
@@ -277,10 +275,10 @@ public class MatchScene extends GameScene implements GolListener {
         if (InputManager.getInstance().isJustPressed(KeyEvent.VK_CONTROL)) {
             trocarPlayer2();
         }
-        if(InputManager.getInstance().isJustPressed(KeyEvent.VK_ESCAPE)){
+        if (InputManager.getInstance().isJustPressed(KeyEvent.VK_ESCAPE)) {
             voltarMenu();
         }
-        if(InputManager.getInstance().isJustPressed(KeyEvent.VK_F3)){
+        if (InputManager.getInstance().isJustPressed(KeyEvent.VK_F3)) {
             BGM.loop();
         }
 
@@ -290,7 +288,8 @@ public class MatchScene extends GameScene implements GolListener {
     public void voltarMenu() {
         BGM.stop();
         for (ChangeSceneListener sceneListener : sceneListeners) {
-            sceneListener.changeScene(new MenuScene(tela,sceneListener));
+            sceneListener.changeScene(new MenuScene(tela, sceneListener));
         }
     }
+
 }

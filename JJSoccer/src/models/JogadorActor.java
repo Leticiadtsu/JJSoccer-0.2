@@ -53,6 +53,11 @@ public class JogadorActor extends Actor {
 
     }
 
+    public void setComportamento(Comportamentos comportamento, PlayerListener listener){
+        if(comportamento ==Comportamentos.JOGADOR_IA){
+            this.comportamento = new IAJogador(listener);
+        }
+    }
     public void setComportamento(Comportamentos comportamento) {
         switch (comportamento) {
             case GOLEIRO_IA:
