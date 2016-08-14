@@ -51,7 +51,7 @@ public class IAJogador extends InteligenciaArtificial {
             }
         }
         Actor bola = proximoBola(actorsNear);
-        if (bola != null) {
+        if (bola != null && chamador.getY() < chamador.getYInicial() + RANGE*4 & chamador.getY() > chamador.getYInicial() - RANGE*4 && chamador.getX() < chamador.getXInicial() + RANGE*4 && chamador.getX() > chamador.getXInicial() - RANGE*4 && !voltarPosicaoOriginal) {
             seguirBola(chamador, bola, action, actorsNear);
         } else {
             if (chamador.getX() == chamador.getXInicial() && chamador.getY() == chamador.getYInicial()) {
