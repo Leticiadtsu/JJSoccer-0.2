@@ -108,6 +108,7 @@ public class MatchScene extends GameScene implements GolListener {
         todos.add(a);
         atoresCasa.add(a);
     }
+
     @Deprecated
     private void adicionarJogadorCasa(int x, int y) {
         JogadorActor jogador = new JogadorActor(Comportamentos.JOGADOR_IA, x, y);
@@ -145,7 +146,7 @@ public class MatchScene extends GameScene implements GolListener {
         adicionarJogadorVisitante(new JogadorActor(Comportamentos.JOGADOR_IA, gridX * 14, gridY * 14));
 
         adicionarJogadorVisitante(new JogadorActor(Comportamentos.JOGADOR_IA, gridX * 16, gridY * 10));
-        adicionarJogadorVisitante(new JogadorActor(Comportamentos.GOLEIRO_IA, gridX * 18 -50, gridY * 10));
+        adicionarJogadorVisitante(new JogadorActor(Comportamentos.GOLEIRO_IA, gridX * 18 - 50, gridY * 10));
 
     }
 
@@ -206,8 +207,8 @@ public class MatchScene extends GameScene implements GolListener {
     }
 
     @Override
-    public void onGoal(Gol gol) {
-        if (gol.isTimeCasa()) {
+    public void onGoal(boolean timeCasal) {
+        if (timeCasal) {
             placar.addGolTime1();
         } else {
             placar.addGolTime2();
@@ -216,9 +217,11 @@ public class MatchScene extends GameScene implements GolListener {
         for (Actor todo : todos) {
             todo.reset();
         }
+        
     }
 
     private void realizarPartida() {
+
         for (Actor ator : todos) {
             ator.act(generateAction(ator), todos);
         }

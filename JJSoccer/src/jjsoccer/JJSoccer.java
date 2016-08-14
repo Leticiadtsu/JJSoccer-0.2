@@ -6,6 +6,7 @@
 package jjsoccer;
 
 import controller.managers.Game;
+import java.util.ConcurrentModificationException;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,12 +20,17 @@ public class JJSoccer {
      */
     public static void main(String[] args) {
         try {
-            //throw new RuntimeException("Deu merda");
+//            throw new RuntimeException("Deu merda");
+//            throw new ConcurrentModificationException();
             new Game().init();
             
+        }catch(ConcurrentModificationException e){
+            JOptionPane.showMessageDialog(null,"Erro no controlador de entradas do usuário\nNossas equipes estão trabalhando duro para que possa resolver\n"+ e +"\nO sistema será finalizado");
+            System.exit(0);
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,"Infelizmente Ocorreu algum erro no sistema\n"+ e +"\nO sistema será finalizado");
-        }   System.exit(0);
+        }    
+        
     }
 
 }

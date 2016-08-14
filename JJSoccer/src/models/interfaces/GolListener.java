@@ -12,5 +12,5 @@ import models.Gol;
  */
 public interface GolListener {
 
-    public void onGoal(Gol gol);
+    public void onGoal(boolean timeCasa);
 }

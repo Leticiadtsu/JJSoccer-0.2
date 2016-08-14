@@ -4,6 +4,7 @@
  */
 package models;
 
+import java.util.ArrayList;
 import java.util.List;
 import models.interfaces.Action;
 import models.interfaces.GolListener;
@@ -14,13 +15,14 @@ import models.interfaces.GolListener;
  */
 public class Gol extends Actor {
 
-    private GolListener listener;
+    private List<GolListener> listeners;
     private boolean timeCasa;
 
     public Gol(GolListener listener, boolean timeCasa) {
         sprite = new Sprite("gol.png");
         setCollisionArea(new CollisionArea(80, 200));
-        this.listener = listener;
+        this.listeners = new ArrayList<>();
+        this.listeners.add(listener);
         this.timeCasa = timeCasa;
     }
 
@@ -28,7 +30,8 @@ public class Gol extends Actor {
         super(x, y);
         sprite = new Sprite("gol.png");
         setCollisionArea(new CollisionArea(80, 200));
-        this.listener = listener;
+        this.listeners = new ArrayList<>();
+        this.listeners.add(listener);
         this.timeCasa = timeCasa;
     }
 
@@ -37,10 +40,17 @@ public class Gol extends Actor {
         for (Actor actor : areaDeRelevancia) {
             if (getCollisionArea().isColliding(this, actor)) {
                 if (actor instanceof Bola) {
-                    listener.onGoal(this);
+                    for (GolListener listener : listeners) {
+                        listener.onGoal(isTimeCasa());
+                    }
+
                 }
             }
         }
+    }
+    
+    public void addListener(GolListener listener){
+        this.listeners.add(listener);
     }
 
     /**

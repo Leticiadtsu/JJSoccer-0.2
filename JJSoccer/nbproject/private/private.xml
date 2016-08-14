@@ -3,6 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/costa/NetBeansProjects/jjsoccer/JJSoccer/src/models/Placar.java</file>
+            <file>file:/home/costa/NetBeansProjects/jjsoccer/JJSoccer/src/models/comportamentoAtuar/IAJogador.java</file>
+            <file>file:/home/costa/NetBeansProjects/jjsoccer/JJSoccer/src/models/Actor.java</file>
+            <file>file:/home/costa/NetBeansProjects/jjsoccer/JJSoccer/src/jjsoccer/JJSoccer.java</file>
+            <file>file:/home/costa/NetBeansProjects/jjsoccer/JJSoccer/src/controller/managers/MatchScene.java</file>
+            <file>file:/home/costa/NetBeansProjects/jjsoccer/JJSoccer/src/models/CollisionArea.java</file>
+            <file>file:/home/costa/NetBeansProjects/jjsoccer/JJSoccer/src/controller/managers/InputManager.java</file>
             <file>file:/home/costa/NetBeansProjects/jjsoccer/JJSoccer/src/controller/managers/Game.java</file>
         </group>
     </open-files>
