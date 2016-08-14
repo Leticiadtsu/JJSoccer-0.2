@@ -4,11 +4,10 @@
  */
 package models.comportamentoAtuar;
 
-import java.awt.Toolkit;
 import java.util.List;
+import java.util.Random;
 import models.Actor;
 import models.Actor.Direcao;
-import models.Dimensao;
 import models.JogadorActor;
 import models.interfaces.Action;
 
@@ -18,13 +17,16 @@ import models.interfaces.Action;
  */
 public class IAJogador extends InteligenciaArtificial {
 
+    
+    private final int RANGE = 50;
+    Random rand = new Random();
     private Direcao direcao;
     private boolean voltarPosicaoOriginal;
 
     public IAJogador() {
 
         voltarPosicaoOriginal = true;
-        direcao = Actor.Direcao.BAIXO;
+        direcao = gerarDirecaoAleatria();
     }
 
     @Override
@@ -51,12 +53,27 @@ public class IAJogador extends InteligenciaArtificial {
     }
 
     private void escolherDirecao(JogadorActor chamador) {
-        if (chamador.getY() > (Toolkit.getDefaultToolkit().getScreenSize().height / 2) + 60) {
-            this.direcao = Direcao.CIMA;
+
+        if (chamador.getY() > chamador.getYInicial() + RANGE || chamador.getY() < chamador.getYInicial() - RANGE || chamador.getX() > chamador.getXInicial() + RANGE || chamador.getX() < chamador.getXInicial() - RANGE) {
+            direcao = gerarDirecaoAleatria();
+            voltarPosicaoOriginal = true;
         }
-        if (chamador.getY() < (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 60) {
-            this.direcao = Direcao.BAIXO;
+    }
+
+    private Direcao gerarDirecaoAleatria() {
+        int direcaoAleatoria = rand.nextInt(3);
+        switch (direcaoAleatoria) {
+            case 0:
+                return Actor.Direcao.BAIXO;
+            case 1:
+                return Actor.Direcao.CIMA;
+
+            case 2:
+                return Actor.Direcao.ESQUERDA;
+            case 3:
+                return Actor.Direcao.DIREITA;
+
         }
-        
+        return Actor.Direcao.DIREITA;
     }
 }

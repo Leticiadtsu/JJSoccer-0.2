@@ -44,9 +44,12 @@ public class Placar implements Renderable {
 
     private void updateImage() {
         Graphics2D graphics = (Graphics2D) image.getGraphics();
+        graphics.setColor(Color.LIGHT_GRAY);
+        graphics.fillRect(0, 0, ImageWidth, 80);
         graphics.setColor(Color.DARK_GRAY);
         graphics.setFont(font);
         graphics.drawString(nomeTime1 + " " + golsTime1 + " x " + golsTime2 + " " + nomeTime2, 10, 50);
+
         graphics.dispose();
 
     }

@@ -37,7 +37,7 @@ public class MatchScene extends GameScene implements GolListener {
     private Frame tela;
     private Campo campo;
     private Bola bola;
-    private final Point posInicialBola;
+    private Point posInicialBola;
     private JogadorActor player;
     private Placar placar;
     private List<Actor> todos;
@@ -50,28 +50,10 @@ public class MatchScene extends GameScene implements GolListener {
 
     public MatchScene() {
         inicioPartida = System.currentTimeMillis();
-
         ultimaTroca = System.currentTimeMillis();
-        tela = new Frame("Jogo");
-        Dimensao tamanhoDoCampo = new Dimensao(tela.getWidth(), tela.getHeight() - 100);
-        Dimensao tamanhoDoGol = new Dimensao(80, 200);
-        campo = new Campo(new Point(20, 100), tamanhoDoCampo, tamanhoDoGol);
-        placar = new Placar(tela.getWidth() / 2, 10, "Time da Casa", "Time Visitante");
-        posInicialBola = new Point(tela.getWidth() / 2, tela.getHeight() / 2 + 50);
+
         todos = new ArrayList<>();
         atoresCasa = new ArrayList<>();
-        bola = new Bola(posInicialBola.x, posInicialBola.y);
-        todos.add(bola);
-        todos.add(new Gol(0, tela.getHeight() / 2 - 50, this, false));
-        todos.add(new Gol(tela.getWidth() - 80, tela.getHeight() / 2 - 50, this, true));
-        player = new JogadorActor(Comportamentos.CONTROLADO, 100, 100);
-        todos.add(0, player);
-        atoresCasa.add(0, player);
-        adicionarJogadorCasa(new JogadorActor(Comportamentos.JOGADOR_IA, 150, 150));
-        posJogadorControaldo = 0;
-        adicionarJogadorInimigo(600, 200);
-        adicionarJogadorInimigo(800, 300);
-        adicionarJogadorInimigo(1000, 500);
 
         genericAction = new Action() {
             @Override
@@ -79,42 +61,98 @@ public class MatchScene extends GameScene implements GolListener {
                 return campo.getLimite();
             }
         };
+        criarCenario();
 
     }
 
-    private void adicionarJogadorInimigo(Actor a) {
+    private void criarCampo(Frame tela) {
+        Dimensao tamanhoDoCampo = new Dimensao(tela.getWidth(), tela.getHeight() - 100);
+        Dimensao tamanhoDoGol = new Dimensao(80, 200);
+        campo = new Campo(new Point(20, 100), tamanhoDoCampo, tamanhoDoGol);
+    }
+
+    private void criarCenario() {
+
+        tela = new Frame("Jogo");
+        criarCampo(tela);
+
+        gerarTimeCasa();
+        gerarTimeVisitante();
+        player = (JogadorActor) atoresCasa.get(posJogadorControaldo);
+        player.setComportamento(Comportamentos.CONTROLADO);
+
+        posInicialBola = new Point(tela.getWidth() / 2, tela.getHeight() / 2 + 50);
+        bola = new Bola(posInicialBola.x, posInicialBola.y);
+
+        placar = new Placar(tela.getWidth() / 2, 10, "Time da Casa", "Time Visitante");
+
+        todos.add(bola);
+        todos.add(new Gol(0, tela.getHeight() / 2 - 50, this, false));
+        todos.add(new Gol(tela.getWidth() - 80, tela.getHeight() / 2 - 50, this, true));
+
+    }
+
+    private void adicionarJogadorVisitante(Actor a) {
+        a.setSpr(new Sprite("soccer-inimigo.png"));
         todos.add(a);
     }
 
+    @Deprecated
     private void adicionarJogadorInimigo(int x, int y) {
         JogadorActor jogador = new JogadorActor(Comportamentos.JOGADOR_IA, x, y);
         jogador.setSpr(new Sprite("soccer-inimigo.png"));
-        adicionarJogadorInimigo(jogador);
+        adicionarJogadorVisitante(jogador);
     }
 
     private void adicionarJogadorCasa(Actor a) {
         todos.add(a);
         atoresCasa.add(a);
     }
-
+    @Deprecated
     private void adicionarJogadorCasa(int x, int y) {
         JogadorActor jogador = new JogadorActor(Comportamentos.JOGADOR_IA, x, y);
         adicionarJogadorCasa(jogador);
     }
 
+    private void gerarTimeCasa() {
+        Polygon limiteCampo = campo.getLimite();
+        int xMinimo = limiteCampo.getBounds().x + 90;
+        int yMinimo = limiteCampo.getBounds().y + 10;
+        int gridX = (tela.getWidth() / 20) + 5;
+        int gridY = (tela.getHeight() / 20) + 5;
+
+        adicionarJogadorCasa(new JogadorActor(Comportamentos.JOGADOR_IA, gridX * 9, gridY * 9));
+        adicionarJogadorCasa(new JogadorActor(Comportamentos.JOGADOR_IA, gridX * 9, gridY * 11));
+        adicionarJogadorCasa(new JogadorActor(Comportamentos.JOGADOR_IA, gridX * 6, gridY * 6));
+
+        adicionarJogadorCasa(new JogadorActor(Comportamentos.JOGADOR_IA, gridX * 6, gridY * 14));
+
+        adicionarJogadorCasa(new JogadorActor(Comportamentos.JOGADOR_IA, gridX * 3, gridY * 10));
+        adicionarJogadorCasa(new JogadorActor(Comportamentos.GOLEIRO_IA, xMinimo + 5, gridY * 10));
+    }
+
+    private void gerarTimeVisitante() {
+        Polygon limiteCampo = campo.getLimite();
+        int xMinimo = limiteCampo.getBounds().x + 90;
+        int yMinimo = limiteCampo.getBounds().y + 10;
+        int gridX = (tela.getWidth() / 20) + 5;
+        int gridY = (tela.getHeight() / 20) + 5;
+
+        adicionarJogadorVisitante(new JogadorActor(Comportamentos.JOGADOR_IA, gridX * 11, gridY * 8));
+        adicionarJogadorVisitante(new JogadorActor(Comportamentos.JOGADOR_IA, gridX * 11, gridY * 12));
+        adicionarJogadorVisitante(new JogadorActor(Comportamentos.JOGADOR_IA, gridX * 14, gridY * 6));
+
+        adicionarJogadorVisitante(new JogadorActor(Comportamentos.JOGADOR_IA, gridX * 14, gridY * 14));
+
+        adicionarJogadorVisitante(new JogadorActor(Comportamentos.JOGADOR_IA, gridX * 16, gridY * 10));
+        adicionarJogadorVisitante(new JogadorActor(Comportamentos.GOLEIRO_IA, gridX * 18 -50, gridY * 10));
+
+    }
+
     @Override
     public void update() {
-        if (System.currentTimeMillis() - inicioPartida <= 60000*10/*Dex minitos*/) {
-
-            for (Actor ator : todos) {
-                ator.act(generateAction(ator), todos);
-            }
-
-            if (InputManager.getInstance().isJustPressed(KeyEvent.VK_M)) {
-                System.err.println("Trocou");
-                trocarPlayer();
-            }
-            Collections.sort(todos);
+        if (System.currentTimeMillis() - inicioPartida <= 60000 * 10/*Dex minitos*/) {
+            realizarPartida();
         } else {
             JOptionPane.showMessageDialog(null, "Acabou");
             inicioPartida = System.currentTimeMillis();
@@ -122,8 +160,9 @@ public class MatchScene extends GameScene implements GolListener {
             for (Actor actor : todos) {
                 actor.reset();
             }
-            
+
         }
+
     }
 
     @Override
@@ -179,4 +218,15 @@ public class MatchScene extends GameScene implements GolListener {
         }
     }
 
+    private void realizarPartida() {
+        for (Actor ator : todos) {
+            ator.act(generateAction(ator), todos);
+        }
+
+        if (InputManager.getInstance().isJustPressed(KeyEvent.VK_M)) {
+            System.err.println("Trocou");
+            trocarPlayer();
+        }
+        Collections.sort(todos);
+    }
 }
