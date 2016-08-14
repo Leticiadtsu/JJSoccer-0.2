@@ -19,8 +19,8 @@ public class JJSoccer {
      */
     public static void main(String[] args) {
         try {
-            throw new RuntimeException("Deu merda");
-            //new Game().init();
+            //throw new RuntimeException("Deu merda");
+            new Game().init();
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,"Infelizmente Ocorreu algum erro no sistema\n"+ e +"\nO sistema será finalizado");

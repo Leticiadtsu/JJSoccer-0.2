@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import javax.swing.JOptionPane;
 import models.Campo;
 import models.Dimensao;
 import models.Gol;
@@ -43,10 +44,13 @@ public class MatchScene extends GameScene implements GolListener {
     private ArrayList<Actor> atoresCasa;
     private ArrayList<Actor> atoresProximos;
     private Action genericAction;//Mudar depois no projeto final
+    private long inicioPartida;
 
     private long ultimaTroca;
 
     public MatchScene() {
+        inicioPartida = System.currentTimeMillis();
+
         ultimaTroca = System.currentTimeMillis();
         tela = new Frame("Jogo");
         Dimensao tamanhoDoCampo = new Dimensao(tela.getWidth(), tela.getHeight() - 100);
@@ -100,16 +104,24 @@ public class MatchScene extends GameScene implements GolListener {
 
     @Override
     public void update() {
+        if (System.currentTimeMillis() - inicioPartida <= 10000/*Um minito*/) {
 
-        for (Actor ator : todos) {
-            ator.act(generateAction(ator), todos);
-        }
+            for (Actor ator : todos) {
+                ator.act(generateAction(ator), todos);
+            }
 
-        if (InputManager.getInstance().isJustPressed(KeyEvent.VK_M)) {
-            System.err.println("Trocou");
-            trocarPlayer();
+            if (InputManager.getInstance().isJustPressed(KeyEvent.VK_M)) {
+                System.err.println("Trocou");
+                trocarPlayer();
+            }
+            Collections.sort(todos);
+        } else {
+            JOptionPane.showMessageDialog(null, "Acabou");
+            inicioPartida = System.currentTimeMillis();
+            for (Actor actor : todos) {
+                actor.reset();
+            }
         }
-        Collections.sort(todos);
     }
 
     @Override
@@ -131,8 +143,6 @@ public class MatchScene extends GameScene implements GolListener {
     }
 
     private void trocarPlayer() {
-
-//        if (System.currentTimeMillis() - ultimaTroca >= 30) {
         System.err.println("Vou troacar");
         player = (JogadorActor) atoresCasa.get(posJogadorControaldo);
         player.setComportamento(Comportamentos.JOGADOR_IA);
@@ -147,9 +157,6 @@ public class MatchScene extends GameScene implements GolListener {
 
         player.setComportamento(Comportamentos.CONTROLADO);
         ultimaTroca = System.currentTimeMillis();
-//        } else {
-//            System.err.println("Nao vou tocar");
-//        }
 
     }
 

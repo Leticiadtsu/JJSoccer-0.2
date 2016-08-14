@@ -16,6 +16,7 @@ public class Game {
     private final int DELAY = 10;
     private GameScene scene;
     private long previousMillis;
+    
 
     public void init() {
         previousMillis = System.currentTimeMillis();
@@ -25,6 +26,7 @@ public class Game {
 
     private void gameloop() {
         while (!InputManager.getInstance().isPressed(KeyEvent.VK_ESCAPE)) {
+
             update();//criar variavel dps
             render();
             InputManager.getInstance().update();
@@ -35,6 +37,7 @@ public class Game {
                 JOptionPane.showMessageDialog(null, "Erro no looping de jogo!!!\n\tFinalizando sitema ");
                 System.exit(0);
             }
+
         }
         System.exit(0);
     }
