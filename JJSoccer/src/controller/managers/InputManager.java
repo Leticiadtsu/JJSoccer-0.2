@@ -80,4 +80,10 @@ public class InputManager implements KeyListener {
     public void keyReleased(KeyEvent e) {
         releasedKeys.add(e.getKeyCode());
     }
+
+    public void reset() {
+        keyCache = new HashMap<>();
+        pressedKeys = new ArrayList<>();
+        releasedKeys = new ArrayList<>();
+    }
 }

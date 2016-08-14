@@ -118,6 +118,7 @@ public class MatchScene extends GameScene implements GolListener {
         } else {
             JOptionPane.showMessageDialog(null, "Acabou");
             inicioPartida = System.currentTimeMillis();
+            InputManager.getInstance().reset();
             for (Actor actor : todos) {
                 actor.reset();
             }
