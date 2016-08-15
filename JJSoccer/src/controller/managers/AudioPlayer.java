@@ -1,16 +1,9 @@
-/*
- * Here comes the text of your license
- * Each line should be prefixed with  * 
- */
 package controller.managers;
 
 import java.applet.AudioClip;
 import java.util.HashMap;
 
-/**
- *
- * @author Andre Chateaubriand
- */
+@Deprecated
 public class AudioPlayer implements Runnable {
 
     private HashMap<String, AudioClip> audios;

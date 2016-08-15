@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jjsoccer;
 
 import controller.managers.Game;
@@ -10,13 +5,13 @@ import java.util.ConcurrentModificationException;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author
+ * Classe de execução do jogo, possui o método main que dá inicio ao Game.
  */
 public class JJSoccer {
 
     /**
-     * @param args the command line arguments
+     * Tenta inicializar o jogo, caso ocorra algum erro, há um tratamento de
+     * exceção.
      */
     public static void main(String[] args) {
         try {

@@ -1,7 +1,3 @@
-/*
- * Here comes the text of your license
- * Each line should be prefixed with  * 
- */
 package controller.managers;
 
 import java.applet.AudioClip;
@@ -31,6 +27,13 @@ import models.Sprite;
 import models.interfaces.ChangeSceneListener;
 import models.interfaces.GolListener;
 
+/**
+ * A classe MatchScne é uma cena da partida, responsável por controlar a
+ * “jogabilidade” desta. Possui uma lista de atores que compõe a partida, um
+ * campo que define o limite do mapa, a bola, os audios, placar, ou seja, todos
+ * os aspectos relacionados à uma partida estão declarados nesta classe.
+ *
+ */
 public class MatchScene extends GameScene implements GolListener {
 
     private int posPlayer1;
@@ -56,6 +59,14 @@ public class MatchScene extends GameScene implements GolListener {
 
     private long ultimaTrocPlayer1;
 
+    /**
+     * Construtor que recebe a tela e os ouvintes da cena, determina o tempo de
+     * jogo em 10 minutos, cria uma lista de ouvintes da cena, lista de atores
+     * da casa e os visitantes. Cria a cena e inicializa o áudio.
+     *
+     * @param tela tela.
+     * @param lisntener ouvinte.
+     */
     public MatchScene(Frame tela, ChangeSceneListener lisntener) {
         tocandoTheme = true;
         tempoDeJogo = 10;
@@ -97,7 +108,7 @@ public class MatchScene extends GameScene implements GolListener {
             while (System.currentTimeMillis() - previousMillis < delay) {
             }
             BGM.loop();
-            
+
         } catch (IOException ex) {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -189,6 +200,10 @@ public class MatchScene extends GameScene implements GolListener {
 
     }
 
+    /**
+     * Atualização da partida, responsável por que no tempo determinado que
+     * encerra a partida, apresenta o placar para o usuário.
+     */
     @Override
     public void update() {
         if (System.currentTimeMillis() - inicioPartida <= 60000 * tempoDeJogo) {
@@ -200,6 +215,11 @@ public class MatchScene extends GameScene implements GolListener {
 
     }
 
+    /**
+     * Renderiza todos os objetos redenderizavel em seu respectivos estados
+     * presentes na cena a qual esta no momento atribuida ao atributo scene da
+     * classe.
+     */
     @Override
     public void render() {
         List<Renderable> renderables = new LinkedList<>(todos);
@@ -247,6 +267,12 @@ public class MatchScene extends GameScene implements GolListener {
         return genericAction;
     }
 
+    /**
+     * Quando é realizado um gol, é contabilizado no placar, para o respectivo
+     * time e acionado um audio.
+     *
+     * @param timeCasal
+     */
     @Override
     public void onGoal(boolean timeCasal) {
         if (timeCasal) {
@@ -282,10 +308,10 @@ public class MatchScene extends GameScene implements GolListener {
             voltarMenu();
         }
         if (InputManager.getInstance().isJustPressed(KeyEvent.VK_M)) {
-            if(tocandoTheme){
+            if (tocandoTheme) {
                 BGM.stop();
                 tocandoTheme = false;
-            }else{
+            } else {
                 BGM.loop();
                 tocandoTheme = true;
             }
@@ -294,6 +320,9 @@ public class MatchScene extends GameScene implements GolListener {
         Collections.sort(todos);
     }
 
+    /**
+     * Método que reponsável pela troca de cena, voltando para o menu.
+     */
     public void voltarMenu() {
         BGM.stop();
         for (ChangeSceneListener sceneListener : sceneListeners) {

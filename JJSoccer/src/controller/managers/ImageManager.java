@@ -1,19 +1,15 @@
-/*
- * Here comes the text of your license
- * Each line should be prefixed with  * 
- */
 package controller.managers;
 
-/**
- *
- * @author
- */
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
 
+/**
+ * Classe que segue o padrão singleton e serve para controlar as imagens do
+ * jogo. Possui um HashMap que salva as imagens.
+ */
 public class ImageManager {
 
     static private ImageManager instance;
@@ -23,6 +19,12 @@ public class ImageManager {
         images = new HashMap<String, BufferedImage>();
     }
 
+    /**
+     * Método que garante que não há replicações de instâncias de uma mesma
+     * imagem.
+     *
+     * @return instancia da classe.
+     */
     static public ImageManager getInstance() {
         if (instance == null) {
             instance = new ImageManager();
@@ -30,6 +32,14 @@ public class ImageManager {
         return instance;
     }
 
+    /**
+     * Método que carrega uma imagem, primeiramete verifica se essa existe no
+     * HashMap, caso exista retorna uma referência à essa. Caso não existe,
+     * carrega essa imagem do HD para o HashMap, e retorna uma referência dessa.
+     *
+     * @param fileName nome da imagem.
+     * @return imagem.
+     */
     public BufferedImage loadImage(String fileName) {
         try {
             URL url = getClass().getResource("/resources/" + fileName);

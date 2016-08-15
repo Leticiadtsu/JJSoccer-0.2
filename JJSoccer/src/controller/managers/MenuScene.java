@@ -1,7 +1,3 @@
-/*
- * Here comes the text of your license
- * Each line should be prefixed with  * 
- */
 package controller.managers;
 
 import com.sun.glass.events.KeyEvent;
@@ -22,8 +18,9 @@ import view.Frame;
 import models.interfaces.ChangeSceneListener;
 
 /**
- *
- * @author Andre Chateaubriand
+ * Classe responsável pela cena de menu, a qual pode inicializar uma nova
+ * partida, ou sair do jogo. Possui como atricuto uma lista de cenas ouvinte, o
+ * audio e as imagens que serão exibidas na tela.
  */
 public class MenuScene extends GameScene {
 
@@ -34,10 +31,21 @@ public class MenuScene extends GameScene {
     private final Frame tela;
     private List<ButtonActor> buttons;
 
+    /**
+     * Enumerador que define as opções do menu.
+     */
     public enum Opcoes {
         JOGAR, SAIR;
     }
 
+    /**
+     * Construtor do menu o qual altera a sua visibilidade, inicializa a tela,
+     * cria uma lista ouvintes da cena, inicializa o audio, define os botões de
+     * opções e as imagens exibidas.
+     *
+     * @param tela tela.
+     * @param parent ouvinte.
+     */
     public MenuScene(Frame tela, ChangeSceneListener parent) {
         this.tela = tela;
         tela.setVisible(true);
@@ -47,7 +55,7 @@ public class MenuScene extends GameScene {
         pane = new PaneRenderable(tela.getWidth(), tela.getHeight());
 
         initAudio();
-        
+
         buttons = new LinkedList<>();
 
         // BT JOGAR
@@ -87,6 +95,11 @@ public class MenuScene extends GameScene {
         }
     }
 
+    /**
+     * Realiza a atualizacao da cena a qual esta no momento atribuída ao
+     * atributo scene da classe. Como é o método mais pesado somente é realizdo
+     * se tenha passado um tempo predefinido após o ultimo chamado.
+     */
     @Override
     public void update() {
         logo.act(null, null);
@@ -146,6 +159,10 @@ public class MenuScene extends GameScene {
         }
     }
 
+    /**
+     * Para o áudio que estava sendo executado e avisa aos ouvintes que foi
+     * escolhido a opção jogar. Trocando de cena.
+     */
     public void jogar() {
         BGM.stop();
 
@@ -155,10 +172,18 @@ public class MenuScene extends GameScene {
 
     }
 
+    /**
+     * Sair do jogo.
+     */
     public void sair() {
         System.exit(0);
     }
 
+    /**
+     * Renderiza todos os objetos redenderizaveis em seu respectivos estados
+     * presentes na cena a qual esta no momento atribuida ao atributo scene da
+     * classe.
+     */
     @Override
     public void render() {
         LinkedList<Renderable> sprites = new LinkedList<Renderable>();

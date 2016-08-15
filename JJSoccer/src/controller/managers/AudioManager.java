@@ -1,19 +1,15 @@
-/*
- * Here comes the text of your license
- * Each line should be prefixed with  * 
- */
 package controller.managers;
 
-/**
- *
- * @author Andre Chateaubriand
- */
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 
+/**
+ * Classe única, que realiza o carregamento do áudio. Sua inicialização só é permitido pelo
+ * método getInstance, não permitindo criar outro objeto desta classe, utilizando o padrão Singleton.
+ */
 public class AudioManager {
 
     static private AudioManager instance;
@@ -23,6 +19,10 @@ public class AudioManager {
         clips = new HashMap<String, AudioClip>();
     }
 
+    /**
+     * Método responsável por permitir apenas uma instância da classe.
+     * @return instancia da classe.
+     */
     static public AudioManager getInstance() {
         if (instance == null) {
             instance = new AudioManager();
@@ -30,6 +30,13 @@ public class AudioManager {
         return instance;
     }
 
+    /**
+     * Carrega o audio que será executado. O arquivo de audio deve estar presente no pacote
+     * "resources".
+     * @param fileName nome do arquivo de audio.
+     * @return audio.
+     * @throws IOException 
+     */
     public AudioClip loadAudio(String fileName) throws IOException {
         URL url = getClass().getResource("/resources/" + fileName);
         if (url == null) {

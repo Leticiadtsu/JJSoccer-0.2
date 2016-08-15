@@ -1,7 +1,3 @@
-/*
- * Here comes the text of your license
- * Each line should be prefixed with  * 
- */
 package controller.managers;
 
 import java.awt.event.KeyEvent;
@@ -13,7 +9,6 @@ import models.interfaces.ChangeSceneListener;
  * Classe responsavel pelo motor do jogo, ela que gerencia todo fluxo do jogo
  * chamada de telas, realizar o looping que atualiza as telas e o que é
  * renderizado na saída.
- *
  */
 public class Game implements ChangeSceneListener {
 
@@ -58,8 +53,8 @@ public class Game implements ChangeSceneListener {
     }
 
     /**
-     * Realiza a utualizacao da cena a qual esta no momento atribuida ao
-     * atributo scene da calasse. Como é o metodo mais pesado somente é realizdo
+     * Realiza a atualizacao da cena a qual esta no momento atribuída ao
+     * atributo scene da classe. Como é o método mais pesado somente é realizdo
      * se tenha passado um tempo predefinido após o ultimo chamado.
      */
     private void update() {
@@ -70,9 +65,9 @@ public class Game implements ChangeSceneListener {
     }
 
     /**
-     * Renderiza todos os objetos redenderizavel em seu respectivos estados
+     * Renderiza todos os objetos redenderizáeis em seu respectivos estados
      * presentes na cena a qual esta no momento atribuida ao atributo scene da
-     * calasse.
+     * classe.
      */
     private void render() {
         scene.render();
