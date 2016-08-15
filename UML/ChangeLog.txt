@@ -20,4 +20,6 @@ v1.0
 	-MatchScene agora possui somente um array de actor
 	-Acicionado a classe habilidades
 	-Adicionado a classe collisionArea
-	-Adicionado campo 
+	-Adicionado campo
+2.0
+	-Correção heranças de comportamentos.
